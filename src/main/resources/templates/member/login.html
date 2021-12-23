@@ -1,21 +1,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 
-<ul>
-	<li onclick="kakaoLogin();">
-      <a href="javascript:void(0)">
-          <span>카카오 로그인</span>
-      </a>
-	</li>
-	<li onclick="kakaoLogout();">
-      <a href="javascript:void(0)">
-          <span>카카오 로그아웃</span>
-      </a>
-	</li>
-</ul>
 <!-- 카카오 스크립트 -->
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-<script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
 <script>
 Kakao.init('f72f3003b882dd8810a45601fb73f64c'); //발급받은 키 중 javascript키를 사용해준다.
 console.log(Kakao.isInitialized()); // sdk초기화여부판단
@@ -55,19 +42,6 @@ function kakaoLogout() {
   }  
 </script>
 
-<ul>
-	<li>
-      <!-- 아래와같이 아이디를 꼭 써준다. -->
-      <a id="naverIdLogin_loginButton" href="javascript:void(0)">
-          <span>네이버 로그인</span>
-      </a>
-	</li>
-	<li onclick="naverLogout(); return false;">
-      <a href="javascript:void(0)">
-          <span>네이버 로그아웃</span>
-      </a>
-	</li>
-</ul>
 
 <!-- 네이버 스크립트 -->
 <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
@@ -136,5 +110,32 @@ function naverLogout() {
     <br>
     <input type="submit" value="로그인"/>
 </form>
+<!-- 카카오 -->>
+<ul>
+	<li onclick="kakaoLogin();">
+      <a href="javascript:void(0)">
+          <span>카카오 로그인</span>
+      </a>
+	</li>
+	<li onclick="kakaoLogout();">
+      <a href="javascript:void(0)">
+          <span>카카오 로그아웃</span>
+      </a>
+	</li>
+</ul>
+<!-- 네이버 -->>
+<ul>
+	<li>
+      <!-- 아래와같이 아이디를 꼭 써준다. -->
+      <a id="naverIdLogin_loginButton" href="javascript:void(0)">
+          <span>네이버 로그인</span>
+      </a>
+	</li>
+	<li onclick="naverLogout(); return false;">
+      <a href="javascript:void(0)">
+          <span>네이버 로그아웃</span>
+      </a>
+	</li>
+</ul>
 </body>
 </html>
