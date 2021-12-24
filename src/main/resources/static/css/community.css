@@ -1,0 +1,88 @@
+/* Your custom css code goes here */
+.communityBoard {
+	min-height: 500px;
+}
+
+.commnityList {
+	text-align: center;
+}
+
+.searchForm {
+	margin-bottom: 8vh;
+}
+
+.searchForm input {
+	margin: 0 5px 0 5px;
+	padding: 0 10px 0 10px;
+	height: 36px;
+	width: 30vw;
+	max-width: 234px;
+}
+
+.searchForm select, button {
+	height: 36px;
+	width: 105px;
+	text-align: center;
+}
+
+#communityTable {
+	width: 100%;
+	min-height: 300px;
+}
+
+.tbcenter {
+	text-align: center;
+}
+
+.writeFormInner {
+	margin: 28px 0 28px 0;
+}
+
+.pageTitle {
+	margin: 0 0 56px 0;
+	font-size: 30px;
+	text-align: center;
+}
+
+.inputForm {
+	margin-bottom: 8px;
+	padding: 8px;
+	width: 100%;
+}
+
+.viewInfo {
+	display: flex;
+	justify-content: space-between;
+	padding: 8px;
+}
+
+.viewInfo span span {
+	margin-right: 12px;
+}
+
+.viewContent {
+	min-height: 300px;
+}
+
+.viewContent img {
+	max-width: 100%;
+}
+
+.likeToggle {
+	margin-bottom: 5vh;
+	text-align: center;
+}
+
+.viewComment {
+	margin-top: 5vh;
+	text-align: center;
+}
+
+.commentList {
+	text-align: left;
+}
+
+.cbBtn {
+	padding: 0 45px 0 45px;
+	text-align: right;
+}
