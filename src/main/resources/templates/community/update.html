@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>커뮤니티 : [[${list.subject}]]</title>
+<title>커뮤니티 : [[${list.subject}]] 수정</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700|Open+Sans">
 <link rel="stylesheet" th:href="@{/css/styles-merged.css}">
 <link rel="stylesheet" th:href="@{/css/style.min.css}">
@@ -127,11 +127,11 @@
 						            <input type="hidden" name="id" th:value="${list.id}"/>
 						            <div class="writeFormInner">
 						                <input type="text" class="inputForm" id="subject" placeholder="제목을 입력해 주세요" name="subject" th:value="${list.subject}">
-						                <span></span>
+						                <span class="inputError">[[${subjectError}]]</span>
 						            </div>
 						            <div class="writeFormInner">
 						                <textarea class="inputForm" rows="15" id="content" placeholder="내용을 입력해 주세요" name="content">[[${list.content}]]</textarea>
-						                <span></span>
+						                <span class="inputError">[[${contentError}]]</span>
 						            </div>
 						            
 						            <!-- 기존 첨부파일 -->
@@ -276,27 +276,5 @@
 	-->
 
 </body>
-<script>
-function chkSubmit() {
-	frm = document.forms['writeForm'];
-	
-	var subject = frm['subject'].value.trim();
-	var content = frm['content'].value.trim();
-	
-	if(subject == ""){
-		alert("제목은 반드시 작성해야 합니다");
-		frm["subject"].focus();
-		return false;
-	}
-	
-	if(content == ""){
-		alert("내용은 반드시 작성해야 합니다");
-		frm["content"].focus();
-		return false;
-	}
-	
-	return true;	
-}
-</script>
 </th:block>
 </html>

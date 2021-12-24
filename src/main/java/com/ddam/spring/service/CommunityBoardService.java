@@ -77,9 +77,9 @@ public class CommunityBoardService {
 
 	// 목록
 	// 검색 키워드 없음
-	public Page<CommunityBoard> pagingList(int page, String sType, String sKeyword) {
+	public Page<CommunityBoard> pagingList(int pageNum, String sType, String sKeyword) {
 		// 페이지 설정
-		Pageable pageable = PageRequest.of(page, 20, Sort.by(Order.desc("id")));
+		Pageable pageable = PageRequest.of(pageNum, 20, Sort.by(Order.desc("id")));
 		
 		// 결과 담을 list 생성
 		Page<CommunityBoard> pagingList = null;
@@ -89,7 +89,7 @@ public class CommunityBoardService {
 			if(sType.equals("snc")) {
 				// 페이지 설정
 				// Direction.DESC, "id" 적용 안됨
-				pageable = PageRequest.of(page, 20);
+				pageable = PageRequest.of(pageNum, 20);
 				
 				pagingList = communityBoardRepository.findBySbjOrCntContainsOrderByIdDesc(sKeyword, pageable);
 				

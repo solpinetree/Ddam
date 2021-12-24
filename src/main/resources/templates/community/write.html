@@ -116,12 +116,12 @@
 						            	<div>작성자 : <input type="text" name="username" value="작성자"></div>
 						            </div>
 						            <div class="writeFormInner">
-						                <input type="text" class="inputForm" id="subject" name="subject" placeholder="제목을 작성해 주세요">
-						                <span class="inputError"></span>
+						                <input type="text" class="inputForm" id="subject" name="subject" placeholder="제목을 작성해 주세요" th:value="${reSubject}">
+						                <span class="inputError">[[${subjectError}]]</span>
 						            </div>
 						            <div class="writeFormInner">
-						                <textarea class="inputForm" rows="15" id="content" name="content" placeholder="내용을 작성해 주세요"></textarea>
-						                <span class="inputError"></span>
+						                <textarea class="inputForm" rows="15" id="content" name="content" placeholder="내용을 작성해 주세요">[[${reContent}]]</textarea>
+						                <span class="inputError">[[${contentError}]]</span>
 						            </div>
 						            
 									<!-- 첨부파일 -->
@@ -261,27 +261,4 @@
 	-->
 
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script>
-function chkSubmit() {
-	frm = document.forms['writeForm'];
-	
-	var subject = frm['subject'].value.trim();
-	var content = frm['content'].value.trim();
-	
-	if(subject == ""){
-		alert("제목은 반드시 작성해야 합니다");
-		frm["subject"].focus();
-		return false;
-	}
-	
-	if(content == ""){
-		alert("내용은 반드시 작성해야 합니다");
-		frm["content"].focus();
-		return false;
-	}
-	
-	return true;	
-}
-</script>
 </html>

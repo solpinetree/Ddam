@@ -154,18 +154,18 @@
 										<input type="hidden" id="sType" name="sType" th:value="${sType}">
 										<input type="hidden" id="sKeyword" name="sKeyword" th:value="${sKeyword}">
 									</div>
-									<input type="hidden" id="page" name="page" th:value="${page}">
+									<input type="hidden" id="pageNum" name="pageNum" th:value="${pageNum}">
 									<ul class="pagination">
 										<li><a href="#" id="startPage">처음</a></li>
 										<li><a href="#" id="minusPage">&lt;</a></li>
 										
 										<!-- 페이지 번호로 이동 -->
 										<li th:each="paging: ${#numbers.sequence(0, totalPage - 1)}">
-											<a href="#" th:id="page + ${pagingStat.index}" th:text="${pagingStat.index + 1}"></a>
+											<a href="#" th:id="pageNum + ${pagingStat.index}" th:text="${pagingStat.index + 1}"></a>
 											<script th:inline="javascript">
 											// 에러 아닌데 에러 뜸
-											$([['#' + ${'page' + pagingStat.index}]]).click(function() {
-												document.getElementById("page").value = [[${pagingStat.index}]];
+											$([['#' + ${'pageNum' + pagingStat.index}]]).click(function() {
+												document.getElementById("pageNum").value = [[${pagingStat.index}]];
 												
 												movePage();
 											});
@@ -300,36 +300,37 @@
 </body>
 <script th:inline="javascript">
 $("#startPage").click(function() {
-	document.getElementById("page").value = 0;
+	document.getElementById("pageNum").value = 0;
 	
 	movePage();
 });
 
 $("#minusPage").click(function() {
-	var page = document.getElementById("page").value;
+	var pageNum = document.getElementById("pageNum").value;
 	
-	if(page == 0) {
+	if(pageNum == 0) {
 		alert("첫페이지입니다");
 	} else {
-		document.getElementById("page").value--;
+		document.getElementById("pageNum").value--;
 		movePage();
 	}
 });
 
+// 에러 아닌데 에러 뜸...
 $("#plusPage").click(function() {
-	var page = document.getElementById("page").value;
+	var pageNum = document.getElementById("pageNum").value;
 	
-	if(page == [[${totalPage - 1}]]) {
+	if(pageNum == [[${totalPage - 1}]]) {
 		alert("마지막 페이지입니다");
 	} else {
-		document.getElementById("page").value++;
+		document.getElementById("pageNum").value++;
 		movePage();
 	}
 });
 
+// 에러 아닌데 에러 뜸...
 $("#endPage").click(function() {
-	// 에러 아닌데 에러 뜸...
-	document.getElementById("page").value = [[${totalPage - 1}]];
+	document.getElementById("pageNum").value = [[${totalPage - 1}]];
 	
 	movePage();
 });

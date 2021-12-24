@@ -137,7 +137,6 @@
 									<button type="button" id="likeBtn"></button>
 								</form>
 								
-								
 								<!-- 게시판 버튼 -->
 								<div class="cbBtn">
 						        	<button type="button" class="btn" th:onclick="'chkDelete(' + ${list.id} + ')'">삭제</button>
@@ -152,15 +151,17 @@
 							        <form name="commentForm" action="commentInsert" method="post" onsubmit="return chkComment()">
 							        	<input type="hidden" name="cbId" th:value="${list.id}">
 							        	<input type="text" class="inputForm" id="comment" name="comment" placeholder="댓글을 작성해 주세요">
-							        	<button type="submit" class="btn">등록</button>
+							        	<button type="submit">등록</button>
 							        </form>
 							        <div>
 							        	<div class="commentList" th:each="commentList: ${list.communityComments}">
-							        		<span>/</span>
-							        		<span>[[${#temporals.format(commentList.createdAt, 'yyyy-MM-dd HH:mm:ss')}]]</span>
-							        		<div>[[${commentList.comment}]]</div>
-							        		<button type="button" class="btn" th:onclick="'location.href=\'' + @{commentDelete(id=${commentList.id})} + '\''">삭제</button>
 							        		<hr>
+							        		<div>
+								        		<span> / [[${#temporals.format(commentList.createdAt, 'yyyy-MM-dd HH:mm:ss')}]]
+								        		</span>
+								        		<button type="button" th:onclick="'location.href=\'' + @{commentDelete(id=${commentList.id})} + '\''">X</button>
+							        		</div>
+							        		<div>[[${commentList.comment}]]</div>
 							        	</div>
 							        </div>
 						        </section>
