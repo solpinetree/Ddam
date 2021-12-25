@@ -15,10 +15,8 @@
 	rel="stylesheet">
 
 <link rel="stylesheet" th:href="@{/css/styles-merged.css}">
-
 <link rel="stylesheet" th:href="@{/css/style.min.css}">
-
-<link rel="stylesheet" th:href="@{/css/custom.css}">
+<!-- <link rel="stylesheet" th:href="@{/css/custom.css}"> -->
 <link rel="stylesheet" th:href="@{/css/common.css}">
 
 </head>
@@ -127,9 +125,8 @@
 							<li class="clear"><label for="email"
 								class="tit_lbl pilsoo_item">이메일</label>
 								<div class="app_content email_area">
-									<input type="text" class="w160" id="email" name="email" title="이메일 주소" th:value="${email}">
-									<span class="ico_space">@</span> <input type="text"
-										class="w160" title="이메일 제공업체">
+									<input type="text" class="w100p" id="email" name="email"  placeholder="이메일을 입력하세요" title="이메일 주소" th:value="${email}">
+									
 								</div></li>
 							<li class="clear"><label for="phone"
 								class="tit_lbl pilsoo_item">연락처</label>
