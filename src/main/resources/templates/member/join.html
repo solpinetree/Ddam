@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="description"
+	content="Free Bootstrap Theme by ProBootstrap.com">
+<meta name="keywords"
+	content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
+
+<link
+	href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700|Open+Sans"
+	rel="stylesheet">
+<link rel="stylesheet" th:href="@{/css/styles-merged.css}">
+<link rel="stylesheet" th:href="@{/css/style.min.css}">
+<link rel="stylesheet" th:href="@{/css/custom.css}">
+<link rel="stylesheet" th:href="@{/css/common.css}">
+</head>
+
+<script>
+	// form 검증(validation)
+	function chkSubmit() {
+
+		frm = document.forms['frm'];
+
+		var pass = frm['pass'].value.trim();
+		var username = frm['username'].value.trim();
+		var name = frm['name'].value.trim();
+		var gender = frm['gender'].value.trim();
+		var phone = frm['phone'].value.trim();
+		var email = frm['email'].value.trim();
+
+		if (pass == "") {
+			alert("비밀번호를 입력해주세요.");
+			frm["pass"].focus();
+			return false;
+		}
+
+		if (username == "") {
+			alert("닉네임 입력해주요.");
+			frm['username'].focus();
+			return false;
+		}
+
+		if (name == "") {
+			alert("이름을 입력해주세요.");
+			frm["name"].focus();
+			return false;
+		}
+
+		if (gender == "") {
+			alert("성별을 입력해주세요.");
+			frm["gender"].focus();
+			return false;
+		}
+
+		if (phone == "") {
+			alert("전화번호를 입력해주세요.");
+			frm["phone"].focus();
+			return false;
+		}
+
+		if (email == "") {
+			alert("이메일을 입력해주세요.");
+			frm["email"].focus();
+			return false;
+		}
+
+		return true;
+	}
+</script>
+
+<body>
+	<ul class="skipnavi">
+		<li><a href="#container">본문내용</a></li>
+	</ul>
+	<!-- wrap -->
+	<div id="wrap">
+
+		<!-- header -->
+		<div th:replace="include/header::header"></div>
+		<!--  nav bar -->
+		<div th:replace="include/header::nav"></div>
+
+		<!-- container -->
+		<div id="container">
+			<!-- 본문 -->
+			<div class="bodytext_area box_inner">
+				<form action="/members/join" name="frm" method="post"
+					th:object="${UserFormDto}" onsubmit="return chkSubmit()">
+					<fieldset>
+						<legend>회원가입 입력 양식</legend>
+						<p class="info_pilsoo pilsoo_item">필수입력</p>
+						<ul class="app_list">
+							<li class="clear"><label for="username"
+								class="tit_lbl pilsoo_item">닉네임</label>
+								<div class="app_content">
+									<input type="text" class="w100p" id="username"
+										placeholder="닉네임을 입력하세요">
+								</div></li>
+							<li class="clear"><label for="name"
+								class="tit_lbl pilsoo_item">이름</label>
+								<div class="app_content">
+									<input type="text" class="w100p" id="name"
+										placeholder="이름을 입력하세요">
+								</div></li>
+							<li class="clear"><label for="password"
+								class="tit_lbl pilsoo_item">비밀번호</label>
+								<div class="app_content">
+									<input type="password" class="w100p" id="password"
+										placeholder="비밀번호를 입력하세요">
+								</div></li>
+							<li class="clear"><span class="tit_lbl pilsoo_item">성별</span>
+								<div class="app_content radio_area">
+									<input type="radio" class="css-radio" id="gender" name="gender"
+										value="남"> <label for="mmm_lbl">남</label> <input
+										type="radio" class="css-radio" id="gender" name="gender"
+										value="여"> <label for="www_lbl">여</label>
+								</div></li>
+							<li class="clear"><label for="email"
+								class="tit_lbl pilsoo_item">이메일</label>
+								<div class="app_content email_area">
+									<input type="text" class="w160" id="email" title="이메일 주소">
+									<span class="ico_space">@</span> <input type="text"
+										class="w160" title="이메일 제공업체">
+									<div class="select_common">
+										<select title="이메일 제공업체">
+											<option value="">직접입력</option>
+											<option value="naver">naver.com</option>
+											<option value="daum">daum.net</option>
+											<option value="gmail">gmail.com</option>
+											<option value="nate">nate.com</option>
+										</select>
+									</div>
+								</div></li>
+							<li class="clear"><label for="phone"
+								class="tit_lbl pilsoo_item">연락처</label>
+								<div class="app_content">
+									<input type="tel" class="w100p" id="phone"
+										placeholder="휴대폰 '-'없이 숫자만 입력하세요">
+								</div></li>
+						</ul>
+						<div style="text-align: center">
+							<button type="submit" class="btn btn-primary" style="">Submit</button>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+			<!-- 본문 끝-->
+		</div>
+		<!-- container 끝 -->
+	</div>
+	<!-- footer -->
+	<div th:replace="include/footer :: footer"></div>
+
+
+	</div>
+	<!-- wrap 끝 -->
+</body>
+</html>

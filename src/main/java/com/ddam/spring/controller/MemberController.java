@@ -35,17 +35,17 @@ public class MemberController {
   		this.userRepository = userRepository;
   	}
 
-  	@GetMapping(value = "/signup")
-    public String userForm(Model model){
+  	@GetMapping(value = "/join")
+    public String join(Model model){
         model.addAttribute("UserFormDto", new UserFormDto());
-        return "member/signup";
+        return "member/join";
     }
 
-    @PostMapping(value = "/signup")
+    @PostMapping(value = "/join")
     public String newMember(@Valid UserFormDto userFormDto, BindingResult bindingResult, Model model){
 
         if(bindingResult.hasErrors()){
-            return "member/signup";
+            return "member/join";
         }
 
         try {
@@ -53,7 +53,7 @@ public class MemberController {
             userService.saveUser(user);
         } catch (IllegalStateException e){
             model.addAttribute("errorMessage", e.getMessage());
-            return "member/signup";
+            return "member/join";
         }
 
         return "redirect:/";

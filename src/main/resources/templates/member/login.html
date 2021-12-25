@@ -1,4 +1,5 @@
 <html xmlns:th="http://www.thymeleaf.org">
+
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 
 <!-- 카카오 스크립트 -->
@@ -97,45 +98,57 @@ function naverLogout() {
 </script>
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="description"
+	content="Free Bootstrap Theme by ProBootstrap.com">
+<meta name="keywords"
+	content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
+
+<link
+	href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700|Open+Sans"
+	rel="stylesheet">
+<link rel="stylesheet" th:href="@{/css/styles-merged.css}">
+<link rel="stylesheet" th:href="@{/css/style.min.css}">
+<link rel="stylesheet" th:href="@{/css/custom.css}">
+<link rel="stylesheet" th:href="@{/css/common.css}">
+<meta charset="UTF-8">
 <title>로그인 페이지</title>
 </head>
+<!-- header -->
+		<div th:replace="include/header::header"></div>
+		<!--  nav bar -->
+		<div th:replace="include/header::nav"></div>
 <body>
 <h1>로그인 페이지</h1>
 <hr>
 <!-- loginProcessingUrl() 로 세팅한 url, 반드시 POST! -->
 <form action="/loginOk" method="POST">  <!-- 시큐리티로 /loginOk 을 낚아챈다.  무조건 POST -->
     <!-- ↓ 아이디/패스워드 의 name 은 'username' 과 'password' 로 하자 (시큐리티의 디폴트) -->
-    <input type="text" name="username" placeholder="아이디 입력"/><br>
+    <input type="text" name="username" placeholder="닉네임 입력"/><br>
     <input type="password" name="password" placeholder="패스워드 입력"/><br>
     <br>
     <input type="submit" value="로그인"/>
 </form>
-<!-- 카카오 -->>
-<ul>
-	<li onclick="kakaoLogin();">
-      <a href="javascript:void(0)">
-          <span>카카오 로그인</span>
-      </a>
-	</li>
-	<li onclick="kakaoLogout();">
-      <a href="javascript:void(0)">
-          <span>카카오 로그아웃</span>
-      </a>
-	</li>
-</ul>
-<!-- 네이버 -->>
-<ul>
-	<li>
-      <!-- 아래와같이 아이디를 꼭 써준다. -->
-      <a id="naverIdLogin_loginButton" href="javascript:void(0)">
-          <span>네이버 로그인</span>
-      </a>
-	</li>
-	<li onclick="naverLogout(); return false;">
-      <a href="javascript:void(0)">
-          <span>네이버 로그아웃</span>
-      </a>
-	</li>
-</ul>
+<div id="container">
+            <div class="bodytext_area box_inner">
+                <div class="login_wrap">
+                    <h1 class="loginTit">
+                        <ul class="login_list">
+                            <li class="kakao"><a href="#"><strong>카카오톡</strong> 로그인</a></li>
+                            <li class="naver"><a href="#"><strong>네이버</strong> 로그인</a></li>
+                        </ul>
+                    </h1>
+                </div>
+            </div>
+        </div>
+        
+        <!-- footer -->
+	<div th:replace="include/footer :: footer"></div>
+
+
+	</div>
 </body>
+
 </html>
