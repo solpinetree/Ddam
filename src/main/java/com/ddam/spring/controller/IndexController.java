@@ -14,11 +14,7 @@ public class IndexController {
 	public String index() {
 		return "index";
 	}
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
-	
 	@GetMapping("/list")
 	public String list() {
 		return "list";
@@ -38,13 +34,12 @@ public class IndexController {
 	public String createCrew() {
 		return "createCrew";
 	}
-<<<<<<< Updated upstream
 
 }
-=======
+
 	
 	
 	
 	
-}
->>>>>>> Stashed changes
+
+

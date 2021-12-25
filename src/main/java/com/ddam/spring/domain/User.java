@@ -67,14 +67,15 @@ public class User {
     private Role auth;
 
 	public static User createUser(UserFormDto userFormDto, PasswordEncoder passwordEncoder){
+		System.out.println(userFormDto);
 		User user = new User();
 		user.setUsername(userFormDto.getUsername());
 		user.setName(userFormDto.getName());
 		user.setGender(userFormDto.getGender());
 		user.setEmail(userFormDto.getEmail());
         user.setPhone(userFormDto.getPhone());
-        String password = passwordEncoder.encode(userFormDto.getPassword());
-        user.setPassword(password);
+//        String password = passwordEncoder.encode(userFormDto.getPassword());
+        user.setPassword(userFormDto.getPassword());
         user.setAuth(Role.USER);
         return user;
     }

@@ -21,6 +21,7 @@ public class UserService {
 
 	public User saveUser(User user){
         validateDuplicateMember(user);
+        
         return userRepository.save(user);
     }
 	

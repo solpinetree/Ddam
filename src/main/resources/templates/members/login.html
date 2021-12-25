@@ -124,13 +124,16 @@ function naverLogout() {
 <h1>로그인 페이지</h1>
 <hr>
 <!-- loginProcessingUrl() 로 세팅한 url, 반드시 POST! -->
-<form action="/loginOk" method="POST">  <!-- 시큐리티로 /loginOk 을 낚아챈다.  무조건 POST -->
+<form action="/members/loginOk" method="POST">  <!-- 시큐리티로 /loginOk 을 낚아챈다.  무조건 POST -->
     <!-- ↓ 아이디/패스워드 의 name 은 'username' 과 'password' 로 하자 (시큐리티의 디폴트) -->
     <input type="text" name="username" placeholder="닉네임 입력"/><br>
     <input type="password" name="password" placeholder="패스워드 입력"/><br>
     <br>
     <input type="submit" value="로그인"/>
 </form>
+<p>처음이신가요? 회원가입은 여기서 해주세요!</p>
+<input type="button" onclick="location.href='/members/join';" value="회원가입하기"></body>
+
 <div id="container">
             <div class="bodytext_area box_inner">
                 <div class="login_wrap">
@@ -143,6 +146,10 @@ function naverLogout() {
                 </div>
             </div>
         </div>
+        
+        <ul>
+
+</ul>
         
         <!-- footer -->
 	<div th:replace="include/footer :: footer"></div>
