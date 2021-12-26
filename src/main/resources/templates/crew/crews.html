@@ -1,0 +1,114 @@
+
+<!-- 
+  Theme Name: Enlight
+  Theme URL: https://probootstrap.com/enlight-free-education-responsive-bootstrap-website-template
+  Author: ProBootstrap.com
+  Author URL: https://probootstrap.com
+  License: Released for free under the Creative Commons Attribution 3.0 license (probootstrap.com/license)
+-->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>땀땀 : 크루탐색</title>
+    <meta name="description" content="Free Bootstrap Theme by ProBootstrap.com">
+    <meta name="keywords" content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
+    
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700|Open+Sans" rel="stylesheet">
+	<link rel="stylesheet" th:href="@{/css/styles-merged.css}">
+	<link rel="stylesheet" th:href="@{/css/style.min.css}">
+	<link rel="stylesheet" th:href="@{/css/custom.css}">
+	<link rel="stylesheet" th:href="@{/font-awesome/css/font-awesome.min.css}">   <!-- font awesome 4 -->
+
+  </head>
+  <body>
+
+    <div class="probootstrap-search" id="probootstrap-search">
+      <a href="#" class="probootstrap-close js-probootstrap-close"><i class="icon-cross"></i></a>
+      <form action="#">
+        <input type="search" name="s" id="search" placeholder="Search a keyword and hit enter...">
+      </form>
+    </div>
+    
+    <div class="probootstrap-page-wrapper">
+      
+      
+      	<!-- header -->
+		<div th:replace="include/header::header"></div>
+		<!--  nav bar -->
+		<div th:replace="include/header::nav"></div>
+
+      
+      <section class="probootstrap-section probootstrap-section-colored">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 text-left section-heading probootstrap-animate">
+              <h1>크루 탐색</h1>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      
+      <!--  크루 리스트 보여주는 section -->
+      <section class="probootstrap-section">
+        <div class="container">
+          <div class="row">
+         	<div th:each="crew : ${crewList}">
+	         	<!--  하나의 크루 -->
+		         	<div style="cursor:pointer" th:onclick="'location.href=\'' + @{/crew/crew-detail/{id}(id=${crew.id})} +'\''">
+			            <div class="col-md-6">
+			              <div class="probootstrap-service-2 probootstrap-animate">
+			                <div class="image">
+			                  <div class="image-bg">
+			                    <img th:src="${crew.filePath}" alt="Free Bootstrap Template by ProBootstrap.com">
+			                  </div>
+			                </div>
+			                <div class="text">
+			                  <h3>[[${crew.name}]]</h3>
+			                  <span class="probootstrap-meta" th:text="${crew.area}"></span><br>
+			                  <span class="probootstrap-meta" th:text="${crew.category}"></span><br>
+			                  <span class="probootstrap-meta"><i class="fa fa-heart" aria-hidden="true">[[${crew.likesCount}]]</i></span>
+			                  <p><span class="enrolled-count">[[${crew.memberCount}]] / [[${crew.memberLimit}]]</span></p>
+			                </div>
+			              </div>
+			             </div>
+			         </div>
+	             <!-- 하나의 크루 끝 -->
+             </div>
+          </div>
+        </div>
+      </section>
+      
+      
+      
+      
+		<!--  크루 생성하기 버튼 -->
+		<section class="probootstrap-cta">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<h2 class="probootstrap-animate" data-animate-effect="fadeInRight">당신의 운동 파트너를 찾아보세요!</h2>
+						<a href="newcrew" role="button"
+							class="btn btn-primary btn-lg btn-ghost probootstrap-animate"
+							data-animate-effect="fadeInLeft">크루 개설하기</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+
+	<!-- footer -->
+	<div th:replace="include/footer :: footer"></div>
+
+    </div>
+    <!-- END wrapper -->
+    
+
+	<script th:src="@{/js/scripts.min.js}"></script>
+	<script th:src="@{/js/main.min.js}"></script>
+	<script th:src="@{/js/custom.js}"></script>
+
+  </body>
+</html>

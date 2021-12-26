@@ -1,0 +1,312 @@
+<!-- 
+  Theme Name: Enlight
+  Theme URL: https://probootstrap.com/enlight-free-education-responsive-bootstrap-website-template
+  Author: ProBootstrap.com
+  Author URL: https://probootstrap.com
+  License: Released for free under the Creative Commons Attribution 3.0 license (probootstrap.com/license)
+-->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>땀땀 : [[${crew.name}]] 크루</title>
+<meta name="description"
+	content="Free Bootstrap Theme by ProBootstrap.com">
+<meta name="keywords"
+	content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
+
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700|Open+Sans" rel="stylesheet"> 
+<link rel="stylesheet" th:href="@{/css/styles-merged.css}">
+<link rel="stylesheet" th:href="@{/css/style.min.css}">
+<link rel="stylesheet" th:href="@{/css/custom.css}">
+<!-- font awesome 4 -->
+<link rel="stylesheet" th:href="@{/font-awesome/css/font-awesome.min.css}">
+
+
+<style>
+.modal-title{
+	font-size: 17px;
+	text-align: left;
+	font-weight: bold;
+}
+
+.modal-title-request{
+	font-size: 17px;
+	text-align: left;
+	font-weight: bold;
+}
+.modal_table {
+	width: 100%;
+}
+
+#modal_userId {
+	width: 200px;
+}
+
+#modal_userFollow {
+	margin: 16px;
+	text-align: right;
+	padding : 10px;
+}
+</style>
+
+
+</head>
+
+<body>
+	<!--  js에서 쓰기 위해 저장해놓음  -->
+	<div th:if="${session.user!=null}">
+		<input type="hidden" id="userId" name="userId" th:value="${session.user.id}" /> 
+		<input type="hidden" id="crewId" name="crewId" th:value="${crew.id}" />
+	</div>
+
+
+
+ 	<div class="probootstrap-search" id="probootstrap-search">
+		<a href="#" class="probootstrap-close js-probootstrap-close"><i
+			class="icon-cross"></i></a>
+		<form action="#">
+			<input type="search" name="s" id="search"
+				placeholder="Search a keyword and hit enter..."> 
+ 		</form>
+	</div>
+	
+	<!-- START wrapper -->
+	<div class="probootstrap-page-wrapper">
+
+		<!-- header -->
+		<div th:replace="include/header::header"></div>
+		<!--  nav bar -->
+		<div th:replace="include/header::nav"></div>
+		
+		<!-- 크루 name 보여주는 section -->
+		<section class="probootstrap-section probootstrap-section-colored">
+			<div class="container">
+				<div class="row">
+					<div
+						class="col-md-12 text-left section-heading probootstrap-animate">
+						<h1>[[${crew.name}]]</h1>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- 크루 name 보여주는 section 끝 -->
+
+		<!-- 크루 썸네일 -->
+		<section class="flexslider">
+			<ul class="slides">
+				<li th:style="'background-image: url('+${crew.filePath} + ')'"
+					class="overlay">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-8 col-md-offset-2">
+								<div class="probootstrap-slider-text text-center">
+								</div>
+							</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</section>
+		<!--  크루 썸네일 끝 -->
+		
+		<!--  크루 정보 보여주는 section -->
+		<section class="probootstrap-section probootstrap-section-sm" style="height:600px;">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="row probootstrap-gutter0">
+							<div class="col-md-7 col-md-push-1  probootstrap-animate" id="probootstrap-content">
+								<p>
+									<!--  크루 카테고리 -->
+									<span class="probootstrap-date"><i class="fa fa-filter" aria-hidden="true"></i>카테고리 : [[${crew.category}]]</span> 
+									<!--  크루 지역 -->
+									<span class="probootstrap-location">
+										<i class="icon-location2"></i>지역: [[${crew.area}]]
+									</span>
+									<!--  크루장 이름 -->
+									<span class="probootstrap-location">
+										<i class="fa fa-user" aria-hidden="true"></i>크루장 :[[${crew.crewAdmin.username}]]
+									</span> 
+									<!-- 크루 멤버 수 -->
+									<span class="probootstrap-location" id="memberCount">
+										<i class="fa fa-users" aria-hidden="true"></i>멤버수 : [[${crew.memberCount}]]
+									</span>
+								</p>
+								
+								<h2>크루를 소개하는 말</h2>
+								
+								<!-- 크루 소개 및 목표 -->
+								<p>[[${crew.description}]]</p>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!--  크루 정보 보여주는 section 끝 -->
+		
+		
+		
+							<!--  팔로우와 좋아요 누르는 디브, 로그인한 회원에게만 보인다. -->
+								<div th:if="${session.user!=null}" style="text-align:center;">
+									
+									<!-- 크루 멤버 아니면서 크루 가입 요청 안 보낸 유저 -->
+									<div th:if="${crewRole.toString().equals('user')}">
+										<button type="button" 
+											th:if="${crew.memberCount<crew.memberLimit}"
+											th:onclick="'location.href=\'' + @{/crew/follow/request/{id}(id=${crew.id})} +'\''"
+											class="btn btn-primary" id="follow">크루 지원하기</button>
+										<button th:if="${crew.memberCount==crew.memberLimit}"
+											class="btn btn-primary">모집 마감</button>
+										<button class="btn btn-primary" id="rec_update">
+											<i class="fa fa-heart" style="font-size: 16px; color: red" aria-hidden="true"></i>
+										</button>
+										<span class="rec_count"></span>
+									</div>
+
+									<!--  크루 가입 요청 기다리는 유저 -->
+									<div th:if="${crewRole.toString().equals('requested')}">
+										<button 
+											class="btn btn-primary" id="follow">승인 기다리는 중</button>
+										<button class="btn btn-primary" id="rec_update">
+											<i class="fa fa-heart" style="font-size: 16px; color: red" aria-hidden="true"></i>
+										</button>
+										<span class="rec_count"></span>
+									</div>
+
+									<!--  크루 멤버 -->
+									<div th:if="${crewRole.toString().equals('member')}">
+										<button
+											th:onclick="'location.href=\'' + @{/crew/unfollow/{id}(id=${crew.id})} +'\''"
+											class="btn btn-primary" id="unfollow">크루 탈퇴하기</button>
+										<button class="btn btn-primary" id="rec_update">
+											<i class="fa fa-heart" style="font-size: 16px; color: red" aria-hidden="true"></i>
+										</button>
+										<span class="rec_count"></span>
+									</div>
+
+
+									<!--  크루장 - 크루 관리하는 디브 -->
+									<div th:if="${crewRole.toString().equals('admin')}">
+										<button
+											th:onclick="'location.href=\'' + @{/crew/manage/{id}(id=${crew.id})} +'\''"
+											class="btn btn-primary">크루 관리페이지</button>
+										<button
+											th:onclick="'location.href=\'' + @{/crew/update/{id}(id=${crew.id})} +'\''"
+											class="btn btn-primary">크루 정보 수정하기</button>
+										<button type="button" class="btn btn-primary" id="follower">
+											<span>크루 멤버 확인</span>
+										</button>
+										<button type="button" class="btn btn-primary" id="followRequest">
+											<span>크루 팔로우 요청   </span>
+											<span class="badge badge-sm badge-circle badge-danger border border-white border-2" id="notification-m">
+												[[${#lists.size(requests)}]]
+											</span>
+										</button>
+										<button
+											th:onclick="'location.href=\'' + @{/crew/meetup/insert/{id}(id=${crew.id})} +'\''"
+											class="btn btn-primary">모임 계획하기
+										</button>
+									</div>
+									<!--  크루장용 디브 끝 -->
+									
+								</div>
+								<!--  팔로우 버튼과 좋아요 버튼 끝 -->
+								
+								
+								<div style="height:100px"></div>
+		
+		
+ 								<div th:replace="crew/meetup :: meetuplists"></div> 
+		
+		<!-- footer -->
+		<div th:replace="include/footer :: footer"></div>
+
+	</div>
+	<!-- END wrapper -->	
+	
+	<!-- -----------크루장용 모달페이지 - 크루 멤버 확인   div and js------------- -->
+	
+	<div class="modal fade" id="followModal" role="dialog">
+		<!-- 이곳에 적어준 id 값을 토대로 모달을 호출하게 된다.  -->
+		<div class="modal-dialog">
+
+			<!-- Modal content -->
+			<div class="modal-content">
+				<div class="modal-header">
+					<!--  모달창의 header 부분에 해당한다.  -->
+					<h4 class="modal-title"></h4>
+					<button type="button" class="close" data-dismiss="modal">×</button>
+
+				</div>
+				<div class="modal-body">
+					<table class="modal_table">
+						<tr th:each="member : ${members}">
+							<td style="width: 70px;"><i class="fa fa-user" style="font-size: 20px; color:purple; border-radius:75%;"></i></td>
+							<td id="modal_userID">[[${member.username}]]</td>
+							<td id="modal_userFollow">
+								<input type="hidden" id="memberId"  th:value="${member.id}"/>
+								<button th:onclick="'deleteMember(\''+${member.id} + '\')'" class="btn btn-outline-primary">내보내기</button>
+							</td>
+						</tr>
+					</table>
+				</div> 
+				<div id="count" value="1"></div> 
+			</div>
+		</div>
+	</div>
+	
+	<!-----------크루장용 모달페이지 - 크루 멤버 확인    끝  ------------->
+	
+	
+	<!-----------크루장용 팔로우 요청 관리 모달 시작------------->
+	
+	<div class="modal fade" id="followRequestModal" role="dialog">
+		<!-- 이곳에 적어준 id 값을 토대로 모달을 호출하게 된다.  -->
+		<div class="modal-dialog">
+
+		<!-- 	Modal content -->
+			<div class="modal-content">
+				<div class="modal-header">
+					 <!-- 모달창의 header 부분에 해당한다.  -->
+					<h4 class="modal-title-request"></h4>
+					<button type="button" class="close" data-dismiss="modal">×</button>
+				</div>
+ 				<div class="modal-body-request">
+					<table class="modal_table">
+						<tr th:each="request : ${requests}">
+							<td style="width: 70px;"><i class="fa fa-user" style="font-size: 20px; color:purple;"></i></td>
+							<td id="modal_userID">[[${request.fromUser.username}]]</td>
+							<td id="llll">[[${request.info}]]</td>
+							<td id="modal_userFollow">
+								<input type="hidden" id="requestId"  th:value="${request.id}"/>
+								<button th:onclick="'acceptMember(\''+${request.fromUser.id} + '\')'" class="btn btn-outline-primary">승인하기</button>
+								<button th:onclick="'rejectMember(\''+${request.fromUser.id} + '\')'" class="btn btn-outline-primary">거절하기</button>
+							</td>
+							
+						</tr>
+					</table>
+				</div>
+				<div id="count" value="1"></div> 
+			</div>
+		</div>
+	</div>
+	
+	<!-- -----------크루장용 팔로우 요청 관리 모달 끝    ------------- -->
+	
+	
+	<!-- js include -->
+	<script th:src="@{/js/scripts.min.js}"></script>
+	<script th:src="@{/js/main.min.js}"></script>
+	<script th:src="@{/js/custom.js}"></script> 
+	<script th:src="@{/js/crewlikes.js}"></script> 
+	<script th:src="@{/js/crewmodal.js}"></script> 
+	<!--  js include 끝 -->
+</body>
+</html>

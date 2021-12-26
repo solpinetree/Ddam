@@ -1,0 +1,170 @@
+
+<!-- 
+  Theme Name: Enlight
+  Theme URL: https://probootstrap.com/enlight-free-education-responsive-bootstrap-website-template
+  Author: ProBootstrap.com
+  Author URL: https://probootstrap.com
+  License: Released for free under the Creative Commons Attribution 3.0 license (probootstrap.com/license)
+-->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>땀땀 : 크루탐색</title>
+    <meta name="description" content="Free Bootstrap Theme by ProBootstrap.com">
+    <meta name="keywords" content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
+    
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700|Open+Sans" rel="stylesheet">
+	<link rel="stylesheet" th:href="@{/css/styles-merged.css}">
+	<link rel="stylesheet" th:href="@{/css/style.min.css}">
+	<link rel="stylesheet" th:href="@{/css/custom.css}">
+	<link rel="stylesheet" th:href="@{/font-awesome/css/font-awesome.min.css}">   <!-- font awesome 4 -->
+  	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+ 	 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  </head>
+  <body>
+
+    <div class="probootstrap-search" id="probootstrap-search">
+      <a href="#" class="probootstrap-close js-probootstrap-close"><i class="icon-cross"></i></a>
+      <form action="#">
+        <input type="search" name="s" id="search" placeholder="Search a keyword and hit enter...">
+      </form>
+    </div>
+					
+    
+<!--     <div class="probootstrap-page-wrapper" th:fragment="meetuplists"> -->
+
+		
+
+      <section class="probootstrap-section" th:fragment="meetuplists">
+        <div class="container">
+          <div class="row">
+	              <div class="probootstrap-service-2 probootstrap-animate" th:each="meetup : ${meetupLists}">
+  	             <!--  지도 부분 -->	
+	              				<div th:id="'div'+${meetup.id}" style="width:100%;height:350px;"></div>
+								<script th:inline="javascript" type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=65c9f79c00dce40eedc3bd3082999eae&libraries=services"></script>
+								<script th:inline="javascript">
+										 /*<![CDATA[*/ 
+											var divId = 'div'+/*[[ ${meetup.id} ]]*/;
+											var divLoc = 	 /*[[ ${meetup.location} ]]*/;
+											
+	 										var mapContainer = document.getElementById('div'+/*[[ ${meetup.id} ]]*/), // 지도를 표시할 div 
+											    mapOption = {
+											        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+											        level: 2 // 지도의 확대 레벨
+											    };  
+											
+									//	 	eval("var div"+/*[[ ${meetup.id} ]]*/+"="+/*[[ ${meetup.location} ]]*/);
+										 
+											// 지도를 생성합니다    
+											var map = new kakao.maps.Map(mapContainer, mapOption); 
+											
+											
+		
+											// 주소-좌표 변환 객체를 생성합니다
+											var geocoder = new kakao.maps.services.Geocoder();
+											
+											se(/*[[ ${meetup.location} ]]*/, map);
+											
+											console.log('se 시작' + /*[[ ${meetup.id} ]]*/);
+											
+											function se(kk, map){
+											// 주소로 좌표를 검색합니다
+											geocoder.addressSearch(kk, function(result, status) {
+											
+												console.log('div 시작'+/*[[ ${meetup.id} ]]*/);
+												console.log(kk);
+											    // 정상적으로 검색이 완료됐으면 
+											     if (status === kakao.maps.services.Status.OK) {
+											    	 
+											        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+											
+	
+											        
+											        // 결과값으로 받은 위치를 마커로 표시합니다
+											        var marker = new kakao.maps.Marker({
+											            map: map,
+											            position: coords
+											        });
+	
+											        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+											        map.setCenter(coords);
+											        
+													console.log('div 끝'+/*[[ ${meetup.id} ]]*/);
+											    } 
+											});    
+											}
+										/*]]*/
+								</script> 
+ 	             	<!--  지도 부분  끝-->	
+ 	             	
+				                <div class="text">
+				                  <span class="probootstrap-location"><i class="icon-calendar2"></i> [[${meetup.datetime}]]</span>
+				                  <span class="probootstrap-location"><i class="icon-location2"></i>[[${meetup.location}]]</span>
+				                  <h3>[[${meetup.name}]]</h3>
+				                  <p>[[${meetup.description}]]</p>
+				                  <p>
+				                  	<a href="#" class="btn btn-primary">참가하기</a> 
+				                  	<span class="enrolled-count">[[${meetup.memberLimit}]]</span>
+				                  </p>
+				                </div>
+	                  </div>
+	                </div> 
+			</div>
+      </section>
+      
+      <!-- 	                  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=65c9f79c00dce40eedc3bd3082999eae&libraries=services"></script>
+				                <script th:inline="javascript">
+					        		console.log("1");
+					        		var addr = $("#location").val(); 
+					        		var divId = $("#divId").val();
+					        		console.log("1");
+					        		var mapContainer = document.getElementById(divId), // 지도를 표시할 div 
+					        		    mapOption = {
+					        		        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+					        		        level: 3 // 지도의 확대 레벨
+					        		    };  
+					        		
+					        		// 지도를 생성합니다    
+					        		var map = new kakao.maps.Map(mapContainer, mapOption); 
+					        		
+					        		// 주소-좌표 변환 객체를 생성합니다
+					        		var geocoder = new kakao.maps.services.Geocoder();
+					        		
+					        		// 주소로 좌표를 검색합니다
+					        		geocoder.addressSearch(addr, function(result, status) {
+					        		
+					        		    // 정상적으로 검색이 완료됐으면 
+					        		     if (status === kakao.maps.services.Status.OK) {
+					        		
+					        		        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+					        		
+					        		        // 결과값으로 받은 위치를 마커로 표시합니다
+					        		        var marker = new kakao.maps.Marker({
+					        		            map: map,
+					        		            position: coords
+					        		        });
+					        		
+					        		        // 인포윈도우로 장소에 대한 설명을 표시합니다
+					        		        var infowindow = new kakao.maps.InfoWindow({
+					        		            content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+					        		        });
+					        		        infowindow.open(map, marker);
+					        		
+					        		        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+					        		        map.setCenter(coords);
+					        		    } 
+					        		});  
+				                </script> -->
+      
+	
+	
+
+
+    <script th:src="@{/js/scripts.min.js}"></script>
+	<script th:src="@{/js/main.min.js}"></script>
+	<script th:src="@{/js/custom.js}"></script>
+
+  </body>
+</html>

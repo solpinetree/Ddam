@@ -1,0 +1,198 @@
+<!-- 
+  Theme Name: Enlight
+  Theme URL: https://probootstrap.com/enlight-free-education-responsive-bootstrap-website-template
+  Author: ProBootstrap.com
+  Author URL: https://probootstrap.com
+  License: Released for free under the Creative Commons Attribution 3.0 license (probootstrap.com/license)
+-->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>땀땀 : 크루 정보 수정하기</title>
+    <meta name="description" content="Free Bootstrap Theme by ProBootstrap.com">
+    <meta name="keywords" content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
+    
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700|Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/styles-merged.css}">
+    <link rel="stylesheet" th:href="@{/css/style.min.css}">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+
+  </head>
+  <body>
+
+    <div class="probootstrap-search" id="probootstrap-search">
+      <a href="#" class="probootstrap-close js-probootstrap-close"><i class="icon-cross"></i></a>
+      <form action="#">
+        <input type="search" name="s" id="search" placeholder="Search a keyword and hit enter...">
+      </form>
+    </div>
+    
+    
+    <div class="probootstrap-page-wrapper">
+  		<!-- header -->
+		<div th:replace="include/header::header"></div>
+		<!--  nav bar -->
+		<div th:replace="include/header::nav"></div>
+      
+      
+      <section class="probootstrap-section probootstrap-section-colored">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 text-left section-heading probootstrap-animate">
+              <h1 class="mb0">크루 개설하기</h1>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      </div>
+      
+      
+	<!--  크루 개설 작성 폼 -->
+      <section class="probootstrap-section probootstrap-section-sm">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="row probootstrap-gutter0">
+                <div class="col-md-7 col-md-push-1  probootstrap-animate" id="probootstrap-content">
+<!--                   <h2>Get In Touch</h2> -->
+                  <p>크루에 대한 정보를 입력해주세요!</p>
+                  <form action="/crew/crew-updateOk" method="post" class="probootstrap-form" enctype="multipart/form-data" accept-charset="UTF-8">
+             
+                  	<!-- 썸네일 -->
+                  	<table class="table">
+						<tr>
+							<td>
+	
+									<input id="input_img" type="file" name="file" style="display:none">
+									<label for="input_img" class="btn fileBtn">크루썸네일 지정하기</label>
+									<span id="fileName">[[${crew.fileOriginName}]]</span>
+
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="img_wrap">
+									<img id="img"  th:src="${crew.filePath}"/>
+								</div>
+							</td>
+						</tr>
+					</table>
+                  	<!--  썸네일 부분 끝 -->
+                  
+                    <div class="form-group">
+                      <label for="name">크루 이름</label>
+                      <span style="font-size: 14px; color: red">[[${errName}]]</span>
+                      <input type="text" class="form-control" id="name" name="name" th:value="${crew.name}">
+                    </div>
+                    
+                     <div class="form-group">
+                      <label for="area">활동 지역</label>
+                    <span style="font-size: 14px; color: red">[[${errArea}]]</span>
+                      <select class="form-control" id="subject" name="area" >
+                            <option value="" th:selected="${crew.area==''}"></option>
+                      		<option th:each="area : ${areaList}" th:value="${area}" th:selected="${crew.area}==${area}">[[${area}]]</option>
+                      </select>
+                    </div>                   
+                   
+                    <div class="form-group">
+                      <label for="category">운동 종류</label>
+                    <span style="font-size: 14px; color: red">[[${errCategory}]]</span>
+                      <select class="form-control" id="subject" name="category" >
+							<option value="" th:selected="${crew.category==''}"></option>
+                      		<option th:each="c : ${category}" th:value="${c}" th:selected="${crew.category}==${c}">[[${c}]]</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="memberLimit">멤버 인원</label>
+                    <span style="font-size: 14px; color: red">[[${errMemberLimit}]]</span>
+                      <select class="form-control" id="subject" name="memberLimit">
+                      		<option value="" th:selected="${crew.memberLimit==null}"></option>
+                      		<option th:each="num:${#numbers.sequence(10,25)}" th:value="${num}" th:selected="${crew.memberLimit==num}">[[${num}]]</option>
+                      </select>
+                    </div>
+                    
+                    <div class="form-group">
+                      <label for="desc">크루의 목표 및 소개</label>
+                    <span style="font-size: 14px; color: red">[[${errDescription}]]</span>
+                      <textarea cols="30" rows="10" class="form-control" id="message" name="description">[[${crew.description}]]</textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                      <input type="submit" class="btn btn-primary btn-lg" id="submit" name="submit" value="크루 등록하기">
+                    </div>
+                    
+                    
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+     <!--  크루 개설 작성 폼 끝 -->
+      
+
+		<!-- footer -->
+		<div th:replace="include/footer :: footer"></div>
+
+    <!-- END wrapper -->
+    
+
+    <script th:src="@{/js/scripts.min.js}"></script>
+    <script th:src="@{/js/main.min.js}"></script>
+    <script th:src="@{/js/custom.js}"></script>
+    
+    <!--  파일 첨부 버튼 커스텀  -->
+	<script>
+		document.getElementById('input_img').addEventListener('change', function(){
+			var prefile = $("#prefile").val();
+			var filename = document.getElementById('fileName');
+			if(this.files[0] == undefined){
+				filename.innerText = prefile;
+				return;
+			}
+			filename.innerText = this.files[0].name;
+		});
+	</script>
+ 
+ 	<!--  첨부파일 타입 확인 -->
+    <script>
+		var sel_file;
+		$(document).ready(function() {
+			$('#input_img').on("change", handleImgFileSelect);
+		});
+		function handleImgFileSelect(e) {
+			var files = e.target.files;
+			var filesArr = Array.prototype.slice.call(files);
+			filesArr.forEach(function(f) {
+				if (!f.type.match("image.*")) {
+					alert("확장자는 이미지 확장자만 가능합니다.");
+					return;
+				}
+				sel_file = f;
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					$('#img').attr('src', e.target.result);
+				}
+				reader.readAsDataURL(f);
+			});
+		}
+	</script>
+	 
+	<script type="text/javascript">
+
+	//Enter로 전송 막기
+	document.addEventListener('keydown', function (event) {
+		if (event.keyCode === 13) {
+			event.preventDefault();
+	};
+	}, true);
+
+	</script>
+
+  </body>
+</html>
