@@ -7,7 +7,7 @@
 
 <script th:unless="${ask_boardresult == 0}" th:inline="javascript">
 	alert("수정 성공");
-	location.href = "list";
+	location.href = "view?abid=[[${dto.abid}]]";
 </script>
 
 </html>

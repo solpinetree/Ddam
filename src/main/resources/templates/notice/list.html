@@ -1,16 +1,8 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-
-<script th:if="${ask_boardlist == null} or ${#lists.size(ask_boardlist) <= 0}">
-	alert("해당 정보가 삭제되거나 없습니다");
-	history.back();
-</script>			
-
-
-<th:block th:with="dto=${ask_boardlist[0]}" th:unless="${ask_boardlist == null} or ${#lists.size(ask_boardlist) <= 0}">
-		
 <head>
+	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>[[${dto.subject }]]</title>  <!-- 제목에 내용을 넣을수도 있다 -->
+    <title>공지사항 게시판</title>
 	<meta name="description"
 		content="Free Bootstrap Theme by ProBootstrap.com">
 	<meta name="keywords"
@@ -21,18 +13,6 @@
 	<link rel="stylesheet" th:href="@{/css/style.min.css}">
 	<link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700|Open+Sans" rel="stylesheet">
 </head>
-
-<script>
-function chkDelete(abid){
-	// 삭제 여부, 다시 확인하고 진행
-	var r = confirm("삭제하시겠습니까?");
-	
-	if(r){
-		location.href = "deleteOk?abid=" + abid;
-	}
-}
-</script>
-
 <body>
 <!--  header -->
 	<div class="probootstrap-header-top" th:fragment="header">
@@ -107,59 +87,40 @@ function chkDelete(abid){
 		</div>
 	</nav>
 	
-<!--  문의사항 뷰  -->	
+<!--  공지사항 게시판  -->
 		<section class="probootstrap-section probootstrap-section-colored">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12 text-left section-heading mb0">
-						<h1 class="mb0">[[${dto.subject }]]</h1>
+						<h1 class="mb0">공지사항 게시판</h1>
 					</div>
 				</div>
 			</div>
 		</section>
-	<div class="container mt-3">
-		<hr>
-		<div class="col-lg-9 col-md-9 col-sm-9 probootstrap-top-quick-contact-info">
-            <span class="float-start me-2">번호: [[${dto.abid }]]</span>
-            <span class="float-end ms-4">작성일: [[${#temporals.format(dto.regdate, 'yyyy-MM-dd HH:mm:ss')}]]</span>
-            <span class="float-end">조회수: [[${dto.view_cnt }]]</span>
-        </div>
-        <section>
-            <div class="col-lg-9 col-md-9 col-sm-9 probootstrap-top-quick-contact-info">
-                <label for="subject">제목:</label>
-                 <div class="border bg-light rounded p-2" >[[${dto.subject }]]</div>
-            </div>    
-            <div class="col-lg-9 col-md-9 col-sm-9 probootstrap-top-quick-contact-info">
-                <label for="content">내용:</label>
-                 <div class="border bg-light rounded p-2" >[[${dto.content }]]</div>
-            </div>    
-            <div class="col-lg-9 col-md-9 col-sm-9 probootstrap-top-quick-contact-info">
-            <label for="inputFile" class="col-sm-2 col-form-label">첨부 파일</label>
-            <div class="col-sm-10">
-                <div class="custom-file" id="inputFile">
-                    <input name="files" type="file" class="custom-file-input" id="customFile">
-<!--                    <img id = "uploadedImg">
-                    <script th:inline="javascript">
-                    	document.getElementById("uploadedImg").src = "resources/img/[[${ask_filelist[0].filename }]]";
-                    </script> -->
-                </div>
-            </div>
-            <div class="col-lg-9 col-md-9 col-sm-9 probootstrap-top-quick-contact-info">
-                <label for="subject">답변:</label>
-                 <div class="border bg-light rounded p-2" >[[${dto.answer }]]</div>
-            </div>    
-            
-        </div>
+		<div class="container mt-3">
+        <hr>
+        <table class="table table-hover">
+            <thead class="table-success">
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성일자</th>
+                    <th>조회수</th>
+                </tr>
+            </thead>
+            <tbody>
 
-            <button type="button" class="btn btn-primary" th:onclick="'location.href=\'' + @{update(abid=${dto.abid})} + '\''">수정</button>
-            <button type="button" class="btn btn-primary" onclick="location.href='list'">목록</button>
-            <button type="button" class="btn btn-primary" th:onclick="'chkDelete(' + ${dto.abid} + ')'">삭제</button>
-            <button type="button" class="btn btn-primary" onclick="location.href='write'">작성</button>
+			<tr th:each="notice_boardlist: ${notice_boardlist}">
+				<td>[[${notice_boardlist.nbid }]]</td>
+				<td><a th:href="@{view(nbid=${notice_boardlist.nbid})}">[[${notice_boardlist.subject }]]</a></td>
+				<td>[[${#temporals.format(notice_boardlist.regdate, 'yyyy-MM-dd HH:mm:ss') }]]</td>
+ 				<td>[[${notice_boardlist.view_cnt }]]</td>
+			</tr>
 
-        </section>        
-	</div>
-	
-	<!--  footer -->
+		</tbody>
+        </table>
+    </div>
+<!--  footer -->
 	    <footer class="probootstrap-footer probootstrap-bg" th:fragment="footer">
         <div class="container">
           <div class="row">
@@ -220,13 +181,7 @@ function chkDelete(abid){
         </div>
       </footer>
 </body>
-</th:block>
 </html>
-
-
-
-
-
 
 
 
