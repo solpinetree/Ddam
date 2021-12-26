@@ -150,7 +150,7 @@ public class CommunityBoardService {
 		return 1;
 	}
 
-	// 게시글 보기
+	// 게시글 조회
 	@Transactional
 	public List<CommunityBoard> view(Long id) {
 		// 게시글 SELETE
@@ -214,61 +214,69 @@ public class CommunityBoardService {
 		
 		return 1;
 	}
-
-	// 좋아요
-	public int likeToggle(CommunityLike clEntity, CommunityBoard cbEntity) {
-		List<CommunityLike> communityLike = cbEntity.getCommunityLikes();
+	
+	// 게시글 조회 시 좋아요 수
+	public int viewLikes(Long id) {
+		int likes = 0;
 		
-		int toggle = 1;
+		CommunityBoard communityBoard = communityBoardRepository.findById(id).orElse(null);
+		List<CommunityLike> communityLike = new ArrayList<>();
+		communityLike = communityBoard.getCommunityLikes();
 		
-//		for(int i = 0; i < communityLike.size(); i++) {
-//			int result = communityLike.get(i).getUser().getId;
-//			
-//			// 이미 있는 경우 업데이트
-//			if(result == userId) {
-//				Long clId = communityLike.get(i).getId();
-//				
-//				toggle = communityLikeRepository.findById(clId).get().getToggle();
-//				
-//				if(toggle == 0) {
+		// toggle이 1일 때 likes에 추가
+		for(int i = 0; i < communityLike.size(); i++) {
+			if(communityLike.get(i).getToggle() == 1) {
+				likes++;
+			}
+		}
+		
+		return likes;
+	}
+	
+	// 게시글 조회 시 좋아요 여부
+	public int toggleValue(Long id) {
+		int toggle = 0;
+		
+		CommunityBoard communityBoard = communityBoardRepository.findById(id).orElse(null);
+		List<CommunityLike> communityLike = new ArrayList<>();
+		communityLike = communityBoard.getCommunityLikes();
+		
+		for(int i = 0; i < communityLike.size(); i++) {
+			// 기존 좋아요 유저 정보와 현재 유저 정보 일치하는지 확인
+//			if(communityLike.get(i).getUser().equals(user)) {
+//				// 일치하면 토글값 확인 후 변경
+//				if(communityLike.get(i).getToggle() == 0) {
+//					communityLike.get(i).setToggle(1);
+//					
 //					toggle = 1;
 //				} else {
-//					toggle = 0;
+//					communityLike.get(i).setToggle(0);
 //				}
-//				
-//				clEntity.setId(clId);
-//				
-//				break;
 //			}
-//		}
-//		
-//		clEntity.setToggle(toggle);
-//		clEntity.setUser(userRepository.findById(result));
-//		clEntity.setCommunityBoard(cbEntity);
-//		communityLikeRepository.save(clEntity);
+		}
 		
 		return toggle;
 	}
+
+	// 좋아요
+	public void likeToggle(Long cbId) {
+		CommunityBoard communityBoard = communityBoardRepository.findById(cbId).orElse(null);
+		CommunityLike clEntity = new CommunityLike();
+		clEntity.setCommunityBoard(communityBoard);
+		clEntity.setToggle(1);
+		
+		communityLikeRepository.save(clEntity);
+	}
 	
-	// 좋아요 토글 결정
-//	public int toggleOnOff(CommunityBoard cbEntity) {
-//		List<CommunityLike> communityLike = cbEntity.getCommunityLikes();
-//		
-//		int toggle = 0;
-//		
-//		for(int i = 0; i < communityLike.size(); i++) {
-//			int result = communityLike.get(i).getUser().getId;
-//			
-//			// 이미 있을 경우 토글값 가져오기
-//			if(result == userId) {
-//				toggle = communityLike.get(i).getToggle();
-//				
-//				break;
-//			}
-//		}
-//		
-//		return toggle;
-//	}
+	// 좋아요 업데이트
+	public List<CommunityLike> likeUpdate(Long cbId) {
+		List<CommunityLike> communityLike = new ArrayList<>();
+		CommunityBoard communityBoard = communityBoardRepository.findById(cbId).orElse(null);
+		
+		communityLike = communityBoard.getCommunityLikes();
+		
+		return communityLike;
+	}
 	
 	// 댓글 등록
 	@Transactional
@@ -316,7 +324,7 @@ public class CommunityBoardService {
 		
 		// 저장 폴더
 		// application.properties에서 설정함
-		String filePath = "C:\\Temp\\Upload\\";
+		String filePath = System.getProperty("user.dir") + "/src/main/resources/static/commuUpload/";
 		
 		// 확장자
 		String ext = originalName.substring(originalName.lastIndexOf(".") + 1);
