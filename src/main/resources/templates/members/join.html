@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -90,8 +91,10 @@
 		<div id="container">
 			<!-- 본문 -->
 			<div class="bodytext_area box_inner">
-				<form action="/members/joinOk" name="frm" method="post"
-					th:object="${UserFormDto}" onsubmit="return chkSubmit()">
+			<!-- 	<form action="joinOk" name="frm" method="post"
+					th:object="${UserFormDto}" onsubmit="return chkSubmit()"> -->
+					<form name="frm" th:action="@{/members/join}" method="post" enctype="multipart/form-data"  th:object="${UserFormDto}" onsubmit="return chkSubmit()">
+				<!-- 	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /> -->
 					<fieldset>
 						<legend>회원가입 입력 양식</legend>
 						<p class="info_pilsoo pilsoo_item">회원가입</p>
@@ -136,7 +139,7 @@
 								</div></li>
 						</ul>
 						<div style="text-align: center">
-							<button type="submit" class="btn btn-primary" style="">Submit</button>
+							<button type="submit" class="btn btn-primary" style="" onsubmit="return chkSubmit()">Submit</button>
 						</div>
 					</fieldset>
 				</form>

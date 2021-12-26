@@ -1,5 +1,6 @@
 
 <html xmlns:th="http://www.thymeleaf.org">
+
 <style>
 div {
 	position: relative;
@@ -55,15 +56,21 @@ div {
 		<div class="bodytext_area box_inner">
 
 			<div class="login_wrap">
-				<div style="text-align: center " >
-					<p style="font-size:28px">로그인</p>
+				<div style="text-align: center">
+					<p style="font-size: 28px">로그인</p>
 				</div>
-				<form action="/members/loginOk" method="POST" id="cm" class="hc vc">
+				<div th:if="${param.error}">
+					<p th:text="${exception}" class="alert alert-danger"></p>
+				</div>
+				<form th:action="@{/members/loginOk}" method="POST" id="cm"
+					class="hc vc">
+					<!-- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /> -->
 					<!-- 시큐리티로 /loginOk 을 낚아챈다.  무조건 POST -->
 					<!-- ↓ 아이디/패스워드 의 name 은 'username' 과 'password' 로 하자 (시큐리티의 디폴트) -->
-					<input type="text" class="w220" name="username" placeholder="닉네임 입력" /><br>
-					<input type="password"  class="w220" name="password" placeholder="패스워드 입력" /><br>
-					<br>
+					<input type="text" class="w220" name="username"
+						placeholder="닉네임 입력" th:for="username" /><br> <input
+						type="password" class="w220" name="password" placeholder="패스워드 입력"
+						th:for="password" /><br> <br>
 					<div style="text-align: center">
 						<button type="submit" class="btn btn-primary" style="">로그인</button>
 					</div>

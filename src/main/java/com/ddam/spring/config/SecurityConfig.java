@@ -5,19 +5,34 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.ddam.spring.service.UserService;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.util.Assert;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 
 @Configuration
 @EnableWebSecurity	// spring security를 활성화
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+	
 	@Autowired
 	UserService userService;
 
@@ -34,6 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					.loginPage("/login") // 로그인 페이지 링크
 					.loginProcessingUrl("/loginOk")
 					.defaultSuccessUrl("/") // 로그인 성공 후 리다이렉트 주소
+					.permitAll()
 				.and().logout() // 
 					.logoutSuccessUrl("/") // 로그아웃 성공시 리다이렉트 주소
 					.invalidateHttpSession(true) // 세션 날리기
@@ -45,9 +61,32 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		;
 	}
 	
+	@Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+
+//        String password = passwordEncoder().encode("1111");
+//
+//        auth.inMemoryAuthentication().withUser("user").password(password).roles("USER");
+//        auth.inMemoryAuthentication().withUser("manager").password(password).roles("MANAGER");
+//        auth.inMemoryAuthentication().withUser("admin").password(password).roles("ADMIN");
+        auth.userDetailsService(userService);
+    }
+	
 	// Security 무시하기 
     public void configure(WebSecurity web)throws Exception{
         web.ignoring().antMatchers("/h2-console/**");
+        web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
 
     }
+    
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+    
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        return new CustomAuthenticationProvider();
+    }
+
+    
 }

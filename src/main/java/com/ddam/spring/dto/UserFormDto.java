@@ -1,7 +1,11 @@
 package com.ddam.spring.dto;
 
+import java.util.Collection;
+
 import javax.validation.constraints.NotBlank;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.ddam.spring.domain.User;
@@ -11,7 +15,7 @@ import lombok.Data;
 
 
  @Data
-public class UserFormDto {
+public class UserFormDto{
 	// 회원가입 화면으로부터 넘어오는 가입정보를 담을 dto
 	
 	@NotBlank(message= "닉네임은 필수 입력 값입니다.")
@@ -32,6 +36,8 @@ public class UserFormDto {
 	@NotBlank(message= "전화번호는 필수 입력 값입니다.")
 	private String phone;
 	
+	private String auth;
+	
 	public User toEntity(){
         User build = User.builder()
                 .username(username)
@@ -40,9 +46,12 @@ public class UserFormDto {
                 .gender(gender)
                 .email(email)
                 .phone(phone)
+                .auth(auth)
                 .build();
         return build;
     }
+
+
 
 	
 }

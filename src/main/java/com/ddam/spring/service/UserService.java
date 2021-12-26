@@ -1,28 +1,41 @@
 package com.ddam.spring.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ddam.spring.config.UserContext;
+import com.ddam.spring.constant.Role;
 import com.ddam.spring.domain.User;
 import com.ddam.spring.dto.UserFormDto;
 import com.ddam.spring.repository.UserRepository;
 
+import lombok.AllArgsConstructor;
 
-@Service
-public class UserService {
+
+@AllArgsConstructor
+@Service("userDetailsService")  // 빈 등록하기
+public class UserService implements UserDetailsService{
 	
 	private final UserRepository userRepository;
+	
 
-	public UserService(UserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
-
+	@Transactional
 	public User saveUser(User user){
+
         validateDuplicateMember(user);
+
+       return userRepository.save(user);
         
-        return userRepository.save(user);
     }
 	
 	private void validateDuplicateMember(User user){
@@ -39,6 +52,11 @@ public class UserService {
         if(user == null){
             throw new UsernameNotFoundException(username);
         }
+        
+        List<GrantedAuthority> roles = new ArrayList<>();
+//        roles.add(new SimpleGrantedAuthority(user.getRole()));
+//
+//        UserContext userContext = new UserContext(user,roles);
 
         return User.builder()
                 .username(user.getEmail())

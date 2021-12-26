@@ -11,6 +11,8 @@ import com.ddam.spring.domain.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 	
+	boolean existsByUsername(String username);
+	
 	User findByUsername(String username);
 
 	User findById(long id);

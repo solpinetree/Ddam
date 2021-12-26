@@ -1,6 +1,9 @@
 package com.ddam.spring.domain;
 
-import java.time.LocalDateTime;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,14 +13,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.ddam.spring.dto.UserFormDto;
 import com.ddam.spring.constant.Role;
-import com.ddam.spring.domain.*;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,8 +35,8 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
 @Builder
+@RequiredArgsConstructor
 @Entity  // javax.persistence.Entity
 @ToString
 @Table(
@@ -40,7 +45,7 @@ import lombok.ToString;
 		, uniqueConstraints = {@UniqueConstraint(columnNames = {"username"})}   // unique 제약사항
 		)
 // 회원 엔티티
-public class User {
+public class User implements UserDetails{
 	@Id   // PK.  
 	@GeneratedValue  // AI
 	private Long id;
@@ -63,8 +68,8 @@ public class User {
 	@NonNull
     private String phone;
 	
-	@Enumerated(EnumType.STRING)
-    private Role auth;
+	@Column(name = "auth")
+    private String auth;
 
 	public static User createUser(UserFormDto userFormDto, PasswordEncoder passwordEncoder){
 		System.out.println(userFormDto);
@@ -76,11 +81,41 @@ public class User {
         user.setPhone(userFormDto.getPhone());
 //        String password = passwordEncoder.encode(userFormDto.getPassword());
         user.setPassword(userFormDto.getPassword());
-        user.setAuth(Role.USER);
         return user;
     }
 
-	
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		Set<GrantedAuthority> roles = new HashSet<>();
+        for (String role : auth.split(",")) {
+            roles.add(new SimpleGrantedAuthority(role));
+        }
+        return roles;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 
    
 }

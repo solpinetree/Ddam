@@ -1,37 +1,55 @@
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5 ">
 
-	<!-- 헤더 -->
-	<div class="probootstrap-header-top" th:fragment="header">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-9 col-md-9 col-sm-9 probootstrap-top-quick-contact-info">
-				</div>
-				<div class="col-lg-3 col-md-3 col-sm-3 probootstrap-top-social">
-					<ul>
-						<li><a href="/members/login">로그인</a></li>
-						<li>|</li>
-						<li><a href="/members/join">회원가입</a></li>
-					</ul>
-				</div>
+<!-- 헤더 -->
+<div class="probootstrap-header-top" th:fragment="header">
+	<div class="container">
+		<div class="row">
+			<div
+				class="col-lg-9 col-md-9 col-sm-9 probootstrap-top-quick-contact-info">
 			</div>
-		</div>
-	</div>
-	
-	<!-- 네비게이션 바 -->
-	<nav class="navbar navbar-default probootstrap-navbar" th:fragment="nav">
-		<div class="container">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="/index" title="땀땀!!">땀땀!!</a>
-			</div>
-			<div id="navbar-collapse" class="navbar-collapse collapse">
-				<ul class="nav navbar-nav navbar-right">
-					<li class="active"><a href="#">모임 참가</a></li>
-					<li><a href="/crew/crews">크루 모집</a></li>
-					<li><a href="/community/list">커뮤니티</a></li>
-					<li><a href="/ask/list">고객센터</a></li>
+			<div class="col-lg-3 col-md-3 col-sm-3 probootstrap-top-social">
+				<ul>
+					<!-- <li><a sec:authorize="isAuthenticated()"
+						th:href="@{/members/logout}"> 로그아웃 </a></li>
+					<li><a sec:authorize="isAnonymous"
+						th:href="@{/members/login"> 로그인 </a></li>
+					<li>|</li>
+					<li><a sec:authorize="isAnonymous" id="signup-text"
+						th:href="@{/members/join"}> 회원가입 </a></li> -->
+					<li><a href="/members/login">로그인</a></li>
+					<li>|</li>
+					<li><a href="/members/join">회원가입</a></li>
+					<!-- <li sec:authorize="isAnonymous()">
+						Click <a th:href="@{/members/login}">로그인</a> to see a greeting.
+					</li>
+					<li sec:authorize="isAuthenticated()">
+						Click <a th:href="@{/members/logout}">로그아웃</a> to see a greeting. -->
+	</li>
 				</ul>
 			</div>
 		</div>
-	</nav>
+	</div>
+</div>
+
+<!-- 네비게이션 바 -->
+<nav class="navbar navbar-default probootstrap-navbar" th:fragment="nav">
+	<div class="container">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="/index" title="땀땀!!">땀땀!!</a>
+		</div>
+		<div id="navbar-collapse" class="navbar-collapse collapse">
+			<ul class="nav navbar-nav navbar-right">
+				<li class="active"><a href="#">모임 참가</a></li>
+				<li><a href="/crew/crews">크루 모집</a></li>
+				<li><a href="/community/list">커뮤니티</a></li>
+				<li><a href="/ask/list">고객센터</a></li>
+			</ul>
+		</div>
+	</div>
+</nav>
 
 </html>
