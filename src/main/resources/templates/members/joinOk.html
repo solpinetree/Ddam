@@ -1,0 +1,11 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<script th:if="${result == 0}">
+	alert("회원가입 실패");
+	history.back();
+</script>
+
+<script th:unless="${result == 0}" th:inline="javascript">
+	alert("회원가입 성공");
+	location.href = "/members/login";
+</script>
+</html>

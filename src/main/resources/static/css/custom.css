@@ -1,1 +1,7 @@
 /* Your custom css code goes here */
+
+.form-control{
+	width:250px;
+	height:40px;
+	text-align:right;
+}

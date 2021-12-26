@@ -1,1 +1,2 @@
 {"resources":{"ERD/test.sql":{"sql-editor-data-source-id":"mysql8-17dc42b89a5-548c864ab59cc0d0","default-datasource":"mysql8-17dc42b89a5-548c864ab59cc0d0","default-catalog":"mydb811"}}}
+{"resources":{"Scripts/Script.sql":{"sql-editor-data-source-id":"mysql8-17df0e86a15-4f87496cad352df5","default-datasource":"mysql8-17df0e86a15-4f87496cad352df5","default-catalog":"mydb811"}}}

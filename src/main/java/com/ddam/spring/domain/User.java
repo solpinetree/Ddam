@@ -1,48 +1,117 @@
 package com.ddam.spring.domain;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.Index;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 
-import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.ddam.spring.dto.UserFormDto;
+import com.ddam.spring.constant.Role;
+import com.ddam.spring.domain.*;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
-@Data //lombok
-@Entity //JPA -> ORM
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Builder
+@Entity  // javax.persistence.Entity
+@ToString
+@Table(
+		name = "user"   // db 테이블명
+		, indexes = {@Index(columnList="u_id")}  // 컬럼에 대한 index 생성
+		, uniqueConstraints = {@UniqueConstraint(columnNames = {"username"})}   // unique 제약사항
+		)
+// 회원 엔티티
 public class User {
+	@Id   // PK.  
+	@GeneratedValue  // AI
+	private Long u_id;
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id; // 시퀀스
+	@NonNull
+	private String username;
 	
-	private String username; // 사용자 아이디
-//	private String password; // 암호화된 패스워드
-//	private String name; // 사용자 닉네임
+	@NonNull
+	private String password;
 	
-//	@OneToMany(fetch= FetchType.EAGER)
-//	@JoinColumn(name ="userId")
-//	@JsonIgnoreProperties({"crewAdmin", "likes", "members"})
-//	private List<Crew> crews;
+	@NonNull
+    private String name;
 	
-//	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-//	private List<FollowRequest> followRequests;
+	@NonNull
+	private String gender;
 	
+	@NonNull
+    private String email;
 	
-	@CreationTimestamp // 자동으로 현재 시간이 세팅
-	private Timestamp createDate;
-	@CreationTimestamp // 자동으로 현재 시간이 세팅
-	private Timestamp updateDate;
+	@NonNull
+    private String phone;
+	
+	@Enumerated(EnumType.STRING)
+    private Role auth;
+
+	public static User createUser(UserFormDto userFormDto, PasswordEncoder passwordEncoder){
+		System.out.println(userFormDto);
+		User user = new User();
+		user.setUsername(userFormDto.getUsername());
+		user.setName(userFormDto.getName());
+		user.setGender(userFormDto.getGender());
+		user.setEmail(userFormDto.getEmail());
+        user.setPhone(userFormDto.getPhone());
+//        String password = passwordEncoder.encode(userFormDto.getPassword());
+        user.setPassword(userFormDto.getPassword());
+        user.setAuth(Role.USER);
+        return user;
+    }
+
+	
+
+   
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

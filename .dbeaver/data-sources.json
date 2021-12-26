@@ -2,6 +2,7 @@
 	"folders": {},
 	"connections": {
 		"mysql8-17dc42b89a5-548c864ab59cc0d0": {
+		"mysql8-17df0e86a15-4f87496cad352df5": {
 			"provider": "mysql",
 			"driver": "mysql8",
 			"name": "mydb811",
@@ -20,6 +21,8 @@
 					"enabledTLSProtocols": "TLSv1,TLSv1.1,TLSv1.2",
 					"allowPublicKeyRetrieval": "TRUE"
 				},
+				"home": "C:\\Program Files\\MySQL\\MySQL Server 8.0",
+				"type": "dev",
 				"auth-model": "native",
 				"handlers": {}
 			}
