@@ -1,208 +1,86 @@
-<!-- 
-  Theme Name: Enlight
-  Theme URL: https://probootstrap.com/enlight-free-education-responsive-bootstrap-website-template
-  Author: ProBootstrap.com
-  Author URL: https://probootstrap.com
-  License: Released for free under the Creative Commons Attribution 3.0 license (probootstrap.com/license)
--->
-<!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ProBootstrap:Enlight &mdash; Free Bootstrap Theme, Free
-	Responsive Bootstrap Website Template</title>
-<meta name="description"
-	content="Free Bootstrap Theme by ProBootstrap.com">
-<meta name="keywords"
-	content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
-
-<link
-	href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700|Open+Sans"
-	rel="stylesheet">
+<title>땀땀!! 운동인을 위한 모임 사이트</title>
+<link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700|Open+Sans" rel="stylesheet">
 <link rel="stylesheet" th:href="@{/css/styles-merged.css}">
 <link rel="stylesheet" th:href="@{/css/style.min.css}">
 <link rel="stylesheet" th:href="@{/css/custom.css}">
-
-
 </head>
 <body>
 
-	<div class="probootstrap-search" id="probootstrap-search">
-		<a href="#" class="probootstrap-close js-probootstrap-close"><i
-			class="icon-cross"></i></a>
-		<form action="#">
-			<input type="search" name="s" id="search"
-				placeholder="Search a keyword and hit enter...">
-		</form>
-	</div>
-
+	<!-- 페이지 -->
 	<div class="probootstrap-page-wrapper">
-		<!-- Fixed navbar -->
-
-		<!-- header -->
+	
+		<!-- 헤더 -->
 		<div th:replace="include/header::header"></div>
-		<!--  nav bar -->
+		
+		<!-- 네비게이션 바 -->
 		<div th:replace="include/header::nav"></div>
-
-
+		
+		<!-- 본문 상단 -->
 		<section
 			class="probootstrap-section probootstrap-section-colored probootstrap-bg probootstrap-custom-heading probootstrap-tab-section"
 			style="background-image: url(img/running.jpg)">
 			<div class="container">
 				<div class="row">
-					<div
-						class="col-md-12 text-center section-heading probootstrap-animate">
+					<div class="col-md-12 text-left section-heading probootstrap-animate">
+						<h2>땀땀에 오신 것을 환영합니다</h2>
 					</div>
 				</div>
 			</div>
 		</section>
-	
-
-		<section class="probootstrap-section probootstrap-section">
+		
+		<!-- 본문 -->
+		<section class="probootstrap-section probootstrap-bg-white probootstrap-border-top">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-12">
-
-						<div class="tab-content">
-
-							<div id="featured-news" class="tab-pane fade in active">
-								<div class="row">
-									<div class="col-md-12">
-									<!-- <div class="owl-carousel" id="owl1"> -->
-										
-											<div class="item">
-												<a href="#" class="probootstrap-featured-news-box">
-													<figure class="probootstrap-media">
-														<img src="img/img_sm_3.jpg"
-															alt="Free Bootstrap Template by ProBootstrap.com"
-															class="img-responsive">
-													</figure>
-													<div class="probootstrap-text">
-														<h3>서울</h3>
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-															elit. Iure, earum.</p>
-														<span class="probootstrap-date"><i
-															class="icon-calendar"></i>July 9, 2017</span>
-													</div>
-												</a>
-											</div>
-											<!-- END item -->
-											<div class="item">
-												<a href="#" class="probootstrap-featured-news-box">
-													<figure class="probootstrap-media">
-														<img src="img/img_sm_1.jpg"
-															alt="Free Bootstrap Template by ProBootstrap.com"
-															class="img-responsive">
-													</figure>
-													<div class="probootstrap-text">
-														<h3>부산</h3>
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-															elit. Facilis, officia.</p>
-														<span class="probootstrap-date"><i
-															class="icon-calendar"></i>July 9, 2017</span>
-
-													</div>
-												</a>
-											</div>
-											<!-- END item -->
-											<div class="item">
-												<a href="#" class="probootstrap-featured-news-box">
-													<figure class="probootstrap-media">
-														<img src="img/img_sm_2.jpg"
-															alt="Free Bootstrap Template by ProBootstrap.com"
-															class="img-responsive">
-													</figure>
-													<div class="probootstrap-text">
-														<h3>수원</h3>
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-															elit. Sequi, dolores.</p>
-														<span class="probootstrap-date"><i
-															class="icon-calendar"></i>July 9, 2017</span>
-
-													</div>
-												</a>
-											</div>
-											<!-- END item -->
-											<div class="item">
-												<a href="#" class="probootstrap-featured-news-box">
-													<figure class="probootstrap-media">
-														<img src="img/img_sm_3.jpg"
-															alt="Free Bootstrap Template by ProBootstrap.com"
-															class="img-responsive">
-													</figure>
-													<div class="probootstrap-text">
-														<h3>인천</h3>
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-															elit. Iure, earum.</p>
-														<span class="probootstrap-date"><i
-															class="icon-calendar"></i>July 9, 2017</span>
-													</div>
-												</a>
-											</div>
-											<!-- END item</div> -->
-										
-									</div>
+					<div class="col-md-6 col-md-offset-3 text-center section-heading probootstrap-animate">
+						<h2>현재 활동 중인 크루</h2>
+					</div>
+				</div>
+				<div class="row">
+				
+					<!-- 크루 항목 -->
+					<!-- 이거 반복문으로 최대 4번이나 6번 정보 출력 -->
+					<div class="col-md-6">
+						<div class="probootstrap-service-2 probootstrap-animate">
+							<div class="image">
+								<div class="image-bg">
+									<img src="img/img_sm_1.jpg" alt="Free Bootstrap Template by ProBootstrap.com">
 								</div>
-								<!-- END row -->
-								<div class="row">
-									<div class="col-md-12 text-center">
-										<p>
-											<a href="recruitCreww" class="btn btn-primary">View all crews</a>
-										</p>
-									</div>
-								</div>
+							</div>
+							<div class="text">
+								<h3>크루 이름</h3>
+								<p>지역</p>
+								<p>인원</p>
+								<p><a href="#" class="btn btn-primary">상세보기</a> <span class="enrolled-count">0명이 좋아합니다</span></p>
 							</div>
 						</div>
 					</div>
-				</div>
-
-			</div>
-	</div>
-
-	</div>
-	</div>
-	</div>
-	</section>
-
-
-	</p>
-	</div>
-	</div>
-
-	</div>
-	</div>
-	</div>
-	</section>
-
-
-
-	</div>
-	</section>
-
-
-	<section class="probootstrap-cta">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<h2 class="probootstrap-animate" data-animate-effect="fadeInRight">Let's
-						create crew!</h2>
-					<a href="createCrew" role="button"
-						class="btn btn-primary btn-lg btn-ghost probootstrap-animate"
-						data-animate-effect="fadeInLeft">Enroll</a>
+					
 				</div>
 			</div>
-		</div>
-	</section>
-
-	<!-- footer -->
-	<div th:replace="include/footer :: footer"></div>
-
-
+		</section>
+		
+		<!-- 본문 하단 -->
+		<section class="probootstrap-cta">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<h2 class="probootstrap-animate" data-animate-effect="fadeInRight">Let's go play!</h2>
+						<a href="createCrew" role="button" class="btn btn-primary btn-lg btn-ghost probootstrap-animate" data-animate-effect="fadeInLeft">전체 크루 보기</a>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+		<!-- 푸터 -->
+		<div th:replace="include/footer :: footer"></div>
+	
 	</div>
-	<!-- END wrapper -->
-
-
+	
 	<script th:src="@{/js/scripts.min.js}"></script>
 	<script th:src="@{/js/main.min.js}"></script>
 	<script th:src="@{/js/custom.js}"></script>
