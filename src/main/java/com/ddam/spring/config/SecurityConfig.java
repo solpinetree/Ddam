@@ -15,7 +15,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity	// spring security를 활성화
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -23,7 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests() // 
+		http.authorizeRequests() // HttpServletRequest 요청 URL에 따라 접근 권한을 설정
 					.antMatchers("/**").permitAll() // 누구나 접근 허용
 					.antMatchers("/manage").hasRole("MANAGE") // MANAGE만 접근 가능
 					.antMatchers("/admin").hasRole("ADMIN") // ADMIN만 접근 가능

@@ -40,6 +40,7 @@ import com.ddam.spring.repository.MeetupRepository;
 import com.ddam.spring.repository.UserRepository;
 import com.ddam.spring.service.FollowRequestService;
 import com.ddam.spring.service.FollowService;
+import com.ddam.spring.validation.CrewValidator;
 
 @Controller
 @RequestMapping("/crew")

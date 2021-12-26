@@ -1,30 +1,30 @@
 package com.ddam.spring.controller;
 
-import com.ddam.spring.domain.CommunityBoard;
-import com.ddam.spring.domain.User;
-import com.ddam.spring.dto.UserFormDto;
-import com.ddam.spring.repository.UserRepository;
-import com.ddam.spring.service.UserService;
-import com.ddam.spring.validation.CommunityBoardValidator;
-
-import lombok.RequiredArgsConstructor;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.ddam.spring.domain.User;
+import com.ddam.spring.dto.UserFormDto;
+import com.ddam.spring.repository.UserRepository;
+import com.ddam.spring.service.UserService;
+
+import lombok.RequiredArgsConstructor;
 
 @RequestMapping("/members")
 @Controller
@@ -66,18 +66,23 @@ public class MemberController {
  			}
  		  
  		  try { 
- 		  User user = User.createUser(userFormDto, passwordEncoder);
- 		  System.out.println(user);
- 		  userService.saveUser(user); 
+	 		  User user = User.createUser(userFormDto, passwordEncoder);
+	 		  System.out.println(user);
+	 		  userService.saveUser(user); 
  		  } 
  		  catch (IllegalStateException e){
- 		 model.addAttribute("errorMessage", e.getMessage()); 
- 		 return "members/join"; 
+	 		 model.addAttribute("errorMessage", e.getMessage()); 
+	 		 return "members/join"; 
  		 }
  		  
  		 return "redirect:/";
  	}
     
+ 	@RequestMapping("/auth")
+ 	@ResponseBody
+ 	public Authentication auth(HttpSession session) {
+ 		return SecurityContextHolder.getContext().getAuthentication();
+ 	}
 	 
   	@GetMapping("/user/logout")
     public String logoutPage(HttpServletRequest request, HttpServletResponse response) {

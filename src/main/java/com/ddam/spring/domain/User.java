@@ -36,14 +36,14 @@ import lombok.ToString;
 @ToString
 @Table(
 		name = "user"   // db 테이블명
-		, indexes = {@Index(columnList="u_id")}  // 컬럼에 대한 index 생성
+		, indexes = {@Index(columnList="id")}  // 컬럼에 대한 index 생성
 		, uniqueConstraints = {@UniqueConstraint(columnNames = {"username"})}   // unique 제약사항
 		)
 // 회원 엔티티
 public class User {
 	@Id   // PK.  
 	@GeneratedValue  // AI
-	private Long u_id;
+	private Long id;
 	
 	@NonNull
 	private String username;

@@ -1,4 +1,4 @@
-package com.ddam.spring.controller;
+package com.ddam.spring.validation;
 
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;

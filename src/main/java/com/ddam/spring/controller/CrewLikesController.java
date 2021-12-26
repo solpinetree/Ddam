@@ -16,7 +16,7 @@ import com.ddam.spring.repository.LikesRepository;
 import com.ddam.spring.service.LikesService;
 
 @Controller
-public class LikesController {
+public class CrewLikesController {
 	
 	@Autowired
 	LikesService likesService;

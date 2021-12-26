@@ -18,3 +18,5 @@ select * from user;
 select * from follow_request;
 
 
+SET foreign_key_checks = 0;
+SET foreign_key_checks = 1;

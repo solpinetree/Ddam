@@ -73,7 +73,7 @@ public class Crew {
 	
 	@ManyToOne
 	@JoinColumn(name="adminId")
-	@JsonIgnoreProperties({"crews"})
+//	@JsonIgnoreProperties({"crews"})
 	private User crewAdmin;	// 크루장
 
 	
