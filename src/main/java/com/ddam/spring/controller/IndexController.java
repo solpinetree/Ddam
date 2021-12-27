@@ -1,5 +1,7 @@
 package com.ddam.spring.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,8 +26,15 @@ public class IndexController {
 	/*
 	 *  메인 페이지
 	 * */
-	@GetMapping("/index")
-	public String index() {
+//	@GetMapping("/index")
+//	public String index() {
+//		return "index";
+//	}
+	
+	@GetMapping(value = {"/"})
+	public String crewList(Model model) {
+		List<Crew> crews = crewRepository.findAll();
+		model.addAttribute("crews",crews);
 		return "index";
 	}
 	
