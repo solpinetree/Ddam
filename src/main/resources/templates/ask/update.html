@@ -21,6 +21,12 @@
 	<link rel="stylesheet" th:href="@{/css/styles-merged.css}">
 	<link rel="stylesheet" th:href="@{/css/style.min.css}">
 	<link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700|Open+Sans" rel="stylesheet">
+		<style>
+	label{
+	font-size:15px
+	}
+	
+	</style>
 </head>
 <script>
 // form 검증(validation)
@@ -124,7 +130,7 @@ function chkSubmit(){
 		</section>
 	<div class="container mt-3">
 		<hr>
-		<div class="col-lg-9 col-md-9 col-sm-9 probootstrap-top-quick-contact-info">
+		<div class="col-lg-9 col-md-9 col-sm-9 probootstrap-top-quick-contact-info"  style="font-size:15px">
             <span class="float-start me-2">번호: [[${dto.abid }]]</span>
             <span class="float-end ms-4">작성일: [[${#temporals.format(dto.regdate, 'yyyy-MM-dd HH:mm:ss')}]]</span> 
             <span class="float-end">조회수: [[${dto.view_cnt }]]</span>
@@ -135,23 +141,25 @@ function chkSubmit(){
 
             <div class="col-lg-9 col-md-9 col-sm-9 probootstrap-top-quick-contact-info">
                 <label for="subject">제목:</label>
-                <input type="text" class="form-control" id="subject" placeholder="제목을 입력하세요" name="subject" style="text-align:left !important;" th:value="${dto.subject }">
+                <input type="text" class="form-control" id="subject" placeholder="제목을 입력하세요" name="subject" style="text-align:left !important; height:50" th:value="${dto.subject }">
             </div>
             <div class="col-lg-9 col-md-9 col-sm-9 probootstrap-top-quick-contact-info">
                 <label for="content">내용:</label>
-                <textarea class="form-control" rows="5" id="content" style="text-align:left" placeholder="내용을 입력하세요" name="content">[[${dto.content }]]</textarea>
+                <textarea class="form-control" rows="5" id="content" style="text-align:left; height:300" placeholder="내용을 입력하세요" name="content">[[${dto.content }]]</textarea>
             </div>
 			<div class="col-lg-9 col-md-9 col-sm-9 probootstrap-top-quick-contact-info">
             <label for="inputFile" class="col-sm-2 col-form-label">첨부 파일</label>
             <div class="col-sm-10">
                 <div class="custom-file" id="inputFile">
                     <input name="files" type="file" class="custom-file-input" id="customFile">
-                 <div class="border bg-light rounded p-2" >[[${ask_filelist[0].filename }]]</div>
+                 <div class="border bg-light rounded p-2" style="margin-bottom:50px">[[${ask_filelist[0].filename }]]</div>
                 </div>
             </div>
         </div>
+        <div class="cbBtn" style="margin-bottom:10px">
 			<button type="submit" class="btn btn-primary">수정완료</button>
 			<button type="button" class="btn btn-primary" onclick="history.back();">이전으로</button>
+			</div>
             <button type="button" class="btn btn-primary" onclick="location.href='list'">목록</button>
 		</form>
 		

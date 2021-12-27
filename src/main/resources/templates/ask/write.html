@@ -12,6 +12,12 @@
 	<link rel="stylesheet" th:href="@{/css/styles-merged.css}">
 	<link rel="stylesheet" th:href="@{/css/style.min.css}">
 	<link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700|Open+Sans" rel="stylesheet">
+		<style>
+	label{
+	font-size:15px
+	}
+	
+	</style>
 </head>
 <script>
 // form 검증(validation)
@@ -127,14 +133,14 @@ function chkSubmit(){
 		<form name="frm" action="writeOk" method="post" onsubmit="return chkSubmit()" enctype="multipart/form-data">
             <div class="col-lg-9 col-md-9 col-sm-9 probootstrap-top-quick-contact-info">
                 <label for="subject"><strong>제목</strong></label>
-                <input type="text" class="form-control" id="subject" placeholder="제목을 입력하세요" name="subject" style="text-align:left !important;">
+                <input type="text" class="form-control" id="subject" placeholder="제목을 입력하세요" name="subject" style="text-align:left !important; height:50">
             </div>
             <div class="col-lg-9 col-md-9 col-sm-9 probootstrap-top-quick-contact-info">
-                <label for="content"><strong>내용</strong></label>
-                <textarea class="form-control" rows="5" style="text-align:left" id="content" placeholder="내용을 입력하세요" name="content" ></textarea>
+                <label for="content" ><strong>내용</strong></label>
+                <textarea class="form-control" rows="5" style="text-align:left; height:300" id="content" placeholder="내용을 입력하세요" name="content" ></textarea>
             </div>
 	        <div class="col-lg-9 col-md-9 col-sm-9 probootstrap-top-quick-contact-info">
-            <label for="inputFile" class="col-sm-2 col-form-label"><strong>첨부 파일</strong></label>
+            <label for="inputFile" class="col-sm-2 col-form-label" style="margin-bottom:50px"><strong>첨부 파일</strong></label>
             <div class="col-sm-10">
                 <div class="custom-file" id="inputFile">
                     <input name="files" type="file" class="custom-file-input" id="customFile">

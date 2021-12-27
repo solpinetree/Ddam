@@ -2,8 +2,6 @@ package com.ddam.spring.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,11 +11,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.ddam.spring.domain.Notice_board;
 import com.ddam.spring.domain.Notice_file;
 import com.ddam.spring.service.Notice_boardService;
 import com.ddam.spring.service.Notice_fileService;
+import com.ddam.spring.util.Ask_Notice_UtilFile;
 
 @Controller
 public class Notice_boardController {
@@ -46,8 +46,9 @@ public class Notice_boardController {
 
 	@PostMapping("/admin/notice/writeOk")
 	public void writeOk(Notice_board dto, Model model,
-			HttpServletRequest request, @RequestPart MultipartFile files) {
+			MultipartHttpServletRequest request, @RequestPart MultipartFile files) {
 		System.out.println("writeOk 진입");
+		
 		//제목,내용
 		Long cnt = notice_boardService.saveNotice_board(dto);
 		model.addAttribute("result", cnt);
@@ -57,12 +58,18 @@ public class Notice_boardController {
 		Notice_file file = new Notice_file();
 		
 		String sourceFileName = files.getOriginalFilename(); 
-		String destinationFileName = sourceFileName;
 
-		file.setFilename(destinationFileName);
+        //UtilFile 객체 생성
+        Ask_Notice_UtilFile utilFile = new Ask_Notice_UtilFile();
+		
+		//파일 업로드 결과값을 path로 받아온다(이미 fileUpload() 메소드에서 해당 경로에 업로드는 끝난다.)
+        String uploadPath = utilFile.fileUpload(request, files, file);
+
+		file.setFilename(uploadPath);
 		file.setOriginalname(sourceFileName);
 		file.setBoard(dto);
 		notice_fileService.saveNotice_file(file);
+		
 		model.addAttribute("file", file);
 	}
 
