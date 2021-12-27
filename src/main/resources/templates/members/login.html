@@ -64,6 +64,10 @@ div {
 				</div>
 				<form th:action="@{/members/loginOk}" method="POST" id="cm"
 					class="hc vc">
+					<div th:if="${param.error}" class="alert alert-danger" role="alert">
+						아이디 혹은 비밀번호가 잘못 입력되었습니다.</div>
+					<div th:if="${param.logout}" class="alert alert-primary"
+						role="alert">로그아웃이 완료되었습니다.</div>
 					<!-- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /> -->
 					<!-- 시큐리티로 /loginOk 을 낚아챈다.  무조건 POST -->
 					<!-- ↓ 아이디/패스워드 의 name 은 'username' 과 'password' 로 하자 (시큐리티의 디폴트) -->

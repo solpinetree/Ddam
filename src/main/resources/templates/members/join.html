@@ -22,59 +22,6 @@
 
 </head>
 
-<script>
-	// form 검증(validation)
-	function chkSubmit() {
-
-		frm = document.forms['frm'];
-
-		var pass = frm['pass'].value.trim();
-		var username = frm['username'].value.trim();
-		var name = frm['name'].value.trim();
-		var gender = frm['gender'].value.trim();
-		var phone = frm['phone'].value.trim();
-		var email = frm['email'].value.trim();
-
-		if (pass == "") {
-			alert("비밀번호를 입력해주세요.");
-			frm["pass"].focus();
-			return false;
-		}
-
-		if (username == "") {
-			alert("닉네임 입력해주요.");
-			frm['username'].focus();
-			return false;
-		}
-
-		if (name == "") {
-			alert("이름을 입력해주세요.");
-			frm["name"].focus();
-			return false;
-		}
-
-		if (gender == "") {
-			alert("성별을 입력해주세요.");
-			frm["gender"].focus();
-			return false;
-		}
-
-		if (phone == "") {
-			alert("전화번호를 입력해주세요.");
-			frm["phone"].focus();
-			return false;
-		}
-
-		if (email == "") {
-			alert("이메일을 입력해주세요.");
-			frm["email"].focus();
-			return false;
-		}
-
-		return true;
-	}
-</script>
-
 <body>
 	<ul class="skipnavi">
 		<li><a href="#container">본문내용</a></li>
@@ -94,7 +41,7 @@
 			<!-- 	<form action="joinOk" name="frm" method="post"
 					th:object="${UserFormDto}" onsubmit="return chkSubmit()"> -->
 					<form name="frm" th:action="@{/members/join}" method="post" enctype="multipart/form-data"  th:object="${UserFormDto}" onsubmit="return chkSubmit()">
-				<!-- 	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /> -->
+				
 					<fieldset>
 						<legend>회원가입 입력 양식</legend>
 						<p class="info_pilsoo pilsoo_item">회원가입</p>
@@ -142,6 +89,7 @@
 							<button type="submit" class="btn btn-primary" style="" onsubmit="return chkSubmit()">Submit</button>
 						</div>
 					</fieldset>
+					<!-- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /> -->
 				</form>
 			</div>
 			<!-- 본문 끝-->

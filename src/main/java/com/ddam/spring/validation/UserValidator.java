@@ -13,22 +13,42 @@ import com.ddam.spring.repository.UserRepository;
 @Component
 public class UserValidator implements Validator {
 
-    @Autowired
-    private UserRepository userRepository;
+	@Autowired
+	private UserRepository userRepository;
 
-    @Override
-    public boolean supports(Class<?> clazz) {
-        return UserFormDto.class.equals(clazz);
-    }
+	@Override
+	public boolean supports(Class<?> clazz) {
+		return UserFormDto.class.equals(clazz);
+	}
 
-    @Override
-    public void validate(Object obj, Errors errors) {
-    	UserFormDto userFormDto = (UserFormDto) obj;
-    	
-        if(userRepository.findByUsername(((UserFormDto) obj).getUsername()) !=null){
-            // 이름이 존재하면
-            errors.rejectValue("username", "key","이미 사용자 이름이 존재합니다.");
-        }
+	@Override
+	public void validate(Object obj, Errors errors) {
+		UserFormDto userFormDto = (UserFormDto) obj;
 
-    }// 비밀번호 검사할때 쓰면 될듯
+		if (userRepository.findByUsername(((UserFormDto) obj).getUsername()) != null) {
+			// 이름이 존재하면
+			errors.rejectValue("username", "key", "이미 사용자 이름이 존재합니다.");
+		}
+		// 닉네임이 비어있을 때
+		String username = userFormDto.getUsername();
+		if (username == null || username.trim().isEmpty()) {
+			errors.rejectValue("username", "emptyUsername");
+		}
+		// 이름이 비어있을 때
+		String name = userFormDto.getName();
+		if (name == null || name.trim().isEmpty()) {
+			errors.rejectValue("name", "emptyName");
+		}
+		// 비밀번호가 비어있을 때
+		String password = userFormDto.getPassword();
+		if (password == null || password.trim().isEmpty()) {
+			errors.rejectValue("password", "emptyPassword");
+		}	
+		// 이메일이 비어있을 때
+		String email = userFormDto.getEmail();
+		if (email == null || email.trim().isEmpty()) {
+			errors.rejectValue("email", "emptyEmail");
+		}
+
+	}
 }

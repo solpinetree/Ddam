@@ -10,6 +10,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -23,6 +25,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.ddam.spring.constant.Role;
 import com.ddam.spring.dto.UserFormDto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -70,8 +73,9 @@ public class User implements UserDetails{
 	@NonNull
     private String phone;
 	
-	@Column(name = "auth")
-    private String auth;
+	@Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role auth;
 	
 	@OneToMany(mappedBy="user",fetch = FetchType.EAGER)
 	private Set<MeetupUser> participantList = new HashSet<>();
@@ -84,19 +88,10 @@ public class User implements UserDetails{
 		user.setGender(userFormDto.getGender());
 		user.setEmail(userFormDto.getEmail());
         user.setPhone(userFormDto.getPhone());
-//        String password = passwordEncoder.encode(userFormDto.getPassword());
+        String password = passwordEncoder.encode(userFormDto.getPassword());
         user.setPassword(userFormDto.getPassword());
         return user;
     }
-
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		Set<GrantedAuthority> roles = new HashSet<>();
-        for (String role : auth.split(",")) {
-            roles.add(new SimpleGrantedAuthority(role));
-        }
-        return roles;
-	}
 
 	@Override
 	public boolean isAccountNonExpired() {
@@ -120,6 +115,12 @@ public class User implements UserDetails{
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
 		return true;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
    

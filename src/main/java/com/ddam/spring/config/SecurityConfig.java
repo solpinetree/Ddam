@@ -10,10 +10,14 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.ddam.spring.service.UserService;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -35,6 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	UserService userService;
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -46,14 +51,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					.anyRequest().authenticated() // 나머지 요청들은 권한의 종류에 상관 없이 권한이 있어야 접근 가능
 					
 				.and().formLogin() // 
-					.loginPage("/login") // 로그인 페이지 링크
-					.loginProcessingUrl("/loginOk")
+					.loginPage("/members/login") // 로그인 페이지 링크
+					.loginProcessingUrl("/members/loginOk")
 					.defaultSuccessUrl("/") // 로그인 성공 후 리다이렉트 주소
+					.successHandler(new CustomLoginSuccessHandler("/"))
+					.failureHandler(new CustomLoginFailureHandler())
+					
 					.permitAll()
 				.and().logout() // 
 					.logoutSuccessUrl("/") // 로그아웃 성공시 리다이렉트 주소
 					.invalidateHttpSession(true) // 세션 날리기
 					.deleteCookies("JSESSIONID")	// 쿠키 제거
+					.logoutSuccessHandler(new CustomLogoutSuccessHandler())
 				.and()
 	                .csrf() 
 	                .ignoringAntMatchers("/h2-console/**").disable()
@@ -64,24 +73,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-//        String password = passwordEncoder().encode("1111");
-//
-//        auth.inMemoryAuthentication().withUser("user").password(password).roles("USER");
-//        auth.inMemoryAuthentication().withUser("manager").password(password).roles("MANAGER");
-//        auth.inMemoryAuthentication().withUser("admin").password(password).roles("ADMIN");
-        auth.userDetailsService(userService);
+//        auth.userDetailsService(userService);
+        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
     }
 	
+
+	@Bean
+	public BCryptPasswordEncoder passwordEncoder() {
+	    return new BCryptPasswordEncoder();
+	}
+
 	// Security 무시하기 
     public void configure(WebSecurity web)throws Exception{
         web.ignoring().antMatchers("/h2-console/**");
         web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
 
     }
-    
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+   
     
     @Bean
     public AuthenticationProvider authenticationProvider() {

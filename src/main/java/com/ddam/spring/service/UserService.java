@@ -4,35 +4,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ddam.spring.config.UserContext;
-import com.ddam.spring.constant.Role;
 import com.ddam.spring.domain.User;
-import com.ddam.spring.dto.UserFormDto;
 import com.ddam.spring.repository.UserRepository;
 
 import lombok.AllArgsConstructor;
 
-
+@EnableAutoConfiguration
 @AllArgsConstructor
 @Service("userDetailsService")  // 빈 등록하기
 public class UserService implements UserDetailsService{
 	
 	private final UserRepository userRepository;
 	
-
+	
+	
 	@Transactional
 	public User saveUser(User user){
 
         validateDuplicateMember(user);
+//        String hashPw = bCryptPasswordEncoder.encode(user.getPassword());
+//        user.setPassword(hashPw);
 
        return userRepository.save(user);
         
@@ -67,7 +68,6 @@ public class UserService implements UserDetailsService{
                 .phone(user.getPhone())
                 .build();
     }
-
 	
 
 }

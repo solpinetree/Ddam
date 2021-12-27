@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.ddam.spring.constant.Role;
 import com.ddam.spring.domain.User;
 
 import lombok.Builder;
@@ -36,7 +37,7 @@ public class UserFormDto{
 	@NotBlank(message= "전화번호는 필수 입력 값입니다.")
 	private String phone;
 	
-	private String auth;
+	private Role auth;
 	
 	public User toEntity(){
         User build = User.builder()
