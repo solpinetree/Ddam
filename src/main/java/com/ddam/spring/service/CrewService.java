@@ -10,8 +10,8 @@ import com.ddam.spring.repository.CrewRepository;
 @Service
 public class CrewService {
 	
-//	@Autowired
-//    private CrewRepository crewRepository;
+	@Autowired
+    private CrewRepository crewRepository;
 //    
 //    public CrewService(CrewRepository crewRepository) {
 //        this.crewRepository = crewRepository;
@@ -63,5 +63,9 @@ public class CrewService {
 //	    		.build();
 //	    return crewDTO;
 //    }
+	
+	public Crew findCrews(Long id) {
+		  return crewRepository.findById(id).orElse(null);
+	}
 	
 }

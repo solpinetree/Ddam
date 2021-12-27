@@ -111,7 +111,6 @@ public class MemberController {
 		return "/members/login";
 	}
 
-	// Model model => User user 로 바꿨습니다. 오류가 나서
 	@PostMapping(value = "/loginOk")
 	public String login(@Validated @ModelAttribute User user,
 			String username, String password,
@@ -141,5 +140,6 @@ public class MemberController {
 		model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해주세요");
 		return "/members/login";
 	}
+	
 
 }

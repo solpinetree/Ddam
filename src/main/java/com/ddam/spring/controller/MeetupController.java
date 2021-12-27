@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ddam.spring.domain.Meetup;
+import com.ddam.spring.domain.MeetupUser;
 import com.ddam.spring.domain.User;
 import com.ddam.spring.repository.CrewRepository;
 import com.ddam.spring.repository.MeetupRepository;
@@ -59,7 +60,6 @@ public class MeetupController {
 			Meetup meetup) throws ParseException {
 		meetup.setCrew(crewRepository.findById(cid));
 		meetup.setDatetime(datetime2);
-		meetup.setMemberCount(0L);
 		Meetup res = meetupRepository.save(meetup);
 		return "redirect:/crew/crew-detail/"+res.getCrew().getId();
 	}

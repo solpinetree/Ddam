@@ -2,6 +2,8 @@ drop table if exists follow;
 drop table if exists crew;
 drop table if exists user;
 drop table if exists likes;
+drop table if exists follow_request;
+drop table if exists meetup;
 
 SELECT * FROM crew;
 select * from user;
