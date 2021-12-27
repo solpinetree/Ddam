@@ -23,8 +23,10 @@ import com.ddam.spring.service.Ask_fileService;
 @Controller
 public class Ask_boardController {
 	
+	@Autowired
 	private Ask_boardService ask_boardService;
-
+	
+	@Autowired
 	private Ask_fileService ask_fileService;
 	
 	@Autowired
@@ -47,8 +49,13 @@ public class Ask_boardController {
 
 	@PostMapping("/ask/writeOk")
 	public void writeOk(Ask_board dto, Model model,
-			HttpServletRequest request, @RequestParam MultipartFile files) {
+			HttpServletRequest request, @RequestPart MultipartFile files) {
 		System.out.println("writeOk 진입");
+		
+		//제목,내용
+		Long cnt = ask_boardService.saveAsk_board(dto);
+		model.addAttribute("result", cnt);
+		model.addAttribute("dto", dto);
 		
 		//파일첨부
 		Ask_file file = new Ask_file();
@@ -60,6 +67,7 @@ public class Ask_boardController {
 		
 		file.setFilename(destinationFileName);
 		file.setOriginalname(sourceFileName);
+		file.setBoard(dto);
 		file.setAbid(dto.getAbid());
 		ask_fileService.saveAsk_file(file);
 		
@@ -67,16 +75,14 @@ public class Ask_boardController {
 		
 		System.out.println(dto.getAskFiles().get(0).getFilename());
 		
-		//제목,내용
-		Long cnt = ask_boardService.saveAsk_board(dto);
-		model.addAttribute("result", cnt);
-		model.addAttribute("dto", dto);
+
 		
 		model.addAttribute("file", file);
 	}
 	
 	@GetMapping("/admin/ask/write")
-	public void adminwrite(int abid, Model model) {
+	public void adminwrite(@RequestParam Long abid, Model model) {
+		System.out.println(abid);
 		model.addAttribute("ask_boardlist", ask_boardService.selectByAbid_Admin(abid));
 		model.addAttribute("ask_filelist", ask_fileService.selectByAfid_Admin(abid));	
 	}
@@ -90,9 +96,9 @@ public class Ask_boardController {
 	}
 	
 	@GetMapping("/ask/view")
-	public void view(int abid, Model model) {
+	public void view(Long abid, Model model) {
 		model.addAttribute("ask_boardlist", ask_boardService.viewByAbid(abid));
-		model.addAttribute("ask_filelists", ask_fileService.viewByAfid(abid));
+		model.addAttribute("ask_filelist", ask_fileService.viewByAfid(abid));
 	}
 
 	@RequestMapping("/ask/list")

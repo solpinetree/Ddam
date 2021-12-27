@@ -322,7 +322,7 @@ public class CrewController {
 	public String unfollow(@PathVariable("cid") long cid, HttpServletRequest request) throws Exception {
 		
     	HttpSession session = request.getSession();
-    	User user = (User)session.getAttribute("user");
+    	User user = (User)session.getAttribute("sessionedUser");
 
 //    	crewRepository.findById(cid).getMembers().remove(user);
     	

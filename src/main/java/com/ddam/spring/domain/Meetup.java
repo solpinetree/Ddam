@@ -3,6 +3,7 @@ package com.ddam.spring.domain;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -40,8 +41,11 @@ public class Meetup {
 //	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private LocalDateTime datetime;
 	
+	private Long memberCount;
+	
 	private Long memberLimit;
 	
+	@Column(columnDefinition = "LONGTEXT")
 	private String description;
 	
 	@CreationTimestamp

@@ -46,7 +46,7 @@ public class Crew {
 	private String fileName;	// 저장할 때 파일 이름
 	private String filePath;	// 저장 및 불러올 경로
 
-	@Column(nullable = false, length=1000000)
+	@Column(columnDefinition = "LONGTEXT")
 	private String description; // 크루 소개
 
 	private Long memberLimit; // 크루 멤버 인원 제한수

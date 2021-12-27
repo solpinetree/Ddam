@@ -34,11 +34,11 @@ public class Ask_file {
 	
 //	@ManyToOne
 //	@JoinColumn(name = "abid")
-	@Column(name = "abid")
+//	@Column(name = "abid")
 	private Long abid;
 	
-//	@ManyToOne
+	@ManyToOne
 //	@Column(name = "abid")
-//	private Ask_board board;
+	private Ask_board board;
 
 }

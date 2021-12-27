@@ -1,9 +1,10 @@
 package com.ddam.spring.controller;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ddam.spring.domain.Meetup;
+import com.ddam.spring.domain.User;
 import com.ddam.spring.repository.CrewRepository;
 import com.ddam.spring.repository.MeetupRepository;
 
@@ -46,7 +48,7 @@ public class MeetupController {
 	/**
 	 *  크루 모임 추가 완료 처리하는 핸들러
 	 * @param cid
-	 * @param datetime2	모임 날
+	 * @param datetime2	모임 날짜
 	 * @param meetup
 	 * @return
 	 * @throws ParseException
@@ -57,12 +59,28 @@ public class MeetupController {
 			Meetup meetup) throws ParseException {
 		meetup.setCrew(crewRepository.findById(cid));
 		meetup.setDatetime(datetime2);
+		meetup.setMemberCount(0L);
 		Meetup res = meetupRepository.save(meetup);
 		return "redirect:/crew/crew-detail/"+res.getCrew().getId();
 	}
 	
+	/**
+	 * '모임 참가' 페이지에 연결해주는 핸들러
+	 * '모임 참가' 페이지: 지금보다 이후에 있는 모임들을 가까운 시일 순으로 보여준다.
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("list")
-	public String meetupList(Model model) {
+	public String meetupList(Model model, HttpServletRequest request) {
+		
+    	HttpSession session = request.getSession();
+    	User user = (User)session.getAttribute("sessionedUser");
+		
+    	if(user!=null) {
+    		model.addAttribute("status", "none");
+    	}else {
+    		
+    	}
 		
 		model.addAttribute("meetupLists", meetupRepository.findByDatetimeGreaterThanOrderByDatetimeAsc(LocalDateTime.now().minusDays(1L)));
 		

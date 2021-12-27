@@ -9,7 +9,7 @@ import com.ddam.spring.domain.Ask_file;
 
 public interface Ask_fileRepository extends JpaRepository<Ask_file, Long>{
 	
-//	List<Ask_file> findByBoard(Ask_board board);
-	List<Ask_file> findByAbid(Long abid);
+	List<Ask_file> findByBoard(Ask_board board);
+//	List<Ask_file> findByAbid(Long abid);
 	
 }

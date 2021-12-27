@@ -89,7 +89,7 @@
                     <span style="font-size: 14px; color: red">[[${errMemberLimit}]]</span>
                       <select class="form-control" id="subject" name="memberLimit" style="text-align:left !important;">
                       		<option value="" th:selected="${meetup.memberLimit==null}"></option>
-                      		<option th:each="num:${#numbers.sequence(10, meetup.crew.memberLimit)}" th:value="${num}" th:selected="${meetup.memberLimit==num}">[[${num}]]</option>
+                      		<option th:each="num:${#numbers.sequence(2, meetup.crew.memberLimit)}" th:value="${num}" th:selected="${meetup.memberLimit==num}">[[${num}]]</option>
                       </select>
                     </div>
                     
