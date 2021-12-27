@@ -29,8 +29,20 @@
       <section class="probootstrap-section" th:fragment="meetuplists">
         <div class="container">
           <div class="row">
-	              <div class="probootstrap-service-2 probootstrap-animate" th:each="meetup : ${meetupLists}">
-  	             <!--  지도 부분 -->	
+          
+          			<!-- for문 시작 -->
+	              <div  class="probootstrap-service-2 probootstrap-animate" th:each="meetup : ${meetupLists}">
+	              
+	              		<!--  로그인한 유저일 때 -->
+		              <div th:if="${session.sessionedUser!=null}">
+		              		<input type="hidden" id = "participated" value="false">
+		              		<div th:each="member : ${meetup.members}">
+		              			<div th:if="${member==session.sessionedUser}">
+		              				<input type="hidden" id="participated" value="true">
+		              			</div>
+		              		</div>
+		              </div>
+  	             				<!--  지도 부분 -->	
 	              				<div th:id="'div'+${meetup.id}" style="width:100%;height:350px;"></div>
 								<script th:inline="javascript" type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=65c9f79c00dce40eedc3bd3082999eae&libraries=services"></script>
 								<script th:inline="javascript">
@@ -94,55 +106,33 @@
 				                  <span class="probootstrap-location"><i class="icon-calendar2"></i>[[${#temporals.format(meetup.datetime,"yyyy년 MM월 dd일 HH시 mm분")}]]</span>
 				                  <span class="probootstrap-location"><i class="icon-location2"></i>[[${meetup.location}]]</span>
 				                  <span class="probootstrap-location"><i class="fa fa-money" aria-hidden="true"></i>[[${meetup.fee}]]</span><br>
-				                  <p>
-				                  	<a href="#" id="rec_part" class="btn btn-primary">참가하기</a>&nbsp;&nbsp;&nbsp;[[${meetup.memberCount}]]명 참가 예정   /    [[${meetup.memberLimit}]]
-				                  </p>
+				                  
+				                  	<!-- user 상태에 따라 다른 버튼 -->
+				                  	<div th:if={${session.sessionedUser==null}}>
+					                  	<a href="#" id="rec_part" class="btn btn-primary">참가하기</a>&nbsp;&nbsp;&nbsp;[[${#lists.size(meetup.members)}]]명 참가 예정   /    [[${meetup.memberLimit}]]
+				                  	</div>
+				                  	<script th:inline="javascript">
+				                  	 	var particitpated = $("#participated").val();
+				                  	 	if(participated=='false'){
+				                  	 </script>
+				                  	 	<a href="#" id="rec_part" class="btn btn-primary">참가하기</a>&nbsp;&nbsp;&nbsp;[[${#lists.size(meetup.members)}]]명 참가 예정   /    [[${meetup.memberLimit}]]
+				                  	 <script th:inline="javascript">		
+				                  	 	}else if(participate=='true'){
+				                  	</script>
+				                  		<a href="#" id="rec_part" class="btn btn-primary">참가 취소</a>&nbsp;&nbsp;&nbsp;[[${#lists.size(meetup.members)}]]명 참가 예정   /    [[${meetup.memberLimit}]]
+				                  	<script th:inline="javascript">
+				                  	 	}
+				                  	</script>
 				                </div>
+				               	<!-- user 상태에 따라 다른 버튼 -->
 	                  </div>
-	                </div> 
+	                  <!-- for문 끝 -->
+	                  
+	                  
+	             </div> 
 			</div>
       </section>
       
-    <script th:inline="javascript">
-		$(function(){
-			// 참가하기 버튼 클릭시
-			
-			var userId = [[${session.sessionedUser.id}]];
-			var crewId = [[${meetup.crew.id}]];
-			
-			$("#rec_part").click(function(){
-				$.ajax({
-					url: "/likes/update",
-	                type: "POST",
-	                data: {
-	                    "userId": userId,
-	                    "crewId": crewId
-	                },
-	               	complete: function () {
-				        recCount();
-	                },
-				})
-			})
-			
-			// 크루 좋아요수
-		    function recCount() {
-				
-				$.ajax({
-					url: "/likes/count",
-	                type: "POST",
-	                data: {
-	                    "crewId": crewId
-	                },
-	                success: function (res) {
-	                	$(".rec_count").html(res.count);
-	                },
-				})
-		    };
-		    
-		    recCount(); // 처음 시작했을 때 실행되도록 해당 함수 호출
-		});
-    
-    </script>
 
     <script th:src="@{/js/scripts.min.js}"></script>
 	<script th:src="@{/js/main.min.js}"></script>

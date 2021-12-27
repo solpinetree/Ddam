@@ -1,18 +1,20 @@
 package com.ddam.spring.domain;
 
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -22,8 +24,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.ddam.spring.dto.UserFormDto;
-import com.ddam.spring.constant.Role;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -71,6 +72,9 @@ public class User implements UserDetails{
 	
 	@Column(name = "auth")
     private String auth;
+	
+	@OneToMany(mappedBy="user")
+	private List<MeetupUser> participantList = new ArrayList<>();;
 
 	public static User createUser(UserFormDto userFormDto, PasswordEncoder passwordEncoder){
 		System.out.println(userFormDto);

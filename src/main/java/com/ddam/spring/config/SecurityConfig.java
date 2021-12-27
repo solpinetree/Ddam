@@ -46,8 +46,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					.anyRequest().authenticated() // 나머지 요청들은 권한의 종류에 상관 없이 권한이 있어야 접근 가능
 					
 				.and().formLogin() // 
-					.loginPage("/login") // 로그인 페이지 링크
-					.loginProcessingUrl("/loginOk")
+					.loginPage("/members/login") // 로그인 페이지 링크
+					.loginProcessingUrl("/members/loginOk")
 					.defaultSuccessUrl("/") // 로그인 성공 후 리다이렉트 주소
 					.permitAll()
 				.and().logout() // 

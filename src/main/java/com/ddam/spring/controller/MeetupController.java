@@ -59,7 +59,6 @@ public class MeetupController {
 			Meetup meetup) throws ParseException {
 		meetup.setCrew(crewRepository.findById(cid));
 		meetup.setDatetime(datetime2);
-		meetup.setMemberCount(0L);
 		Meetup res = meetupRepository.save(meetup);
 		return "redirect:/crew/crew-detail/"+res.getCrew().getId();
 	}
