@@ -73,7 +73,8 @@ public class Ask_boardService {
 	public int update(Ask_board dto, String originalFileName) {
 		int cnt = 0;
 		Ask_board data = repository.findById(dto.getAbid()).orElse(null);
-		List<Ask_file> files = filerepository.findByBoard(data);
+//		List<Ask_file> files = filerepository.findByBoard(data);
+		List<Ask_file> files = filerepository.findByAbid(data.getAbid());
 		Ask_file file = files.get(0); 
 		
 		if(data != null) {
@@ -93,7 +94,8 @@ public class Ask_boardService {
 	//문의사항 삭제
 	public int deleteByUid(long abid) {
 		Ask_board board = repository.findById(abid).orElse(null);
-		List<Ask_file> files = filerepository.findByBoard(board);
+//		List<Ask_file> files = filerepository.findByBoard(board);
+		List<Ask_file> files = filerepository.findByAbid(board.getAbid());
 		files.forEach(i -> filerepository.delete(i));
 		repository.deleteById(abid);
 		repository.flush();

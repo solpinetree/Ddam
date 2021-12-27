@@ -49,7 +49,8 @@ public class Ask_fileService {
 		
 		Ask_board board = boardrepository.findById(abid).orElse(null);
 		
-		List<Ask_file> files = repository.findByBoard(board);
+//		List<Ask_file> files = repository.findByBoard(board);
+		List<Ask_file> files = repository.findByAbid(board.getAbid());
 		
 		return files;  // 읽어오기
 	}
@@ -58,9 +59,10 @@ public class Ask_fileService {
 	public List<Ask_file> selectByAfid(long abid){
 		
 		Ask_board board = boardrepository.findById(abid).orElse(null);
-		List<Ask_file> files = repository.findByBoard(board);
-		files = repository.findByBoard(board);
-		Ask_file file = files.get(0);
+//		List<Ask_file> files = repository.findByBoard(board);
+		List<Ask_file> files = repository.findByAbid(board.getAbid());
+//		files = repository.findByBoard(board);
+//		Ask_file file = files.get(0);
 		return files;
 	}
 	
@@ -81,7 +83,8 @@ public class Ask_fileService {
 	//문의사항 삭제
 		public int deleteByUid(long abid) {
 			Ask_board board = boardrepository.findById(abid).orElse(null);
-			List<Ask_file> files = repository.findByBoard(board);
+//			List<Ask_file> files = repository.findByBoard(board);
+			List<Ask_file> files = repository.findByAbid(board.getAbid());
 			repository.deleteById(abid);
 			repository.flush();		
 			return 1;
@@ -92,9 +95,10 @@ public class Ask_fileService {
 	public List<Ask_file> selectByAfid_Admin(long abid){
 		
 		Ask_board board = boardrepository.findById(abid).orElse(null);
-		List<Ask_file> files = repository.findByBoard(board);
-		files = repository.findByBoard(board);
-		Ask_file file = files.get(0);
+//		List<Ask_file> files = repository.findByBoard(board);
+		List<Ask_file> files = repository.findByAbid(board.getAbid());
+//		files = repository.findByBoard(board);
+//		Ask_file file = files.get(0);
 		return files;
 		
 	}

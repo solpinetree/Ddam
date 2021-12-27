@@ -11,15 +11,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ddam.spring.domain.Ask_board;
 import com.ddam.spring.domain.Ask_file;
-import com.ddam.spring.domain.User;
 import com.ddam.spring.service.Ask_boardService;
 import com.ddam.spring.service.Ask_fileService;
-import com.ddam.spring.service.UserService;
 
 @Controller
 public class Ask_boardController {
@@ -48,24 +47,31 @@ public class Ask_boardController {
 
 	@PostMapping("/ask/writeOk")
 	public void writeOk(Ask_board dto, Model model,
-			HttpServletRequest request, @RequestPart MultipartFile files) {
+			HttpServletRequest request, @RequestParam MultipartFile files) {
 		System.out.println("writeOk 진입");
-		//제목,내용
-		Long cnt = ask_boardService.saveAsk_board(dto);
-		model.addAttribute("result", cnt);
-		model.addAttribute("dto", dto);
 		
 		//파일첨부
 		Ask_file file = new Ask_file();
 		
 		String sourceFileName = files.getOriginalFilename(); 
 		String destinationFileName = sourceFileName;
-
+		
+		System.out.println(sourceFileName);
+		
 		file.setFilename(destinationFileName);
 		file.setOriginalname(sourceFileName);
-		file.setBoard(dto);
-//		file.setAbid(dto);
+		file.setAbid(dto.getAbid());
 		ask_fileService.saveAsk_file(file);
+		
+		dto.getAskFiles().add(file);
+		
+		System.out.println(dto.getAskFiles().get(0).getFilename());
+		
+		//제목,내용
+		Long cnt = ask_boardService.saveAsk_board(dto);
+		model.addAttribute("result", cnt);
+		model.addAttribute("dto", dto);
+		
 		model.addAttribute("file", file);
 	}
 	
@@ -86,7 +92,7 @@ public class Ask_boardController {
 	@GetMapping("/ask/view")
 	public void view(int abid, Model model) {
 		model.addAttribute("ask_boardlist", ask_boardService.viewByAbid(abid));
-		model.addAttribute("ask_filelist", ask_fileService.viewByAfid(abid));
+		model.addAttribute("ask_filelists", ask_fileService.viewByAfid(abid));
 	}
 
 	@RequestMapping("/ask/list")

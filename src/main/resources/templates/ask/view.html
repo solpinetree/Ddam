@@ -136,12 +136,11 @@ function chkDelete(abid){
             <div class="col-lg-9 col-md-9 col-sm-9 probootstrap-top-quick-contact-info">
             <label for="inputFile" class="col-sm-2 col-form-label">첨부 파일</label>
             <div class="col-sm-10">
-                <div class="custom-file" id="inputFile">
-                    <input name="files" type="file" class="custom-file-input" id="customFile">
-<!--                    <img id = "uploadedImg">
-                    <script th:inline="javascript">
-                    	document.getElementById("uploadedImg").src = "resources/img/[[${ask_filelist[0].filename }]]";
-                    </script> -->
+                    <img id = "uploadedImg" th:src="@{/img/ask1.jpg}">
+                <div class="custom-file" id="inputFile" th:each="ask_filelist: ${dto.askFiles}">
+<!--                     <input name="files" type="file" class="custom-file-input" id="customFile"> -->
+                   <!--  <img id = "uploadedImg" th:src="'/img/'+${ask_fildlist.filename}"> -->
+
                 </div>
             </div>
             <div class="col-lg-9 col-md-9 col-sm-9 probootstrap-top-quick-contact-info">

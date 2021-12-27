@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
@@ -33,11 +34,11 @@ public class Ask_file {
 	
 //	@ManyToOne
 //	@JoinColumn(name = "abid")
-//	@Column(name = "abid")
-//	private Long abid;
+	@Column(name = "abid")
+	private Long abid;
 	
-	@ManyToOne
+//	@ManyToOne
 //	@Column(name = "abid")
-	private Ask_board board;
+//	private Ask_board board;
 
 }

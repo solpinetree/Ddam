@@ -20,3 +20,10 @@ select * from follow_request;
 
 SET foreign_key_checks = 0;
 SET foreign_key_checks = 1;
+
+drop table if exists ask_board;
+drop table if exists ask_file;
+
+select * from ask_file;
+
+show tables;
