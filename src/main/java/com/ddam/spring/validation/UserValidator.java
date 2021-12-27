@@ -25,10 +25,7 @@ public class UserValidator implements Validator {
 	public void validate(Object obj, Errors errors) {
 		UserFormDto userFormDto = (UserFormDto) obj;
 
-		if (userRepository.findByUsername(((UserFormDto) obj).getUsername()) != null) {
-			// 이름이 존재하면
-			errors.rejectValue("username", "key", "이미 사용자 이름이 존재합니다.");
-		}
+
 		// 닉네임이 비어있을 때
 		String username = userFormDto.getUsername();
 		if (username == null || username.trim().isEmpty()) {

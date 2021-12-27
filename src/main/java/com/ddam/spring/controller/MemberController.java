@@ -120,7 +120,7 @@ public class MemberController {
 		if (referer != null)
 			request.getSession().setAttribute("url_prior_login", referer);
 
-		session.setAttribute("sessionedUser", user);
+		session.setAttribute("sessionedUser", user.getUsername());
 
 		System.out.println("POST: /login");
 		return "redirect:/";

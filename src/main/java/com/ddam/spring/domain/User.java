@@ -89,7 +89,7 @@ public class User implements UserDetails{
 		user.setEmail(userFormDto.getEmail());
         user.setPhone(userFormDto.getPhone());
         String password = passwordEncoder.encode(userFormDto.getPassword());
-        user.setPassword(userFormDto.getPassword());
+        user.setPassword(password);
         return user;
     }
 
