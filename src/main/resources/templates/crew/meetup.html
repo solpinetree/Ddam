@@ -36,8 +36,8 @@
 	              		<!--  로그인한 유저일 때 -->
 		              <div th:if="${session.sessionedUser!=null}">
 		              		<input type="hidden" id = "participated" value="false">
-		              		<div th:each="member : ${meetup.members}">
-		              			<div th:if="${member==session.sessionedUser}">
+		              		<div th:each="list : ${meetup.participantList}">
+		              			<div th:if="${list.user==session.sessionedUser}">
 		              				<input type="hidden" id="participated" value="true">
 		              			</div>
 		              		</div>
@@ -108,18 +108,18 @@
 				                  <span class="probootstrap-location"><i class="fa fa-money" aria-hidden="true"></i>[[${meetup.fee}]]</span><br>
 				                  
 				                  	<!-- user 상태에 따라 다른 버튼 -->
-				                  	<div th:if={${session.sessionedUser==null}}>
-					                  	<a href="#" id="rec_part" class="btn btn-primary">참가하기</a>&nbsp;&nbsp;&nbsp;[[${#lists.size(meetup.members)}]]명 참가 예정   /    [[${meetup.memberLimit}]]
+				                  	<div th:if=${session.sessionedUser==null}>
+					                  	<a href="#" id="rec_part" class="btn btn-primary">참가하기</a>&nbsp;&nbsp;&nbsp;[[${#lists.size(meetup.participantList)}]]명 참가 예정   /    [[${meetup.memberLimit}]]
 				                  	</div>
 				                  	<script th:inline="javascript">
 				                  	 	var particitpated = $("#participated").val();
 				                  	 	if(participated=='false'){
 				                  	 </script>
-				                  	 	<a href="#" id="rec_part" class="btn btn-primary">참가하기</a>&nbsp;&nbsp;&nbsp;[[${#lists.size(meetup.members)}]]명 참가 예정   /    [[${meetup.memberLimit}]]
+				                  	 	<a href="#" id="rec_part" class="btn btn-primary">참가하기</a>&nbsp;&nbsp;&nbsp;[[${#lists.size(meetup.participantList)}]]명 참가 예정   /    [[${meetup.memberLimit}]]
 				                  	 <script th:inline="javascript">		
 				                  	 	}else if(participate=='true'){
 				                  	</script>
-				                  		<a href="#" id="rec_part" class="btn btn-primary">참가 취소</a>&nbsp;&nbsp;&nbsp;[[${#lists.size(meetup.members)}]]명 참가 예정   /    [[${meetup.memberLimit}]]
+				                  		<a href="#" id="rec_part" class="btn btn-primary">참가 취소</a>&nbsp;&nbsp;&nbsp;[[${#lists.size(meetup.participantList)}]]명 참가 예정   /    [[${meetup.memberLimit}]]
 				                  	<script th:inline="javascript">
 				                  	 	}
 				                  	</script>
