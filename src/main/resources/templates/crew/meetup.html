@@ -97,7 +97,7 @@
  	             	<!--  지도 부분  끝-->	
  	             	
 				                <div class="text">
-				                  <span class="probootstrap-location"><i class="icon-calendar2"></i> [[${meetup.datetime}]]</span>
+				                  <span class="probootstrap-location"><i class="icon-calendar2"></i>[[${#temporals.format(meetup.datetime,"yyyy년 MM월 dd일 HH:mm")}]]</span>
 				                  <span class="probootstrap-location"><i class="icon-location2"></i>[[${meetup.location}]]</span>
 				                  <h3>[[${meetup.name}]]</h3>
 				                  <p>[[${meetup.description}]]</p>

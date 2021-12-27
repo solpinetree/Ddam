@@ -14,10 +14,10 @@
     <meta name="description" content="Free Bootstrap Theme by ProBootstrap.com">
     <meta name="keywords" content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
     
-    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700|Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
     <link rel="stylesheet" th:href="@{/css/styles-merged.css}">
     <link rel="stylesheet" th:href="@{/css/style.min.css}">
-    <link rel="stylesheet" th:href="@{/css/custom.css}">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700|Open+Sans" rel="stylesheet">
 
   </head>
   <body>
@@ -58,7 +58,7 @@
               <div class="row probootstrap-gutter0">
                 <div class="col-md-7 col-md-push-1  probootstrap-animate" id="probootstrap-content">
 <!--                   <h2>Get In Touch</h2> -->
-                  <p>크루에 대한 정보를 입력해주세요!</p>
+                  <p>크루에 대한 정보를 수정해주세요!</p>
                   <form action="/crew/crew-updateOk" method="post" class="probootstrap-form" enctype="multipart/form-data" accept-charset="UTF-8">
              
                   	<!-- 썸네일 -->
@@ -85,13 +85,13 @@
                     <div class="form-group">
                       <label for="name">크루 이름</label>
                       <span style="font-size: 14px; color: red">[[${errName}]]</span>
-                      <input type="text" class="form-control" id="name" name="name" th:value="${crew.name}">
+                      <input type="text" class="form-control" id="name" name="name" th:value="${crew.name}" style="text-align:left !important;">
                     </div>
                     
                      <div class="form-group">
                       <label for="area">활동 지역</label>
                     <span style="font-size: 14px; color: red">[[${errArea}]]</span>
-                      <select class="form-control" id="subject" name="area" >
+                      <select class="form-control" id="subject" name="area" style="text-align:left !important;">
                             <option value="" th:selected="${crew.area==''}"></option>
                       		<option th:each="area : ${areaList}" th:value="${area}" th:selected="${crew.area}==${area}">[[${area}]]</option>
                       </select>
@@ -100,7 +100,7 @@
                     <div class="form-group">
                       <label for="category">운동 종류</label>
                     <span style="font-size: 14px; color: red">[[${errCategory}]]</span>
-                      <select class="form-control" id="subject" name="category" >
+                      <select class="form-control" id="subject" name="category" style="text-align:left !important;">
 							<option value="" th:selected="${crew.category==''}"></option>
                       		<option th:each="c : ${category}" th:value="${c}" th:selected="${crew.category}==${c}">[[${c}]]</option>
                       </select>
@@ -109,7 +109,7 @@
                     <div class="form-group">
                       <label for="memberLimit">멤버 인원</label>
                     <span style="font-size: 14px; color: red">[[${errMemberLimit}]]</span>
-                      <select class="form-control" id="subject" name="memberLimit">
+                      <select class="form-control" id="subject" name="memberLimit" style="text-align:left !important;">
                       		<option value="" th:selected="${crew.memberLimit==null}"></option>
                       		<option th:each="num:${#numbers.sequence(10,25)}" th:value="${num}" th:selected="${crew.memberLimit==num}">[[${num}]]</option>
                       </select>
@@ -118,7 +118,7 @@
                     <div class="form-group">
                       <label for="desc">크루의 목표 및 소개</label>
                     <span style="font-size: 14px; color: red">[[${errDescription}]]</span>
-                      <textarea cols="30" rows="10" class="form-control" id="message" name="description">[[${crew.description}]]</textarea>
+                      <textarea cols="30" rows="10" class="form-control" id="message" name="description" style="text-align:left !important;">[[${crew.description}]]</textarea>
                     </div>
                     
                     <div class="form-group">

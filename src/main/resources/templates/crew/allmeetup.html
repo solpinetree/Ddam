@@ -1,0 +1,89 @@
+<!-- 
+  Theme Name: Enlight
+  Theme URL: https://probootstrap.com/enlight-free-education-responsive-bootstrap-website-template
+  Author: ProBootstrap.com
+  Author URL: https://probootstrap.com
+  License: Released for free under the Creative Commons Attribution 3.0 license (probootstrap.com/license)
+-->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>땀땀 : 모임참가</title>
+<meta name="description"
+	content="Free Bootstrap Theme by ProBootstrap.com">
+<meta name="keywords"
+	content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
+
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700|Open+Sans" rel="stylesheet"> 
+<link rel="stylesheet" th:href="@{/css/styles-merged.css}">
+<link rel="stylesheet" th:href="@{/css/style.min.css}">
+<link rel="stylesheet" th:href="@{/css/custom.css}">
+<!-- font awesome 4 -->
+<link rel="stylesheet" th:href="@{/font-awesome/css/font-awesome.min.css}">
+
+
+</head>
+
+<body>
+	<!--  js에서 쓰기 위해 저장해놓음  -->
+	<div th:if="${session.sessionedUser!=null}">
+		<input type="hidden" id="userId" name="userId" th:value="${session.sessionedUser.id}" /> 
+	</div>
+
+
+
+ 	<div class="probootstrap-search" id="probootstrap-search">
+		<a href="#" class="probootstrap-close js-probootstrap-close"><i
+			class="icon-cross"></i></a>
+		<form action="#">
+			<input type="search" name="s" id="search"
+				placeholder="Search a keyword and hit enter..."> 
+ 		</form>
+	</div>
+	
+	<!-- START wrapper -->
+	<div class="probootstrap-page-wrapper">
+
+		<!-- header -->
+		<div th:replace="include/header::header"></div>
+		<!--  nav bar -->
+		<div th:replace="include/header::nav"></div>
+		
+		<!-- 본문 상단 -->
+		<section
+			class="probootstrap-section probootstrap-section-colored probootstrap-bg probootstrap-custom-heading probootstrap-tab-section"
+			style="background-image: url(img/running.jpg)">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 text-left section-heading probootstrap-animate">
+						<h2>다가오는 모임들</h2>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- 본문 상단 끝 -->
+		
+		<!--  미팅 리스트 보여주는 부분 -->
+ 		<div th:replace="crew/meetup :: meetuplists"></div> 
+		
+		<!-- footer -->
+		<div th:replace="include/footer :: footer"></div>
+
+	</div>
+	<!-- END wrapper -->	
+
+	
+	<!-- js include -->
+	<script th:src="@{/js/scripts.min.js}"></script>
+	<script th:src="@{/js/main.min.js}"></script>
+	<script th:src="@{/js/custom.js}"></script> 
+	<script th:src="@{/js/crewlikes.js}"></script> 
+	<script th:src="@{/js/crewmodal.js}"></script> 
+	<!--  js include 끝 -->
+</body>
+</html>

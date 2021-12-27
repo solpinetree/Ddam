@@ -14,10 +14,10 @@
     <meta name="description" content="Free Bootstrap Theme by ProBootstrap.com">
     <meta name="keywords" content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
     
-    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700|Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
     <link rel="stylesheet" th:href="@{/css/styles-merged.css}">
     <link rel="stylesheet" th:href="@{/css/style.min.css}">
-    <link rel="stylesheet" th:href="@{/css/custom.css}">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700|Open+Sans" rel="stylesheet">
 
   </head>
   <body>
@@ -65,14 +65,14 @@
                     <div class="form-group">
                       <label for="subject">이번 모임의 이름</label>
                       <span style="font-size: 14px; color: red">[[${errName}]]</span>
-                      <input type="text" class="form-control" id="subject" name="name" th:value="${meetup.name}">
+                      <input type="text" class="form-control" id="subject" name="name" th:value="${meetup.name}" style="text-align:left !important;">
                     </div>
                     
                      <div class="form-group">
                       <label for="area">만나는 장소 및 활동 장소</label>
                       <span style="font-size: 14px; color: red">[[${errName}]]</span>
 <!--                       <input type="text" class="form-control" id="name" name="location" th:value="${meetup.location}"> -->
-                      <input type="text" id="sample5_address" class="form-control" name="location" th:value="${meetup.location}"> 
+                      <input type="text" id="sample5_address" class="form-control" name="location" th:value="${meetup.location}" style="text-align:left !important;"> 
                     <!--    <input type="button" th:onclick="sample5_execDaumPostcode()" value="주소 검색"><br>  -->
                       <div id="map" style="width:300px;height:300px;margin-top:10px;display:none;"></div>
                     </div>        
@@ -80,14 +80,14 @@
                     <div class="form-group">
                       <label for="name">예정 날짜와 시간</label>
                       <span style="font-size: 14px; color: red">[[${errName}]]</span>
-                      <input type="datetime-local" class="form-control" id="datefield" name="datetime2" min="2000-10-06T12:12:55" th:value="${meetup.datetime}">
+                      <input type="datetime-local" class="form-control" id="datefield" name="datetime2" style="text-align:left !important;">
                     </div>
                    
 
                     <div class="form-group">
                       <label for="memberLimit">모임 정원</label>
                     <span style="font-size: 14px; color: red">[[${errMemberLimit}]]</span>
-                      <select class="form-control" id="subject" name="memberLimit">
+                      <select class="form-control" id="subject" name="memberLimit" style="text-align:left !important;">
                       		<option value="" th:selected="${meetup.memberLimit==null}"></option>
                       		<option th:each="num:${#numbers.sequence(10, meetup.crew.memberLimit)}" th:value="${num}" th:selected="${meetup.memberLimit==num}">[[${num}]]</option>
                       </select>
@@ -96,14 +96,14 @@
                     <div class="form-group">
                       <label for="name">회비</label>
                       <span style="font-size: 14px; color: red">[[${errName}]]</span>
-                      <input type="text" class="form-control" id="subject" name="fee" th:value="${meetup.fee}">
+                      <input type="text" class="form-control" id="subject" name="fee" th:value="${meetup.fee}" style="text-align:left !important;">
                     </div>
                     
                     
                     <div class="form-group">
                       <label for="desc">모임 활동 및 안내사항</label>
                     <span style="font-size: 14px; color: red">[[${errDescription}]]</span>
-                      <textarea cols="30" rows="10" class="form-control" id="message" name="description">[[${meetup.description}]]</textarea>
+                      <textarea cols="30" rows="10" class="form-control" id="message" name="description" style="text-align:left !important;">[[${meetup.description}]]</textarea>
                     </div>
                     
                     <div th:if="${fileName!=null}">
