@@ -53,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.and().logout() // 
 					.logoutSuccessUrl("/") // 로그아웃 성공시 리다이렉트 주소
 					.invalidateHttpSession(true) // 세션 날리기
-					.deleteCookies("JSESSIONID")
+					.deleteCookies("JSESSIONID")	// 쿠키 제거
 				.and()
 	                .csrf() 
 	                .ignoringAntMatchers("/h2-console/**").disable()

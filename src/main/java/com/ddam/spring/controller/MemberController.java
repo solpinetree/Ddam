@@ -111,8 +111,9 @@ public class MemberController {
 		return "/members/login";
 	}
 
+	// Model model => User user 로 바꿨습니다. 오류가 나서
 	@PostMapping(value = "/loginOk")
-	public String login(@Validated @ModelAttribute Model model,
+	public String login(@Validated @ModelAttribute User user,
 			String username, String password,
 			@RequestParam(value = "error", required = false) String error,
 			@RequestParam(value = "expetion", required = false) String exception,
@@ -121,19 +122,18 @@ public class MemberController {
 			HttpSession session
 			) {
 
-		User user = userRepository.findByUsername(username);
+		User user1 = userRepository.findByUsername(username);
 
-		if(user.equals(user.getUsername())) {
+		if(!username.equals(user1.getUsername())) {
 			return "redirect:/members/login";
 		}
 		
-		if(user.equals(user.getPassword())) {
+		if(!password.equals(user1.getPassword())) {
 			return "redirect:/members/login";
 		}
 
-		session.setAttribute("sessionedUser",user);
+		session.setAttribute("sessionedUser",user1);
 		return "redirect:/";
-
 	}
 
 	@GetMapping(value = "/login/error")

@@ -6,7 +6,7 @@
   License: Released for free under the Creative Commons Attribution 3.0 license (probootstrap.com/license)
 -->
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -154,7 +154,7 @@
 		
 		
 							<!--  팔로우와 좋아요 누르는 디브, 로그인한 회원에게만 보인다. -->
-								<div th:if="${session.user!=null}" style="text-align:center;">
+								<div th:if="${session.sessionedUser!=null}" style="text-align:center;">
 									
 									<!-- 크루 멤버 아니면서 크루 가입 요청 안 보낸 유저 -->
 									<div th:if="${crewRole.toString().equals('user')}">

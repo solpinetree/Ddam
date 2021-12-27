@@ -176,7 +176,7 @@ public class CrewController {
 
 		// 유효성 검사 통과 후 
 		HttpSession session = request.getSession();
-		User user = (User)session.getAttribute("user");
+		User user = (User)session.getAttribute("sessionedUser");
 
 		crew.setMemberCount(1L);
 		crew.setLikesCount(0L);
