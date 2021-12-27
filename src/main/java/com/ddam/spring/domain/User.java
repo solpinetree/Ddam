@@ -73,8 +73,8 @@ public class User implements UserDetails{
 	@Column(name = "auth")
     private String auth;
 	
-	@OneToMany(mappedBy="user")
-	private List<MeetupUser> participantList = new ArrayList<>();;
+	@OneToMany(mappedBy="user",fetch = FetchType.EAGER)
+	private Set<MeetupUser> participantList = new HashSet<>();
 
 	public static User createUser(UserFormDto userFormDto, PasswordEncoder passwordEncoder){
 		System.out.println(userFormDto);
