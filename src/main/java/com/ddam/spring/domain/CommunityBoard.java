@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
@@ -46,8 +47,9 @@ public class CommunityBoard {
 	@Column(columnDefinition = "integer default 0")
 	private int viewCnt;
 	
-//	@ManyToOne
-//	private User user;
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "community_board_cb_id")
