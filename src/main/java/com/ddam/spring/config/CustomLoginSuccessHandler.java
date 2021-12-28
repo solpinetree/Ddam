@@ -3,8 +3,6 @@ package com.ddam.spring.config;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,12 +13,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
+import com.ddam.spring.repository.UserRepository;
+
 //AuthenticationSuccessHandler(I)
 //  └─ SavedRequestAwareAuthenticationSuccessHandler
 // https://docs.spring.io/spring-security/site/docs/4.0.x/apidocs/org/springframework/security/web/authentication/SavedRequestAwareAuthenticationSuccessHandler.html
 
 public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
+	UserRepository userRepository;
+	
 	public CustomLoginSuccessHandler(String defaultTargetUrl) {
 		// 로그인후 특별히 redirect 할 url 이 없는경우 기본적으로 rediret 할 url
 		setDefaultTargetUrl(defaultTargetUrl);
@@ -49,6 +51,7 @@ public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSu
 		request.getSession().setAttribute("loginTime", loginTime);
 		
 		request.getSession().setAttribute("username", userDetails.getUsername());
+		request.getSession().setAttribute("user", userRepository.findByUsername(userDetails.getUsername()));
 		
 		
 		// 로그인 직전 url 로 redirect 하기...

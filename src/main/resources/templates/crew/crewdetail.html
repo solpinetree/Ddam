@@ -59,7 +59,7 @@
 
 <body>
 	<!--  js에서 쓰기 위해 저장해놓음  -->
-	<div th:if="${session.user!=null}">
+	<div sec:authorize="isAuthenticated()">
 		<input type="hidden" id="userId" name="userId" th:value="${session.user.id}" /> 
 		<input type="hidden" id="crewId" name="crewId" th:value="${crew.id}" />
 	</div>
@@ -154,7 +154,7 @@
 		
 		
 							<!--  팔로우와 좋아요 누르는 디브, 로그인한 회원에게만 보인다. -->
-								<div th:if="${session.sessionedUser!=null}" style="text-align:center;">
+								<div sec:authorize="isAuthenticated()" style="text-align:center;">
 									
 									<!-- 크루 멤버 아니면서 크루 가입 요청 안 보낸 유저 -->
 									<div th:if="${crewRole.toString().equals('user')}">

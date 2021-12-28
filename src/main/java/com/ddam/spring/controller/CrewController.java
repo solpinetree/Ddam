@@ -100,7 +100,7 @@ public class CrewController {
 		
 		
     	HttpSession session = request.getSession();
-    	User user = (User)session.getAttribute("sessionedUser");
+    	User user = (User)session.getAttribute("user");
     	
     	
     	if(user!=null) {
