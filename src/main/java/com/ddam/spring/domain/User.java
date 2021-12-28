@@ -56,6 +56,7 @@ public class User implements UserDetails{
 	private Long id;
 	
 	@NonNull
+	@Column(unique=true)
 	private String username;
 	
 	@NonNull
@@ -73,10 +74,11 @@ public class User implements UserDetails{
 	@NonNull
     private String phone;
 	
-	@Enumerated(EnumType.STRING)
+//	@Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role auth;
-	
+//    private Role auth;
+    private String role;
+    
 	@OneToMany(mappedBy="user",fetch = FetchType.EAGER)
 	private Set<MeetupUser> participantList = new HashSet<>();
 
@@ -90,6 +92,13 @@ public class User implements UserDetails{
         user.setPhone(userFormDto.getPhone());
         String password = passwordEncoder.encode(userFormDto.getPassword());
         user.setPassword(password);
+        
+		if(user.getUsername()=="admin") {
+			user.setRole("admin");
+		}else {
+			user.setRole("member");
+		}
+        
         return user;
     }
 

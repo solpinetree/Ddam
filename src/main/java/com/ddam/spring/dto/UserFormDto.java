@@ -37,7 +37,8 @@ public class UserFormDto{
 	@NotBlank(message= "전화번호는 필수 입력 값입니다.")
 	private String phone;
 	
-	private Role auth;
+//	private Role auth;
+	private String role;
 	
 	public User toEntity(){
         User build = User.builder()
@@ -47,7 +48,8 @@ public class UserFormDto{
                 .gender(gender)
                 .email(email)
                 .phone(phone)
-                .auth(auth)
+                .role(role)
+//                .auth(auth)
                 .build();
         return build;
     }

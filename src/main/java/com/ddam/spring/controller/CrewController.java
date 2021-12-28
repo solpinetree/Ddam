@@ -140,7 +140,6 @@ public class CrewController {
 	public String writeOk(@RequestParam("file") MultipartFile file, @Valid Crew crew, 
 			BindingResult result, Model model,
 			RedirectAttributes redirectAttributes, HttpServletRequest request) throws IllegalStateException, IOException {
-		
 
 		
 		// 크루 썸네일을 입력 안 한 경우
@@ -176,7 +175,10 @@ public class CrewController {
 
 		// 유효성 검사 통과 후 
 		HttpSession session = request.getSession();
-		User user = (User)session.getAttribute("sessionedUser");
+		String username = (String)session.getAttribute("username");
+		User user = userRepository.findByUsername(username);
+		
+		System.out.println(user + " crewAdmin user 정보");
 
 		crew.setMemberCount(1L);
 		crew.setLikesCount(0L);

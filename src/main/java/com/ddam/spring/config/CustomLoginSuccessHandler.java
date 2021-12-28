@@ -37,16 +37,18 @@ public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSu
 		UserDetails userDetails = (UserDetails)authentication.getPrincipal();
 		System.out.println("username: " + userDetails.getUsername());
 		System.out.println("password: " + userDetails.getPassword());
-		List<String> roleNames = new ArrayList<>();
-		authentication.getAuthorities().forEach(authority -> {
-			roleNames.add(authority.getAuthority());
-		});
-		System.out.println("authorities: " + roleNames);  // 권한이름들
+//		List<String> roleNames = new ArrayList<>();
+//		authentication.getAuthorities().forEach(authority -> {
+//			roleNames.add(authority.getAuthority());
+//		});
+//		System.out.println("authorities: " + roleNames);  // 권한이름들
 		
 		// 로그인 시간을 세션에 저장하기
 		LocalDateTime loginTime = LocalDateTime.now();
 		System.out.println("로그인시간: " + loginTime);
 		request.getSession().setAttribute("loginTime", loginTime);
+		
+		request.getSession().setAttribute("username", userDetails.getUsername());
 		
 		
 		// 로그인 직전 url 로 redirect 하기...

@@ -88,9 +88,9 @@ public class MemberController {
 
 		try {
 			User user = User.createUser(userFormDto, bCryptPasswordEncoder);
-			System.out.println(user);
 			redirectAttributes.addFlashAttribute("message", "회원가입 성공!");
 			userService.saveUser(user);
+			System.out.println(user+" insert 성공");
 		} catch (IllegalStateException e) {
 			model.addAttribute("errorMessage", e.getMessage());
 			return "members/join";
