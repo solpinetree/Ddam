@@ -62,7 +62,7 @@
 								
 								<!-- 좋아요 -->
 								<div class="likeToggle">
-									<div id="likes">[[${likes}]]</div>
+									<div id="likes"></div>
 									<button type="button" id="likeBtn" class="btn">좋아요</button>
 								</div>
 								
@@ -77,7 +77,7 @@
 						        <!-- 댓글 -->
 						        <hr>
 						        <section class="viewComment">
-							        <form name="commentForm" action="commentInsert" method="post" onsubmit="return chkComment()">
+							        <form name="commentForm" action="commentInsert" method="post">
 							        	<input type="hidden" id="cbId" name="cbId" th:value="${list.id}">
 							        	<input type="text" class="inputForm" id="comment" name="comment" placeholder="댓글을 작성해 주세요">
 							        	<button type="submit">등록</button>
@@ -88,7 +88,7 @@
 							        		<div>
 								        		<span> / [[${#temporals.format(commentList.createdAt, 'yyyy-MM-dd HH:mm:ss')}]]
 								        		</span>
-								        		<button type="button" th:onclick="'location.href=\'' + @{commentDelete(id=${commentList.id})} + '\''">X</button>
+								        		<button type="button" th:onclick="'chkDeleteComment(' + ${commentList.id} + ')'">X</button>
 							        		</div>
 							        		<div>[[${commentList.comment}]]</div>
 							        	</div>
@@ -126,42 +126,62 @@
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
-function chkComment() {
-	frm = document.forms['commentForm'];
-	
-	var comment = frm['comment'].value.trim();
-	
-	if(comment == ""){
-		alert("내용은 반드시 작성해야 합니다");
-		frm["comment"].focus();
-		return false;
-	}
-	
-	return true;	
-}
-
 function chkDelete(id) {
-	var r = confirm("삭제하시겠습니까?");
+	var r = confirm("게시글을 삭제하시겠습니까?");
 	
 	if(r){
 		location.href = 'deleteOk?id=' + id;
 	}
 }
 
+function chkDeleteComment(id) {
+	var r = confirm("댓글을 삭제하시겠습니까?");
+	
+	if(r){
+		location.href = 'commentDelete?id=' + id;
+	}
+}
+
+// 처음 진입시 좋아요 가져오기
+$(document).ready(function() {
+	var cbId = document.getElementById("cbId").value;
+	
+	$.ajax({
+		url: "/community/likeView",
+		type: "GET",
+		cache: false,
+		dataType: "json",
+		data: {
+			"cbId" : cbId
+		},
+		success: function(data, status) {
+			if(status == "success") {
+				document.getElementById("likes").innerHTML = data.likes;
+			}
+		}
+	});
+});
+
 // 좋아요 ajax
+// 성공 시 좋아요 가져오기
 $("#likeBtn").click(function() {
 	var cbId = document.getElementById("cbId").value;
 	
 	$.ajax({
 		url: "/community/likeToggle",
-		type: "POST",
+		type: "GET",
 		cache: false,
 		dataType: "json",
 		data: {
 			"cbId" : cbId
+		},
+		success: function(data, status) {
+			if(status == "success") {
+				document.getElementById("likes").innerHTML = data.likes;
+			}
 		}
-	})
-})
+	});
+});
 </script>
 </th:block>
 </html>

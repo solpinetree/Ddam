@@ -229,7 +229,7 @@ public class CommunityBoardService {
 	}
 	
 	// 좋아요 업데이트
-	public Map<String, Object> likeUpdate(Long cbId) {
+	public Map<String, Object> likeLoad(Long cbId) {
 		List<CommunityLike> communityLike = new ArrayList<>();
 		CommunityBoard communityBoard = communityBoardRepository.findById(cbId).orElse(null);
 		

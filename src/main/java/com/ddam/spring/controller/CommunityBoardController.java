@@ -94,7 +94,6 @@ public class CommunityBoardController {
 	@RequestMapping("/view")
 	public void view(Long id, Model model) {
 		model.addAttribute("list", communityBoardService.view(id));
-//		model.addAttribute("likes", communityBoardService.viewLikes(id));
 	}
 	
 	// update
@@ -134,25 +133,30 @@ public class CommunityBoardController {
 	
 	
 	// 좋아요 기능
+	// likeView
+	// view 진입 시
+	@ResponseBody
+	@RequestMapping("/likeView")
+	public JSONObject likeView(Long cbId) {
+		Map<String, Object> map = new HashMap<>();
+		
+		map = communityBoardService.likeLoad(cbId);
+		
+		JSONObject jsonObj = new JSONObject(map);
+		
+		return jsonObj;
+	}
+	
 	// likeToggle
 	// 좋아요 클릭 시
 	@ResponseBody
 	@RequestMapping("/likeToggle")
-	public void likeToggle(Long cbId) {
+	public JSONObject likeToggle(Long cbId) {
 		communityBoardService.likeToggle(cbId);
 		
-		// 업데이트된 좋아요 수를 다시 반환하는 방법??
-//		communityBoardService.selectById(cbId).get(0).getCommunityLikes();
-	}
-	
-	// viewLikes
-	// 좋아요 수 업데이트
-	@ResponseBody
-	@RequestMapping("/likeUpdate")
-	public JSONObject likeUpdate(Long cbId) {
 		Map<String, Object> map = new HashMap<>();
 		
-		map = communityBoardService.likeUpdate(cbId);
+		map = communityBoardService.likeLoad(cbId);
 		
 		JSONObject jsonObj = new JSONObject(map);
 		
