@@ -102,7 +102,7 @@ public class CrewController {
     	HttpSession session = request.getSession();
     	User user = (User)session.getAttribute("user");
     	
-    	
+    	System.out.println("crew-detail: " +user);   	
     	if(user!=null) {
 		
 	    	// 지금 로그인한 유저와 크루와의 관계
