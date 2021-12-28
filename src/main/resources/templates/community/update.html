@@ -65,8 +65,8 @@
 						            </div>
 						            
 						            <!-- 기존 첨부파일 -->
-						            <div class="writeFormInner">
-						            	
+						            <div class="writeFormInner" th:each="fileList: ${list.communityFiles}">
+						            	<span>[[${fileList.originalName}]]</span>
 						            </div>
 						            
 									<!-- 첨부파일 -->

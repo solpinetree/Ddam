@@ -1,7 +1,10 @@
 package com.ddam.spring.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -91,7 +94,7 @@ public class CommunityBoardController {
 	@RequestMapping("/view")
 	public void view(Long id, Model model) {
 		model.addAttribute("list", communityBoardService.view(id));
-		model.addAttribute("likes", communityBoardService.viewLikes(id));
+//		model.addAttribute("likes", communityBoardService.viewLikes(id));
 	}
 	
 	// update
@@ -135,11 +138,25 @@ public class CommunityBoardController {
 	// 좋아요 클릭 시
 	@ResponseBody
 	@RequestMapping("/likeToggle")
-	public void likeToggle(Long cbId, Model model) {
+	public void likeToggle(Long cbId) {
 		communityBoardService.likeToggle(cbId);
 		
 		// 업데이트된 좋아요 수를 다시 반환하는 방법??
-		communityBoardService.selectById(cbId).get(0).getCommunityLikes();
+//		communityBoardService.selectById(cbId).get(0).getCommunityLikes();
+	}
+	
+	// viewLikes
+	// 좋아요 수 업데이트
+	@ResponseBody
+	@RequestMapping("/likeUpdate")
+	public JSONObject likeUpdate(Long cbId) {
+		Map<String, Object> map = new HashMap<>();
+		
+		map = communityBoardService.likeUpdate(cbId);
+		
+		JSONObject jsonObj = new JSONObject(map);
+		
+		return jsonObj;
 	}
 	
 	

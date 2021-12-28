@@ -3,7 +3,9 @@ package com.ddam.spring.service;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ import com.ddam.spring.repository.CommunityBoardRepository;
 import com.ddam.spring.repository.CommunityCommentRepository;
 import com.ddam.spring.repository.CommunityFileRepository;
 import com.ddam.spring.repository.CommunityLikeRepository;
+import com.ddam.spring.repository.UserRepository;
 
 @Service
 public class CommunityBoardService {
@@ -56,12 +59,12 @@ public class CommunityBoardService {
 		this.communityFileRepository = communityFileRepository;
 	}
 	
-//	private UserRepository userRepository;
-//	
-//	@Autowired
-//	public void setUserRepository(UserRepository userRepository) {
-//		this.userRepository = userRepository;
-//	}
+	private UserRepository userRepository;
+	
+	@Autowired
+	public void setUserRepository(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
 	
 	public CommunityBoardService() {
 		System.out.println("CommunityBoardService() 생성");
@@ -214,49 +217,6 @@ public class CommunityBoardService {
 		
 		return 1;
 	}
-	
-	// 게시글 조회 시 좋아요 수
-	public int viewLikes(Long id) {
-		int likes = 0;
-		
-		CommunityBoard communityBoard = communityBoardRepository.findById(id).orElse(null);
-		List<CommunityLike> communityLike = new ArrayList<>();
-		communityLike = communityBoard.getCommunityLikes();
-		
-		// toggle이 1일 때 likes에 추가
-		for(int i = 0; i < communityLike.size(); i++) {
-			if(communityLike.get(i).getToggle() == 1) {
-				likes++;
-			}
-		}
-		
-		return likes;
-	}
-	
-	// 게시글 조회 시 좋아요 여부
-	public int toggleValue(Long id) {
-		int toggle = 0;
-		
-		CommunityBoard communityBoard = communityBoardRepository.findById(id).orElse(null);
-		List<CommunityLike> communityLike = new ArrayList<>();
-		communityLike = communityBoard.getCommunityLikes();
-		
-		for(int i = 0; i < communityLike.size(); i++) {
-			// 기존 좋아요 유저 정보와 현재 유저 정보 일치하는지 확인
-//			if(communityLike.get(i).getUser().equals(user)) {
-//				// 일치하면 토글값 확인 후 변경
-//				if(communityLike.get(i).getToggle() == 0) {
-//					communityLike.get(i).setToggle(1);
-//					
-//					toggle = 1;
-//				} else {
-//					communityLike.get(i).setToggle(0);
-//				}
-//			}
-		}
-		
-		return toggle;
-	}
 
 	// 좋아요
 	public void likeToggle(Long cbId) {
@@ -269,13 +229,26 @@ public class CommunityBoardService {
 	}
 	
 	// 좋아요 업데이트
-	public List<CommunityLike> likeUpdate(Long cbId) {
+	public Map<String, Object> likeUpdate(Long cbId) {
 		List<CommunityLike> communityLike = new ArrayList<>();
 		CommunityBoard communityBoard = communityBoardRepository.findById(cbId).orElse(null);
 		
+		int likes = 0;
+		
 		communityLike = communityBoard.getCommunityLikes();
 		
-		return communityLike;
+		// toggle이 1일 때 likes에 추가
+		for(int i = 0; i < communityLike.size(); i++) {
+			if(communityLike.get(i).getToggle() == 1) {
+				likes++;
+			}
+		}
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("likes", likes);
+		
+		return map;
 	}
 	
 	// 댓글 등록
