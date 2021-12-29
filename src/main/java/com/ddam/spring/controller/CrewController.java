@@ -8,12 +8,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -48,6 +46,8 @@ import com.ddam.spring.validation.CrewValidator;
 @RequestMapping("/crew")
 public class CrewController {
 	
+	@Autowired
+	CrewValidator crewValidator;
 
 	@Autowired
 	private CrewRepository crewRepository;
@@ -68,9 +68,9 @@ public class CrewController {
 	private MeetupRepository meetupRepository;
 	
 	// 이 컨트롤러 의 handler 에서 폼 데이터를 바인딩할때 검증하는 객체 지정
-	@InitBinder
+	@InitBinder("crewValidator")
 	public void initBinder(WebDataBinder binder) {
-		binder.setValidator(new CrewValidator());
+		binder.setValidator(crewValidator);
 	}
 	
 	// area 지역 
@@ -102,7 +102,10 @@ public class CrewController {
 		
 		
     	HttpSession session = request.getSession();
-    	User user = (User)session.getAttribute("user");
+    	String username = (String)session.getAttribute("username");
+    	User user = userRepository.findByUsername(username);
+    	
+    	model.addAttribute("user", user);
     	
     	System.out.println("crew-detail: " +user);   	
     	if(user!=null) {
@@ -137,9 +140,6 @@ public class CrewController {
 		model.addAttribute("category", category);
 		return "crew/newcrew";
 	}
-	
-	
-	
 
 	@PostMapping("/crew-writeOk")
 	public String writeOk(@RequestParam("file") MultipartFile file, @Valid Crew crew, 
@@ -154,29 +154,12 @@ public class CrewController {
 			
 			System.out.println("파일 입력 됨");
 			
-			ServletContext context = request.getServletContext();
-			String saveDirectory = context.getRealPath("crewphoto");
-			System.out.println("saveDirectory: " + saveDirectory);
-			
-			File f = new File(saveDirectory);
-			if(!f.exists()) {
-				if(f.mkdir()) {
-					System.out.println("폴더 생성 성공!");
-				} else {
-					System.out.println("폴더 생성 실패");
-				}
-			} else {
-				System.out.println("폴더가 이미 존재합니다");
-			}
-			
-			
 			// 크루 썸네일이 입력된 경우 
-//			String path = System.getProperty("user.dir") +"/src/main/resources/static/crewphoto/";
-			String path = saveDirectory;
+			String path = System.getProperty("user.dir") +"/src/main/resources/static/crewphoto/";
 			UUID uuid = UUID.randomUUID();
 			String fileName = uuid+"_"+file.getOriginalFilename();
-			File saveFile = new File(path, fileName);
-			System.out.println("파일 저장 경로: "+ saveFile.getAbsolutePath());
+			File saveFile = new File(path + fileName);
+			System.out.println("파일 저장 경로: "+saveFile);
 	        file.transferTo(saveFile);
 			
 			crew.setFileOriginName(file.getOriginalFilename());
@@ -307,8 +290,11 @@ public class CrewController {
 	 *  팔로우 요청이 왔을 때
 	 */
 	@RequestMapping("/follow/request/{cid}")
-	public String request(@PathVariable("cid") long cid, Model model) throws Exception {
-		
+	public String request(@PathVariable("cid") long cid, Model model, HttpServletRequest request) throws Exception {
+		HttpSession session = request.getSession();
+		String username = (String)session.getAttribute("username");
+		User user = userRepository.findByUsername(username);
+		model.addAttribute("user", user);
 		model.addAttribute("cid", cid);
 		return "crew/follow-request";
 	}
@@ -318,7 +304,7 @@ public class CrewController {
 	 */
 	@PostMapping("/follow/request-ok")
 	public String requestOk(@RequestParam String info, @RequestParam long cid, @RequestParam long uid,
-			RedirectAttributes redirectAttributes) {
+			Model model, RedirectAttributes redirectAttributes) {
 		
 		FollowRequest followRequest = new FollowRequest(); 
     	followRequest.setInfo(info);
@@ -333,7 +319,8 @@ public class CrewController {
 //    		crew.getRequests().add(user);
     	}
     	
-    	redirectAttributes.addFlashAttribute("cid", cid);
+//    	redirectAttributes.addFlashAttribute("cid", cid);
+    	model.addAttribute("cid", cid);
     	
 		return "crew/request-ok";
 	}
@@ -345,9 +332,10 @@ public class CrewController {
 	@RequestMapping("/unfollow/{cid}")
 	public String unfollow(@PathVariable("cid") long cid, HttpServletRequest request) throws Exception {
 		
-    	HttpSession session = request.getSession();
-    	User user = (User)session.getAttribute("sessionedUser");
-
+		HttpSession session = request.getSession();
+		String username = (String)session.getAttribute("username");
+		User user = userRepository.findByUsername(username);
+    	
 //    	crewRepository.findById(cid).getMembers().remove(user);
     	
 		followService.deleteByFromUserIdAndToCrewId(user.getId(), cid);
@@ -455,4 +443,7 @@ public class CrewController {
 			}
 		}
 	}
+	
+	
+	
 }
