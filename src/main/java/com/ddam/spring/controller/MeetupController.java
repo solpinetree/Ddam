@@ -2,6 +2,7 @@ package com.ddam.spring.controller;
 
 import java.text.ParseException;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ddam.spring.domain.Follow;
 import com.ddam.spring.domain.Meetup;
 import com.ddam.spring.domain.User;
 import com.ddam.spring.repository.CrewRepository;
+import com.ddam.spring.repository.FollowRepository;
 import com.ddam.spring.repository.MeetupRepository;
 import com.ddam.spring.repository.UserRepository;
 import com.ddam.spring.service.MeetupUserService;
@@ -36,6 +39,9 @@ public class MeetupController {
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	FollowRepository followRepository;
 	
 	@Autowired
 	MeetupUserService meetupUserService;
@@ -85,8 +91,10 @@ public class MeetupController {
     	HttpSession session = request.getSession();
     	String username = (String)session.getAttribute("username");
     	User user = userRepository.findByUsername(username);
+    	List<Follow> followlist = followRepository.findByFromUserId(user.getId());
 
 		model.addAttribute("user", user);
+		model.addAttribute("followList", followlist);
 		model.addAttribute("meetupLists", meetupRepository.findByDatetimeGreaterThanOrderByDatetimeAsc(LocalDateTime.now().minusDays(1L)));
 		
 		return "crew/allmeetup";

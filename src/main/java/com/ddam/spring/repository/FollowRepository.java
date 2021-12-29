@@ -21,5 +21,8 @@ public interface FollowRepository extends JpaRepository<Follow, Long>{
 	int countByFromUserIdAndToCrewId(long fromUserId, long toCrewId);	 // 팔로우 되어있는지 count 하는 메서드
 
 	List<Follow> findAllByToCrewId(long toCrewId);
+	
+	List<Follow> findByFromUserId(Long fromUserId);
+
 
 }

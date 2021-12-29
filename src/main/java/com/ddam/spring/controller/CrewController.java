@@ -31,10 +31,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ddam.spring.domain.Crew;
+import com.ddam.spring.domain.Follow;
 import com.ddam.spring.domain.FollowRequest;
 import com.ddam.spring.domain.Meetup;
 import com.ddam.spring.domain.User;
 import com.ddam.spring.repository.CrewRepository;
+import com.ddam.spring.repository.FollowRepository;
 import com.ddam.spring.repository.FollowRequestRepository;
 import com.ddam.spring.repository.MeetupRepository;
 import com.ddam.spring.repository.UserRepository;
@@ -66,6 +68,9 @@ public class CrewController {
 	
 	@Autowired
 	private MeetupRepository meetupRepository;
+	
+	@Autowired
+	private FollowRepository followRepository;
 	
 	// 이 컨트롤러 의 handler 에서 폼 데이터를 바인딩할때 검증하는 객체 지정
 	@InitBinder("crewValidator")
@@ -127,6 +132,9 @@ public class CrewController {
     	
     	List<Meetup> meetupLists = meetupRepository.findByCrewId(cid);
     	model.addAttribute( "meetupLists", meetupLists);
+    	
+    	List<Follow> followlist = followRepository.findByFromUserId(user.getId());
+		model.addAttribute("followList", followlist);
 		
 		return "crew/crewdetail";
 	}
