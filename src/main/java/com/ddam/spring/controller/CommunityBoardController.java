@@ -102,6 +102,7 @@ public class CommunityBoardController {
 	@RequestMapping("/view")
 	public void view(Long id, Model model) {
 		model.addAttribute("list", communityBoardService.view(id));
+		model.addAttribute("likes", communityBoardService.likeLoadLogout(id));
 	}
 	
 	// update
@@ -112,7 +113,7 @@ public class CommunityBoardController {
 	
 	// updateOk
 	@PostMapping("/updateOk")
-	public String updateOk(@RequestParam("multipartFile") MultipartFile multipartFile, CommunityBoard cbEntity
+	public String updateOk(@RequestParam("multipartFile") MultipartFile multipartFile, CommunityBoard cbEntity, Long removeFileId
 			, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 		
 		String page = "community/updateOk";
@@ -127,7 +128,7 @@ public class CommunityBoardController {
 			page = "redirect:/community/update?id=" + cbEntity.getId();
 		} else {
 			model.addAttribute("cbEntity", cbEntity);
-			model.addAttribute("result", communityBoardService.update(multipartFile, cbEntity));
+			model.addAttribute("result", communityBoardService.update(multipartFile, cbEntity, removeFileId));
 		}
 		
 		return page;

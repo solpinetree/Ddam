@@ -8,6 +8,7 @@
 <link rel="stylesheet" th:href="@{/css/styles-merged.css}">
 <link rel="stylesheet" th:href="@{/css/style.min.css}">
 <link rel="stylesheet" th:href="@{/css/community.css}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
 
@@ -44,7 +45,7 @@
 								<!-- 게시글 정보 -->
 								<div class="viewInfo">
 									<span>
-							            <span>[[${list.username}]]</span>
+							            <span id="writer">[[${list.username}]]</span>
 							            <span>/</span>
 							            <span>[[${#temporals.format(list.createdAt, 'yyyy-MM-dd HH:mm:ss')}]]</span>
 									</span>
@@ -62,14 +63,14 @@
 								
 								<!-- 좋아요 -->
 								<div class="likeToggle">
-									<div id="likes"></div>
+									<div id="likes">좋아요 [[${likes}]]</div>
 									<span id="likeBtn"></span>
 								</div>
 								
 								<!-- 게시판 버튼 -->
 								<div class="cbBtn">
 						        	<button type="button" class="btn" th:onclick="'chkDelete(' + ${list.id} + ')'">삭제</button>
-									<button type="button" class="btn" th:onclick="'location.href=\'' + @{update(id=${list.id})} + '\''">수정</button>
+									<button type="button" class="btn" th:onclick="'chkUpdate(' + ${list.id} + ')'">수정</button>
 						        	<button type="button" class="btn" onclick="location.href='list'">목록</button>
 						        	<button type="button" class="btn" onclick="location.href='write'">작성</button>
 						        </div>
@@ -123,13 +124,30 @@
 	-->
 
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script>
+<script inline="javascript">
 function chkDelete(id) {
-	var r = confirm("게시글을 삭제하시겠습니까?");
+	var writer = document.getElementById("writer").innerHTML;
+	var username = "[[${session.username}]]";
 	
-	if(r){
-		location.href = 'deleteOk?id=' + id;
+	if(writer == username) {
+		var r = confirm("게시글을 삭제하시겠습니까?");
+	
+		if(r){
+			location.href = 'deleteOk?id=' + id;
+		}
+	} else {
+		alert("작성자가 아닙니다");
+	}
+}
+
+function chkUpdate(id) {
+	var writer = document.getElementById("writer").innerHTML;
+	var username = "[[${session.username}]]";
+	
+	if(writer == username) {
+		location.href = 'update?id=' + id;
+	} else {
+		alert("작성자가 아닙니다");
 	}
 }
 
@@ -183,7 +201,7 @@ $("#likeBtn").click(function() {
 
 // 화면에 좋아요 보여주기
 function viewLikes(data) {
-	document.getElementById("likes").innerHTML = data.likes;
+	document.getElementById("likes").innerHTML = "좋아요 " + data.likes;
 	
 	if(data.toggle == 0) {
 		$("#likeBtn").html("<img src='/img/heartE.png'>");

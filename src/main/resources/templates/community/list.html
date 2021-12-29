@@ -60,7 +60,6 @@
 											<th class="tbcenter">작성자</th>
 											<th class="tbcenter">작성일</th>
 											<th class="tbcenter">조회 수</th>
-											<th class="tbcenter">좋아요</th>
 										</tr>
 										<tr th:each="pagingList: ${pagingList}">
 											<td class="tbcenter">[[${pagingList.id}]]</td>
@@ -68,7 +67,6 @@
 											<td class="tbcenter">[[${pagingList.username}]]</td>
 											<td class="tbcenter">[[${#temporals.format(pagingList.createdAt, 'yyyy-MM-dd')}]]</td>
 											<td class="tbcenter">[[${pagingList.viewCnt}]]</td>
-											<td class="tbcenter">[[${pagingList.communityLikes.size}]]</td>
 										</tr>
 									</table>
 								</div>
