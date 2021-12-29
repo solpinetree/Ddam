@@ -55,26 +55,28 @@
       <section class="probootstrap-section">
         <div class="container">
           <div class="row">
-         	<div th:each="crew : ${crewList}">
+         	<div th:each="crew:${crewList}">
 	         	<!--  하나의 크루 -->
+	         	
 		         	<div style="cursor:pointer" th:onclick="'location.href=\'' + @{/crew/crew-detail/{id}(id=${crew.id})} +'\''">
 			            <div class="col-md-6">
 			              <div class="probootstrap-service-2 probootstrap-animate">
 			                <div class="image">
-			                  <div class="image-bg">
-			                    <img th:src="${crew.filePath}" alt="Free Bootstrap Template by ProBootstrap.com">
-			                  </div>
-			                </div>
+								<div class="image-bg">
+									<!--  <span th:text="${crew.filePath}"></span>-->
+									<img th:src="@{${crew.filePath}}" alt="Free Bootstrap Template by ProBootstrap.com">
+								</div>
+							</div>
 			                <div class="text">
-			                  <h3>[[${crew.name}]]</h3>
+			                  <h3 th:text="${crew.name}">크루 이름</h3>
 			                  <span class="probootstrap-meta" th:text="${crew.area}"></span><br>
 			                  <span class="probootstrap-meta" th:text="${crew.category}"></span><br>
-			                  <span class="probootstrap-meta"><i class="fa fa-heart" aria-hidden="true">&nbsp;[[${crew.likesCount}]]</i></span>
-			                  <p><span class="enrolled-count">[[${crew.memberCount}]] / [[${crew.memberLimit}]]</span></p>
+			                  <p><span class="enrolled-count" th:text="${crew.memberCount+'/'+crew.memberLimit}"></span></p>
 			                </div>
 			              </div>
 			             </div>
 			         </div>
+			      
 	             <!-- 하나의 크루 끝 -->
              </div>
           </div>
