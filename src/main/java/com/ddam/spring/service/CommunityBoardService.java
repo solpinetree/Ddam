@@ -176,10 +176,14 @@ public class CommunityBoardService {
 	}
 
 	// 게시글 수정
-	public int update(MultipartFile multipartFile, CommunityBoard cbEntity) {
+	public int update(MultipartFile multipartFile, CommunityBoard cbEntity, Long removeFileId) {
 		int cnt = 0;
 		
 		CommunityFile cfEntity = new CommunityFile();
+		
+		if(removeFileId != null) {
+			communityFileRepository.deleteById(removeFileId);
+		}
 		
 		// 파일 없으면 넘어가기
 		if(!multipartFile.isEmpty()) {
@@ -213,7 +217,7 @@ public class CommunityBoardService {
 		return 1;
 	}
 
-	// 좋아요
+	// 좋아요 ajax
 	public Map<String, Object> likeToggle(Long cbId, String username) {
 		int likes = 0;
 		int toggle = 1;
@@ -259,7 +263,7 @@ public class CommunityBoardService {
 		return map;
 	}
 	
-	// 좋아요 수
+	// 좋아요 수 ajax
 	public Map<String, Object> likeLoad(Long cbId, String username) {
 		int likes = 0;
 		int toggle = 0;
@@ -288,6 +292,25 @@ public class CommunityBoardService {
 		map.put("toggle", toggle);
 		
 		return map;
+	}
+	
+	// 좋아요 수 비로그인
+	public int likeLoadLogout(Long cbId) {
+		int likes = 0;
+		
+		CommunityBoard communityBoard = communityBoardRepository.findById(cbId).orElse(null);
+		
+		List<CommunityLike> communityLike = new ArrayList<>();
+		communityLike = communityBoard.getCommunityLikes();
+		
+		// toggle이 1일 때 likes에 추가
+		for(int i = 0; i < communityLike.size(); i++) {
+			if(communityLike.get(i).getToggle() == 1) {
+				likes++;
+			}
+		}
+		
+		return likes;
 	}
 	
 	// 댓글 등록

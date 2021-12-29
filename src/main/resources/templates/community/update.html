@@ -8,6 +8,7 @@
 <link rel="stylesheet" th:href="@{/css/styles-merged.css}">
 <link rel="stylesheet" th:href="@{/css/style.min.css}">
 <link rel="stylesheet" th:href="@{/css/community.css}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
 
@@ -65,14 +66,16 @@
 						            </div>
 						            
 						            <!-- 기존 첨부파일 -->
+						            <div id="removeFiles"></div>
 						            <div class="writeFormInner" th:each="fileList: ${list.communityFiles}">
 						            	<span>[[${fileList.originalName}]]</span>
+						            	<button type="button" id="removeFileBtn" th:onclick="'removeFile(' + ${fileList.id} + '); $(this).parent().remove()'">파일 삭제</button>
 						            </div>
 						            
 									<!-- 첨부파일 -->
-									<div class="writeFormInner">
-										<label for="multipartFile">첨부파일 : </label>
-										<div id="inputFile">
+									<div class="writeFormInner" id="addFiles">
+										<label th:if="${list.communityFiles.size()} == 0" for="multipartFile">첨부파일 : </label>
+										<div th:if="${list.communityFiles.size()} == 0" id="inputFile">
 											<input name="multipartFile" id="multipartFile" type="file" multiple="multiple">
 										</div>
 									</div>
@@ -114,5 +117,13 @@
 	-->
 
 </body>
+<script>
+function removeFile(cfId) {
+	$("#removeFiles").append("<input type='hidden' name='removeFileId' value='" + cfId + "'>");
+	
+	$("#addFiles").append("<label for='multipartFile'>첨부파일 : </label>" +
+			"<div id='inputFile'>" + "<input name='multipartFile' id='multipartFile' type='file' multiple='multiple'>" + "</div>");
+}
+</script>
 </th:block>
 </html>
