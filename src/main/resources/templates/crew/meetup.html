@@ -11,7 +11,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>땀땀 : 크루탐색</title>
+    <title>땀땀 : 모임 탐색</title>
     <meta name="description" content="Free Bootstrap Theme by ProBootstrap.com">
     <meta name="keywords" content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
     
@@ -35,12 +35,8 @@
 	              
 	              		<!--  로그인한 유저일 때 -->
 		              <div sec:authorize="isAuthenticated()">
-		              		<input type="hidden" id = "participated" value="false">
-		              		<div th:each="list : ${meetup.participantList}">
-		              			<div th:if="${list.user==session.sessionedUser}">
-		              				<input type="hidden" id="participated" value="true">
-		              			</div>
-		              		</div>
+		              		<input type="hidden" id = "userId" th:value="${user.id}">
+		              		<input type="hidden" id = "meetupId" th:value="${meetup.id}">
 		              </div>
   	             				<!--  지도 부분 -->	
 	              				<div th:id="'div'+${meetup.id}" style="width:100%;height:350px;"></div>
@@ -107,23 +103,47 @@
 				                  <span class="probootstrap-location"><i class="icon-location2"></i>[[${meetup.location}]]</span>
 				                  <span class="probootstrap-location"><i class="fa fa-money" aria-hidden="true"></i>[[${meetup.fee}]]</span><br>
 				                  
-				                  	<!-- user 상태에 따라 다른 버튼 -->
-				                  	<div th:if=${session.sessionedUser==null}>
-					                  	<a href="#" id="rec_part" class="btn btn-primary">참가하기</a>&nbsp;&nbsp;&nbsp;[[${#lists.size(meetup.participantList)}]]명 참가 예정   /    [[${meetup.memberLimit}]]
+				                  	<div th:if=${#lists.size(meetup.participantList)!=meetup.memberLimit}>
+								                  	<!-- user 상태에 따라 다른 버튼 -->
+								                  	<div sec:authorize="isAnonymous()">
+									                  	<a href="#" onClick="alert('로그인 후에 이용해주세요!')" id="rec_part" class="btn btn-primary">참가하기</a>&nbsp;&nbsp;&nbsp;[[${#lists.size(meetup.participantList)}]]명 참가 예정   /    [[${meetup.memberLimit}]]
+								                  	</div>
+								                  	
+								                  	<div th:id="'participate_btn'+${meetup.id}" sec:authorize="isAuthenticated()">
+														<div th:each="meetupUser, index : ${meetup.participantList}">
+															<div th:if="${meetupUser.user == user}">
+										                  		<button th:onclick="'updatePart(\''+${meetup.id} + '\')'" class="btn btn-primary">참가 취소</button>&nbsp;&nbsp;&nbsp;[[${#lists.size(meetup.participantList)}]]명 참가 예정   /    [[${meetup.memberLimit}]]
+															</div>
+															<div th:if="${index.count== #lists.size(meetup.participantList)}">
+																<div th:if="${meetupUser.user!= user}">
+									                  	 			<button th:onclick="'updatePart(\''+${meetup.id} + '\')'" class="btn btn-primary">참가하기</button>&nbsp;&nbsp;&nbsp;[[${#lists.size(meetup.participantList)}]]명 참가 예정   /    [[${meetup.memberLimit}]]
+																</div>
+															</div>
+														</div>
+																		<!--참가, 참가 취소 버튼 관리하는 AJAX -->
+																		<script th:inline="javascript">
+																		
+																			function updatePart(meetupId){
+																				var userId = $("#userId").val();
+																				
+																				$.ajax({
+																					url: "/crew/meetup/partupdate",
+																	                type: "POST",
+																	                data: {
+																	                	"meetupId": meetupId,
+																	                    "userId": userId
+																	                },
+																	                complete: function () {
+																	                	$("#participate_btn"+meetupId).load(location.href + " #participate_btn"+meetupId);
+																	                },
+																				})
+																			}
+																		</script>
+																		<!--  AJAX 끝 -->
+								                  	</div>
 				                  	</div>
-				                  	<div sec:authorize="isAuthenticated()">
-					                  	<script th:inline="javascript">
-					                  	 	var particitpated = $("#participated").val();
-					                  	 	if(participated=='false'){
-					                  	 </script>
-					                  	 	<a href="#" id="rec_part" class="btn btn-primary">참가하기</a>&nbsp;&nbsp;&nbsp;[[${#lists.size(meetup.participantList)}]]명 참가 예정   /    [[${meetup.memberLimit}]]
-					                  	 <script th:inline="javascript">		
-					                  	 	}else if(participate=='true'){
-					                  	</script>
-					                  		<a href="#" id="rec_part" class="btn btn-primary">참가 취소</a>&nbsp;&nbsp;&nbsp;[[${#lists.size(meetup.participantList)}]]명 참가 예정   /    [[${meetup.memberLimit}]]
-					                  	<script th:inline="javascript">
-					                  	 	}
-					                  	</script>
+				                  	<div th:if=${#lists.size(meetup.participantList)==meetup.memberLimit}>
+				                  		<a href="#" onClick="alert('인원이 꽉 찼습니다.')" id="rec_part" class="btn btn-primary">모집 인원 마감</a>&nbsp;&nbsp;&nbsp;[[${#lists.size(meetup.participantList)}]]명 참가 예정   /    [[${meetup.memberLimit}]]
 				                  	</div>
 				                </div>
 				               	<!-- user 상태에 따라 다른 버튼 -->
@@ -139,6 +159,8 @@
     <script th:src="@{/js/scripts.min.js}"></script>
 	<script th:src="@{/js/main.min.js}"></script>
 	<script th:src="@{/js/custom.js}"></script>
+	
 
+	
   </body>
 </html>

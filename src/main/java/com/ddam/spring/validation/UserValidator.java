@@ -13,8 +13,8 @@ import com.ddam.spring.repository.UserRepository;
 @Component
 public class UserValidator implements Validator {
 
-	@Autowired
-	private UserRepository userRepository;
+	
+	
 
 	@Override
 	public boolean supports(Class<?> clazz) {

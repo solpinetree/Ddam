@@ -2,6 +2,7 @@ package com.ddam.spring.controller;
 
 import java.text.ParseException;
 import java.time.LocalDateTime;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,12 +15,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ddam.spring.domain.Meetup;
-import com.ddam.spring.domain.MeetupUser;
 import com.ddam.spring.domain.User;
 import com.ddam.spring.repository.CrewRepository;
 import com.ddam.spring.repository.MeetupRepository;
+import com.ddam.spring.repository.UserRepository;
+import com.ddam.spring.service.MeetupUserService;
 
 @Controller
 @RequestMapping("/crew/meetup")
@@ -30,6 +33,12 @@ public class MeetupController {
 	
 	@Autowired
 	MeetupRepository meetupRepository;
+	
+	@Autowired
+	UserRepository userRepository;
+	
+	@Autowired
+	MeetupUserService meetupUserService;
 	
 	
 	/**
@@ -70,20 +79,41 @@ public class MeetupController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("list")
+	@RequestMapping("/list")
 	public String meetupList(Model model, HttpServletRequest request) {
 		
     	HttpSession session = request.getSession();
-    	User user = (User)session.getAttribute("sessionedUser");
-		
-    	if(user!=null) {
-    		model.addAttribute("status", "none");
-    	}else {
-    		
-    	}
-		
+    	String username = (String)session.getAttribute("username");
+    	User user = userRepository.findByUsername(username);
+
+		model.addAttribute("user", user);
 		model.addAttribute("meetupLists", meetupRepository.findByDatetimeGreaterThanOrderByDatetimeAsc(LocalDateTime.now().minusDays(1L)));
 		
 		return "crew/allmeetup";
+	}
+	
+	/**
+	 * 유저의 모임 참가 or 참가 취소 버튼을 누르면 호출되는 ajax 에서 버튼 상태를 
+	 * 처리하는 핸들러 메소드
+	 * @param model
+	 * @param paramMap
+	 */
+	@PostMapping("/partupdate")
+	@ResponseBody
+	public void update(Model model, @RequestParam Map<String, Object> paramMap) {
+
+		long userId = Long.parseLong((String)paramMap.get("userId"));
+		long meetupId = Long.parseLong((String)paramMap.get("meetupId"));
+		
+		System.out.println(userId + " " + meetupId + " 허전");
+		
+		// 동일 모임에 대한 참가 신청 여부 검색
+		int result = meetupUserService.find(userId,meetupId);
+		
+		if(result ==0) {	//참가하기 안 누른 상태
+			meetupUserService.save(userId,meetupId);
+		}else {	// 이미 좋아요를 누른 상태라면
+			meetupUserService.delete(userId,meetupId);
+		}
 	}
 }

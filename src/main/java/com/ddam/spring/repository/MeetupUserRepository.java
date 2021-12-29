@@ -6,4 +6,9 @@ import com.ddam.spring.domain.MeetupUser;
 
 public interface MeetupUserRepository extends JpaRepository<MeetupUser, Long>{
 
+	int countByUserIdAndMeetupId(long uid, long mid);
+
+	void deleteByUserIdAndMeetupId(long uid, long mid);
+	
+	MeetupUser findByUserIdAndMeetupId(long uid, long mid);
 }
