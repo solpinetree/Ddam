@@ -63,7 +63,7 @@
 								<!-- 좋아요 -->
 								<div class="likeToggle">
 									<div id="likes"></div>
-									<button type="button" id="likeBtn" class="btn">좋아요</button>
+									<span id="likeBtn"></span>
 								</div>
 								
 								<!-- 게시판 버튼 -->
@@ -75,9 +75,9 @@
 						        </div>
 						        
 						        <!-- 댓글 -->
-						        <hr>
 						        <section class="viewComment">
-							        <form name="commentForm" action="commentInsert" method="post">
+							        <form name="commentForm" action="commentInsert" method="post" sec:authorize="isAuthenticated()">
+							        	<hr>
 							        	<input type="hidden" id="cbId" name="cbId" th:value="${list.id}">
 							        	<input type="text" class="inputForm" id="comment" name="comment" placeholder="댓글을 작성해 주세요">
 							        	<button type="submit">등록</button>
@@ -86,8 +86,7 @@
 							        	<div class="commentList" th:each="commentList: ${list.communityComments}">
 							        		<hr>
 							        		<div>
-								        		<span> / [[${#temporals.format(commentList.createdAt, 'yyyy-MM-dd HH:mm:ss')}]]
-								        		</span>
+								        		<span th:each="user: ${commentList.user}">[[${user.username}]] / [[${#temporals.format(commentList.createdAt, 'yyyy-MM-dd HH:mm:ss')}]]</span>
 								        		<button type="button" th:onclick="'chkDeleteComment(' + ${commentList.id} + ')'">X</button>
 							        		</div>
 							        		<div>[[${commentList.comment}]]</div>
@@ -156,13 +155,12 @@ $(document).ready(function() {
 		},
 		success: function(data, status) {
 			if(status == "success") {
-				document.getElementById("likes").innerHTML = data.likes;
+				viewLikes(data);
 			}
 		}
 	});
 });
 
-// 좋아요 ajax
 // 성공 시 좋아요 가져오기
 $("#likeBtn").click(function() {
 	var cbId = document.getElementById("cbId").value;
@@ -177,11 +175,22 @@ $("#likeBtn").click(function() {
 		},
 		success: function(data, status) {
 			if(status == "success") {
-				document.getElementById("likes").innerHTML = data.likes;
+				viewLikes(data);
 			}
 		}
 	});
 });
+
+// 화면에 좋아요 보여주기
+function viewLikes(data) {
+	document.getElementById("likes").innerHTML = data.likes;
+	
+	if(data.toggle == 0) {
+		$("#likeBtn").html("<img src='/img/heartE.png'>");
+	} else {
+		$("#likeBtn").html("<img src='/img/heart.png'>");
+	}
+}
 </script>
 </th:block>
 </html>

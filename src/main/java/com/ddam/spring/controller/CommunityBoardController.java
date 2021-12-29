@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ddam.spring.domain.CommunityBoard;
 import com.ddam.spring.domain.CommunityComment;
+import com.ddam.spring.domain.User;
 import com.ddam.spring.service.CommunityBoardService;
 import com.ddam.spring.validation.CommunityBoardValidator;
 
@@ -68,9 +72,13 @@ public class CommunityBoardController {
 	// writeOk
 	@PostMapping("/writeOk")
 	public String writeOk(@RequestParam("multipartFile") MultipartFile multipartFile, CommunityBoard cbEntity
-			, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+			, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes, HttpServletRequest request) {
 		
 		String page = "community/writeOk";
+		
+		// session에서 username 정보 가져오기
+		HttpSession session = request.getSession();
+		String username = (String)session.getAttribute("username");
 		
 		// Validator 생성
 		Validator validator = new CommunityBoardValidator();
@@ -84,7 +92,7 @@ public class CommunityBoardController {
 			page = "redirect:/community/write";
 		} else {
 			model.addAttribute("cbEntity", cbEntity);
-			model.addAttribute("result", communityBoardService.write(multipartFile, cbEntity));
+			model.addAttribute("result", communityBoardService.write(multipartFile, cbEntity, username));
 		}
 		
 		return page;
@@ -119,7 +127,7 @@ public class CommunityBoardController {
 			page = "redirect:/community/update?id=" + cbEntity.getId();
 		} else {
 			model.addAttribute("cbEntity", cbEntity);
-			model.addAttribute("result", communityBoardService.write(multipartFile, cbEntity));
+			model.addAttribute("result", communityBoardService.update(multipartFile, cbEntity));
 		}
 		
 		return page;
@@ -137,10 +145,14 @@ public class CommunityBoardController {
 	// view 진입 시
 	@ResponseBody
 	@RequestMapping("/likeView")
-	public JSONObject likeView(Long cbId) {
+	public JSONObject likeView(Long cbId, HttpServletRequest request) {
+		// session에서 username 정보 가져오기
+		HttpSession session = request.getSession();
+		String username = (String)session.getAttribute("username");
+		
 		Map<String, Object> map = new HashMap<>();
 		
-		map = communityBoardService.likeLoad(cbId);
+		map = communityBoardService.likeLoad(cbId, username);
 		
 		JSONObject jsonObj = new JSONObject(map);
 		
@@ -151,12 +163,14 @@ public class CommunityBoardController {
 	// 좋아요 클릭 시
 	@ResponseBody
 	@RequestMapping("/likeToggle")
-	public JSONObject likeToggle(Long cbId) {
-		communityBoardService.likeToggle(cbId);
+	public JSONObject likeToggle(Long cbId, HttpServletRequest request) {
+		// session에서 username 정보 가져오기
+		HttpSession session = request.getSession();
+		String username = (String)session.getAttribute("username");
 		
 		Map<String, Object> map = new HashMap<>();
 		
-		map = communityBoardService.likeLoad(cbId);
+		map = communityBoardService.likeToggle(cbId, username);
 		
 		JSONObject jsonObj = new JSONObject(map);
 		
@@ -167,9 +181,13 @@ public class CommunityBoardController {
 	// 댓글 관련 기능
 	// commentInsert
 	@PostMapping("/commentInsert")
-	public void commentInsert(CommunityComment ccEntity, Long cbId, Model model) {
+	public void commentInsert(CommunityComment ccEntity, Long cbId, Model model, HttpServletRequest request) {
+		// session에서 username 정보 가져오기
+		HttpSession session = request.getSession();
+		String username = (String)session.getAttribute("username");
+		
 		model.addAttribute("cbId", cbId);
-		model.addAttribute("result", communityBoardService.commentInsert(ccEntity, cbId));
+		model.addAttribute("result", communityBoardService.commentInsert(ccEntity, cbId, username));
 	}
 	
 	// commentDelete
