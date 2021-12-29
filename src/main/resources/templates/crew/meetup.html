@@ -118,7 +118,7 @@
 								                  					<button th:onclick="'updatePart(\''+${meetup.id} + '\')'" class="btn btn-primary">참가 취소</button>&nbsp;&nbsp;&nbsp;[[${#lists.size(meetup.participantList)}]] 명 참가 예정   /    [[${meetup.memberLimit}]]
 								                  				</div>
 								                  				<div th:unless="${selection.size() > 0}">
-								                  					<div th:with="isMember=${followList.?[crew.id ==__${meetup.crew.id}__]}">
+								                  					<div th:with="isMember=${followList.?[toCrew.id ==__${meetup.crew.id}__]}">
 									                  					<div th:if="${isMember.size() > 0}">
 									  	                					<button th:onclick="'updatePart(\''+${meetup.id} + '\')'" class="btn btn-primary">참가하기</button>&nbsp;&nbsp;&nbsp;[[${#lists.size(meetup.participantList)}]] 명 참가 예정   /    [[${meetup.memberLimit}]]
 									                  					</div>

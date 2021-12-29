@@ -118,6 +118,8 @@ public class CrewController {
 	    	// 지금 로그인한 유저와 크루와의 관계
 	    	String crewRole = followService.find(user.getId(), cid);
 	    	model.addAttribute("crewRole", crewRole);
+	    	List<Follow> followlist = followRepository.findByFromUserId(user.getId());
+			model.addAttribute("followList", followlist);
     	}
     	
     	
@@ -133,9 +135,6 @@ public class CrewController {
     	List<Meetup> meetupLists = meetupRepository.findByCrewId(cid);
     	model.addAttribute( "meetupLists", meetupLists);
     	
-    	List<Follow> followlist = followRepository.findByFromUserId(user.getId());
-		model.addAttribute("followList", followlist);
-		
 		return "crew/crewdetail";
 	}
 

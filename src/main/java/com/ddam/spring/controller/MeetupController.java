@@ -91,10 +91,13 @@ public class MeetupController {
     	HttpSession session = request.getSession();
     	String username = (String)session.getAttribute("username");
     	User user = userRepository.findByUsername(username);
-    	List<Follow> followlist = followRepository.findByFromUserId(user.getId());
+    	
+    	if(user!=null) {
+    		List<Follow> followlist = followRepository.findByFromUserId(user.getId());
+    		model.addAttribute("followList", followlist);
+    	}
 
 		model.addAttribute("user", user);
-		model.addAttribute("followList", followlist);
 		model.addAttribute("meetupLists", meetupRepository.findByDatetimeGreaterThanOrderByDatetimeAsc(LocalDateTime.now().minusDays(1L)));
 		
 		return "crew/allmeetup";
