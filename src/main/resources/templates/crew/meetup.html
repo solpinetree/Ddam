@@ -103,23 +103,25 @@
 				                  <span class="probootstrap-location"><i class="icon-location2"></i>[[${meetup.location}]]</span>
 				                  <span class="probootstrap-location"><i class="fa fa-money" aria-hidden="true"></i>[[${meetup.fee}]]</span><br>
 				                  
+				                  	<!-- 인원마감이 아닐 때 -->
 				                  	<div th:if=${#lists.size(meetup.participantList)!=meetup.memberLimit}>
 								                  	<!-- user 상태에 따라 다른 버튼 -->
 								                  	<div sec:authorize="isAnonymous()">
 									                  	<a href="#" onClick="alert('로그인 후에 이용해주세요!')" id="rec_part" class="btn btn-primary">참가하기</a>&nbsp;&nbsp;&nbsp;[[${#lists.size(meetup.participantList)}]]명 참가 예정   /    [[${meetup.memberLimit}]]
 								                  	</div>
 								                  	
+								                  	
+								                  	<!--  로그인한 유저 -->
 								                  	<div th:id="'participate_btn'+${meetup.id}" sec:authorize="isAuthenticated()">
-														<div th:each="meetupUser, index : ${meetup.participantList}">
-															<div th:if="${meetupUser.user == user}">
-										                  		<button th:onclick="'updatePart(\''+${meetup.id} + '\')'" class="btn btn-primary">참가 취소</button>&nbsp;&nbsp;&nbsp;[[${#lists.size(meetup.participantList)}]]명 참가 예정   /    [[${meetup.memberLimit}]]
-															</div>
-															<div th:if="${index.count== #lists.size(meetup.participantList)}">
-																<div th:if="${meetupUser.user!= user}">
-									                  	 			<button th:onclick="'updatePart(\''+${meetup.id} + '\')'" class="btn btn-primary">참가하기</button>&nbsp;&nbsp;&nbsp;[[${#lists.size(meetup.participantList)}]]명 참가 예정   /    [[${meetup.memberLimit}]]
-																</div>
-															</div>
-														</div>
+								                  			<div th:with="selection=${meetup.participantList.?[user == user]}">
+								                  				<div th:if="${selection.size() > 0}">
+								                  					<button th:onclick="'updatePart(\''+${meetup.id} + '\')'" class="btn btn-primary">참가 취소</button>&nbsp;&nbsp;&nbsp;[[${#lists.size(meetup.participantList)}]]명 참가 예정   /    [[${meetup.memberLimit}]]
+								                  				</div>
+								                  				<div th:unless="${selection.size() > 0}">
+								                  					<button th:onclick="'updatePart(\''+${meetup.id} + '\')'" class="btn btn-primary">참가하기</button>&nbsp;&nbsp;&nbsp;[[${#lists.size(meetup.participantList)}]]명 참가 예정   /    [[${meetup.memberLimit}]]
+								                  				</div>
+								                  			</div> 
+													</div>
 																		<!--참가, 참가 취소 버튼 관리하는 AJAX -->
 																		<script th:inline="javascript">
 																		
@@ -141,7 +143,10 @@
 																		</script>
 																		<!--  AJAX 끝 -->
 								                  	</div>
+								                  	<!--  로그인한 유저 부분 끝 -->
 				                  	</div>
+				                  	<!--  인원 마감이 아닐 때 끝 -->
+				                  	
 				                  	<div th:if=${#lists.size(meetup.participantList)==meetup.memberLimit}>
 				                  		<a href="#" onClick="alert('인원이 꽉 찼습니다.')" id="rec_part" class="btn btn-primary">모집 인원 마감</a>&nbsp;&nbsp;&nbsp;[[${#lists.size(meetup.participantList)}]]명 참가 예정   /    [[${meetup.memberLimit}]]
 				                  	</div>
