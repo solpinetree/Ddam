@@ -56,4 +56,5 @@ public class Meetup {
 	private Timestamp createDate;
 	@CreationTimestamp
 	private Timestamp updateDate;
+
 }

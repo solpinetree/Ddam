@@ -2,19 +2,16 @@ package com.ddam.spring.controller;
 
 import java.util.List;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,7 +32,6 @@ import com.ddam.spring.domain.User;
 import com.ddam.spring.dto.UserFormDto;
 import com.ddam.spring.repository.UserRepository;
 import com.ddam.spring.service.UserService;
-import com.ddam.spring.validation.CommunityBoardValidator;
 import com.ddam.spring.validation.UserValidator;
 
 import lombok.RequiredArgsConstructor;

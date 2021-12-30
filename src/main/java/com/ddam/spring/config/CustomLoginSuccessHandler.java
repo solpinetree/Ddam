@@ -52,7 +52,6 @@ public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSu
 		request.getSession().setAttribute("loginTime", loginTime);
 		
 		request.getSession().setAttribute("username", userDetails.getUsername());
-		System.out.println("username: " + userDetails.getUsername());
 		
 		// 로그인 직전 url 로 redirect 하기...
 		HttpSession session = request.getSession();

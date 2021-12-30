@@ -22,6 +22,7 @@ import com.ddam.spring.domain.CommunityBoard;
 import com.ddam.spring.domain.CommunityComment;
 import com.ddam.spring.domain.CommunityFile;
 import com.ddam.spring.domain.CommunityLike;
+import com.ddam.spring.domain.User;
 import com.ddam.spring.repository.CommunityBoardRepository;
 import com.ddam.spring.repository.CommunityCommentRepository;
 import com.ddam.spring.repository.CommunityFileRepository;
@@ -72,11 +73,11 @@ public class CommunityBoardService {
 	
 	
 	// 유저 정보 가져오기
-//	public User loadUser(String username) {
-//		User user = userRepository.findByUsername(username);
-//		
-//		return user;
-//	}
+	public User loadUser(String username) {
+		User user = userRepository.findByUsername(username);
+		
+		return user;
+	}
 
 	// 목록
 	// 검색 키워드 없음
@@ -118,17 +119,11 @@ public class CommunityBoardService {
 	}
 
 	// 게시글 등록
-	public int write(MultipartFile multipartFile, CommunityBoard cbEntity) {
-//		User user = loadUser(username);
-		
+	public int write(MultipartFile multipartFile, CommunityBoard cbEntity, String username) {
 		// 검색에 이용할 사용자 이름도 저장
-//		cbEntity.setUsername(user.getUsername());
-//		cbEntity.setCreatedAt(LocalDateTime.now());
-//		cbEntity.setUser(user);
-		
-//		if(!multipartFile.isEmpty()) {
-//			
-//		}
+		User user = loadUser(username);
+		cbEntity.setUsername(username);
+		cbEntity.setUser(user);
 		
 		cbEntity.setCreatedAt(LocalDateTime.now());
 		
@@ -181,10 +176,14 @@ public class CommunityBoardService {
 	}
 
 	// 게시글 수정
-	public int update(MultipartFile multipartFile, CommunityBoard cbEntity) {
+	public int update(MultipartFile multipartFile, CommunityBoard cbEntity, Long removeFileId) {
 		int cnt = 0;
 		
 		CommunityFile cfEntity = new CommunityFile();
+		
+		if(removeFileId != null) {
+			communityFileRepository.deleteById(removeFileId);
+		}
 		
 		// 파일 없으면 넘어가기
 		if(!multipartFile.isEmpty()) {
@@ -218,24 +217,67 @@ public class CommunityBoardService {
 		return 1;
 	}
 
-	// 좋아요
-	public void likeToggle(Long cbId) {
-		CommunityBoard communityBoard = communityBoardRepository.findById(cbId).orElse(null);
-		CommunityLike clEntity = new CommunityLike();
-		clEntity.setCommunityBoard(communityBoard);
-		clEntity.setToggle(1);
+	// 좋아요 ajax
+	public Map<String, Object> likeToggle(Long cbId, String username) {
+		int likes = 0;
+		int toggle = 1;
 		
-		communityLikeRepository.save(clEntity);
+		CommunityBoard communityBoard = communityBoardRepository.findById(cbId).orElse(null);
+		
+		User user = loadUser(username);
+		
+		List<CommunityLike> communityLike = new ArrayList<>();
+		communityLike = communityBoard.getCommunityLikes();
+		
+		CommunityLike clEntity = new CommunityLike();
+		
+		if(communityLikeRepository.findByUserAndCommunityBoard(user, communityBoard) == null) {
+			clEntity.setCommunityBoard(communityBoard);
+			clEntity.setUser(user);
+			clEntity.setToggle(toggle);
+			communityLikeRepository.save(clEntity);
+		} else {
+			clEntity = communityLikeRepository.findByUserAndCommunityBoard(user, communityBoard);
+			
+			if(clEntity.getToggle() == 1) {
+				toggle = 0;
+			} else {
+				toggle = 1;
+			}
+			
+			clEntity.setToggle(toggle);
+			communityLikeRepository.save(clEntity);
+		}
+		
+		for(int i = 0; i < communityLike.size(); i++) {
+			if(communityLike.get(i).getToggle() == 1) {
+				likes++;
+			}
+		}
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("likes", likes);
+		map.put("toggle", toggle);
+		
+		return map;
 	}
 	
-	// 좋아요 업데이트
-	public Map<String, Object> likeLoad(Long cbId) {
-		List<CommunityLike> communityLike = new ArrayList<>();
+	// 좋아요 수 ajax
+	public Map<String, Object> likeLoad(Long cbId, String username) {
+		int likes = 0;
+		int toggle = 0;
+		
 		CommunityBoard communityBoard = communityBoardRepository.findById(cbId).orElse(null);
 		
-		int likes = 0;
+		User user = loadUser(username);
 		
+		List<CommunityLike> communityLike = new ArrayList<>();
 		communityLike = communityBoard.getCommunityLikes();
+		
+		if(communityLikeRepository.findByUserAndCommunityBoard(user, communityBoard) != null) {
+			toggle = communityLikeRepository.findByUserAndCommunityBoard(user, communityBoard).getToggle();
+		}
 		
 		// toggle이 1일 때 likes에 추가
 		for(int i = 0; i < communityLike.size(); i++) {
@@ -247,31 +289,43 @@ public class CommunityBoardService {
 		Map<String, Object> map = new HashMap<>();
 		
 		map.put("likes", likes);
+		map.put("toggle", toggle);
 		
 		return map;
 	}
 	
-	// 댓글 등록
-	@Transactional
-	public int commentInsert(CommunityComment ccEntity, Long cbId) {
-		int cnt = 0;
-		
-//		User user = loadUser(username);
-		
-//		ccEntity.setCreatedAt(LocalDateTime.now());
-//		ccEntity.setUser(user);
+	// 좋아요 수 비로그인
+	public int likeLoadLogout(Long cbId) {
+		int likes = 0;
 		
 		CommunityBoard communityBoard = communityBoardRepository.findById(cbId).orElse(null);
 		
-		if(communityBoard != null) {
-			ccEntity.setCreatedAt(LocalDateTime.now());
-			ccEntity.setCommunityBoard(communityBoard);
-			communityCommentRepository.save(ccEntity);
-			
-			cnt = 1;
+		List<CommunityLike> communityLike = new ArrayList<>();
+		communityLike = communityBoard.getCommunityLikes();
+		
+		// toggle이 1일 때 likes에 추가
+		for(int i = 0; i < communityLike.size(); i++) {
+			if(communityLike.get(i).getToggle() == 1) {
+				likes++;
+			}
 		}
 		
-		return cnt;
+		return likes;
+	}
+	
+	// 댓글 등록
+	public int commentInsert(CommunityComment ccEntity, Long cbId, String username) {
+		User user = loadUser(username);
+		ccEntity.setUser(user);
+		
+		CommunityBoard communityBoard = communityBoardRepository.findById(cbId).orElse(null);
+		ccEntity.setCommunityBoard(communityBoard);
+		
+		ccEntity.setCreatedAt(LocalDateTime.now());
+		
+		communityCommentRepository.save(ccEntity);
+		
+		return 1;
 	}
 	
 	// 댓글 삭제

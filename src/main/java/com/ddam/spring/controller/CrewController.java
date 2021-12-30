@@ -31,10 +31,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ddam.spring.domain.Crew;
+import com.ddam.spring.domain.Follow;
 import com.ddam.spring.domain.FollowRequest;
 import com.ddam.spring.domain.Meetup;
 import com.ddam.spring.domain.User;
 import com.ddam.spring.repository.CrewRepository;
+import com.ddam.spring.repository.FollowRepository;
 import com.ddam.spring.repository.FollowRequestRepository;
 import com.ddam.spring.repository.MeetupRepository;
 import com.ddam.spring.repository.UserRepository;
@@ -46,6 +48,8 @@ import com.ddam.spring.validation.CrewValidator;
 @RequestMapping("/crew")
 public class CrewController {
 	
+	@Autowired
+	CrewValidator crewValidator;
 
 	@Autowired
 	private CrewRepository crewRepository;
@@ -65,10 +69,13 @@ public class CrewController {
 	@Autowired
 	private MeetupRepository meetupRepository;
 	
+	@Autowired
+	private FollowRepository followRepository;
+	
 	// 이 컨트롤러 의 handler 에서 폼 데이터를 바인딩할때 검증하는 객체 지정
-	@InitBinder
+	@InitBinder("crewValidator")
 	public void initBinder(WebDataBinder binder) {
-		binder.setValidator(new CrewValidator());
+		binder.setValidator(crewValidator);
 	}
 	
 	// area 지역 
@@ -100,7 +107,10 @@ public class CrewController {
 		
 		
     	HttpSession session = request.getSession();
-    	User user = (User)session.getAttribute("user");
+    	String username = (String)session.getAttribute("username");
+    	User user = userRepository.findByUsername(username);
+    	
+    	model.addAttribute("user", user);
     	
     	System.out.println("crew-detail: " +user);   	
     	if(user!=null) {
@@ -108,6 +118,8 @@ public class CrewController {
 	    	// 지금 로그인한 유저와 크루와의 관계
 	    	String crewRole = followService.find(user.getId(), cid);
 	    	model.addAttribute("crewRole", crewRole);
+	    	List<Follow> followlist = followRepository.findByFromUserId(user.getId());
+			model.addAttribute("followList", followlist);
     	}
     	
     	
@@ -122,7 +134,7 @@ public class CrewController {
     	
     	List<Meetup> meetupLists = meetupRepository.findByCrewId(cid);
     	model.addAttribute( "meetupLists", meetupLists);
-		
+    	
 		return "crew/crewdetail";
 	}
 
@@ -285,8 +297,11 @@ public class CrewController {
 	 *  팔로우 요청이 왔을 때
 	 */
 	@RequestMapping("/follow/request/{cid}")
-	public String request(@PathVariable("cid") long cid, Model model) throws Exception {
-		
+	public String request(@PathVariable("cid") long cid, Model model, HttpServletRequest request) throws Exception {
+		HttpSession session = request.getSession();
+		String username = (String)session.getAttribute("username");
+		User user = userRepository.findByUsername(username);
+		model.addAttribute("user", user);
 		model.addAttribute("cid", cid);
 		return "crew/follow-request";
 	}
@@ -296,7 +311,7 @@ public class CrewController {
 	 */
 	@PostMapping("/follow/request-ok")
 	public String requestOk(@RequestParam String info, @RequestParam long cid, @RequestParam long uid,
-			RedirectAttributes redirectAttributes) {
+			Model model, RedirectAttributes redirectAttributes) {
 		
 		FollowRequest followRequest = new FollowRequest(); 
     	followRequest.setInfo(info);
@@ -311,7 +326,8 @@ public class CrewController {
 //    		crew.getRequests().add(user);
     	}
     	
-    	redirectAttributes.addFlashAttribute("cid", cid);
+//    	redirectAttributes.addFlashAttribute("cid", cid);
+    	model.addAttribute("cid", cid);
     	
 		return "crew/request-ok";
 	}
@@ -323,9 +339,10 @@ public class CrewController {
 	@RequestMapping("/unfollow/{cid}")
 	public String unfollow(@PathVariable("cid") long cid, HttpServletRequest request) throws Exception {
 		
-    	HttpSession session = request.getSession();
-    	User user = (User)session.getAttribute("sessionedUser");
-
+		HttpSession session = request.getSession();
+		String username = (String)session.getAttribute("username");
+		User user = userRepository.findByUsername(username);
+    	
 //    	crewRepository.findById(cid).getMembers().remove(user);
     	
 		followService.deleteByFromUserIdAndToCrewId(user.getId(), cid);
@@ -433,4 +450,7 @@ public class CrewController {
 			}
 		}
 	}
+	
+	
+	
 }

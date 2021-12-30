@@ -12,6 +12,7 @@
 <link rel="stylesheet" th:href="@{/css/styles-merged.css}">
 <link rel="stylesheet" th:href="@{/css/style.min.css}">
 <link rel="stylesheet" th:href="@{/css/custom.css}">
+<link rel="stylesheet" th:href="@{/font-awesome/css/font-awesome.min.css}">
 </head>
 <body>
 
@@ -52,17 +53,18 @@
 					<div th:each="crew:${crews}" class="col-md-6">
 						<div class="probootstrap-service-2 probootstrap-animate">
 							<div class="image">
-								<div class="image-bg">
-									<span th:text="${crew.filePath}"></span>
-									<img th:src="@{'/' + ${crew.filePath} + '/' + ${crew.fileName}}" alt="Free Bootstrap Template by ProBootstrap.com">
+								<div class="image-bg">  
+									<!--  <span th:text="${crew.filePath}"></span>-->
+									<img th:src="@{${crew.filePath}}" alt="Free Bootstrap Template by ProBootstrap.com">
 								</div>
 							</div>
 							<div class="text">
-								<h3 th:text="${crew.name}">크루 이름</h3>
-								<p th:text="${crew.area}">지역</p>
-								<p th:text="${crew.memberLimit}">인원</p>
-								<p><a th:href="@{crewdetail(id=${crew.id})}" class="btn btn-primary">상세보기</a> </p>
-							</div>
+			                  <h3 th:text="${crew.name}">크루 이름</h3>
+			                  <span class="probootstrap-meta" th:text="${crew.area}"></span><br>
+			                  <span class="probootstrap-meta" th:text="${crew.category}"></span><br>
+			                  <p><span class="enrolled-count" th:text="${crew.memberCount+'/'+crew.memberLimit}"></span></p>
+			                  <p><a th:onclick="'location.href=\'' + @{/crew/crew-detail/{id}(id=${crew.id})} +'\''" class="btn btn-primary">상세보기</a> </p>
+			                </div>
 						</div>
 					</div>
 					

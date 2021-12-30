@@ -73,6 +73,11 @@
 	text-align: center;
 }
 
+#likeBtn img {
+	height: 40px;
+	width: 40px;
+}
+
 .viewComment {
 	margin-top: 5vh;
 	text-align: center;

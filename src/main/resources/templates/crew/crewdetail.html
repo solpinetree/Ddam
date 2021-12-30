@@ -30,13 +30,13 @@
 <style>
 .modal-title{
 	font-size: 17px;
-	text-align: left;
+ 	text-align: left;
 	font-weight: bold;
 }
 
 .modal-title-request{
 	font-size: 17px;
-	text-align: left;
+ 	text-align: left; 
 	font-weight: bold;
 }
 .modal_table {
@@ -49,8 +49,11 @@
 
 #modal_userFollow {
 	margin: 16px;
-	text-align: right;
+ 	text-align: right; 
 	padding : 10px;
+}
+.btn btn-primary button:hover{
+	color:white;
 }
 </style>
 
@@ -60,20 +63,10 @@
 <body>
 	<!--  js에서 쓰기 위해 저장해놓음  -->
 	<div sec:authorize="isAuthenticated()">
-		<input type="hidden" id="userId" name="userId" th:value="${session.user.id}" /> 
+		<input type="hidden" id="userId" name="userId" th:value="${user.id}" /> 
 		<input type="hidden" id="crewId" name="crewId" th:value="${crew.id}" />
 	</div>
 
-
-
- 	<div class="probootstrap-search" id="probootstrap-search">
-		<a href="#" class="probootstrap-close js-probootstrap-close"><i
-			class="icon-cross"></i></a>
-		<form action="#">
-			<input type="search" name="s" id="search"
-				placeholder="Search a keyword and hit enter..."> 
- 		</form>
-	</div>
 	
 	<!-- START wrapper -->
 	<div class="probootstrap-page-wrapper">
@@ -115,7 +108,7 @@
 		<!--  크루 썸네일 끝 -->
 		
 		<!--  크루 정보 보여주는 section -->
-		<section class="probootstrap-section probootstrap-section-sm" style="height:600px;">
+		<section class="probootstrap-section probootstrap-section-sm" style="height:600px; clear:both;">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
@@ -130,7 +123,7 @@
 									</span>
 									<!--  크루장 이름 -->
 									<span class="probootstrap-location">
-										<i class="fa fa-user" aria-hidden="true"></i>크루장 :[[${crew.crewAdmin.username}]]
+										<i class="fa fa-user" aria-hidden="true"></i>크루장 :	[[${crew.crewAdmin.username}]]
 									</span> 
 									<!-- 크루 멤버 수 -->
 									<span class="probootstrap-location" id="memberCount">
@@ -141,8 +134,7 @@
 								<h2>크루를 소개하는 말</h2>
 								
 								<!-- 크루 소개 및 목표 -->
-								<p>[[${crew.description}]]</p>
-
+								<p>[[${crew.description}]]</p><br><br><br>
 							</div>
 						</div>
 					</div>
@@ -151,10 +143,11 @@
 		</section>
 		<!--  크루 정보 보여주는 section 끝 -->
 		
+		<div style="height:100px"></div>
 		
 		
 							<!--  팔로우와 좋아요 누르는 디브, 로그인한 회원에게만 보인다. -->
-								<div sec:authorize="isAuthenticated()" style="text-align:center;">
+								<div sec:authorize="isAuthenticated()" style="text-align:center; clear:both;">
 									
 									<!-- 크루 멤버 아니면서 크루 가입 요청 안 보낸 유저 -->
 									<div th:if="${crewRole.toString().equals('user')}">
@@ -191,9 +184,9 @@
 										<span class="rec_count"></span>
 									</div>
 
-
+			
 									<!--  크루장 - 크루 관리하는 디브 -->
-									<div th:if="${crewRole.toString().equals('admin')}">
+									<div id="forCrewAdmin" th:if="${crewRole.toString().equals('admin')}" style="width:100%; margin:auto;">
 										<button
 											th:onclick="'location.href=\'' + @{/crew/manage/{id}(id=${crew.id})} +'\''"
 											class="btn btn-primary">크루 관리페이지</button>
@@ -206,7 +199,7 @@
 										<button type="button" class="btn btn-primary" id="followRequest">
 											<span>크루 팔로우 요청   </span>
 											<span class="badge badge-sm badge-circle badge-danger border border-white border-2" id="notification-m">
-												[[${#lists.size(requests)}]]
+												<span id="reqNum">[[${#lists.size(requests)}]]</span>
 											</span>
 										</button>
 										<button
@@ -219,10 +212,8 @@
 								</div>
 								<!--  팔로우 버튼과 좋아요 버튼 끝 -->
 								
-								
-								<div style="height:100px"></div>
-		
-		
+
+
  								<div th:replace="crew/meetup :: meetuplists"></div> 
 		
 		<!-- footer -->
@@ -245,6 +236,7 @@
 					<button type="button" class="close" data-dismiss="modal">×</button>
 
 				</div>
+	<div class="followModal">
 				<div class="modal-body">
 					<table class="modal_table">
 						<tr th:each="member : ${members}">
@@ -257,8 +249,8 @@
 						</tr>
 					</table>
 				</div> 
-				<div id="count" value="1"></div> 
 			</div>
+		</div>
 		</div>
 	</div>
 	
@@ -275,10 +267,11 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					 <!-- 모달창의 header 부분에 해당한다.  -->
-					<h4 class="modal-title-request"></h4>
+					<h4 class="modal-title"></h4>
 					<button type="button" class="close" data-dismiss="modal">×</button>
 				</div>
- 				<div class="modal-body-request">
+	<div class="followRequestModal">
+ 				<div class="modal-body">
 					<table class="modal_table">
 						<tr th:each="request : ${requests}">
 							<td style="width: 70px;"><i class="fa fa-user" style="font-size: 20px; color:purple;"></i></td>
@@ -289,12 +282,11 @@
 								<button th:onclick="'acceptMember(\''+${request.fromUser.id} + '\')'" class="btn btn-outline-primary">승인하기</button>
 								<button th:onclick="'rejectMember(\''+${request.fromUser.id} + '\')'" class="btn btn-outline-primary">거절하기</button>
 							</td>
-							
 						</tr>
 					</table>
 				</div>
-				<div id="count" value="1"></div> 
 			</div>
+		</div>
 		</div>
 	</div>
 	

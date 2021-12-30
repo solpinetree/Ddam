@@ -43,9 +43,6 @@
 								<!-- 게시글 작성 -->
 								<form name="writeForm" action="writeOk" method="post" enctype="multipart/form-data" onsubmit="return chkSubmit()">
 						            <div class="writeFormInner">
-						            	<div>작성자 : <input type="text" name="username" value="작성자"></div>
-						            </div>
-						            <div class="writeFormInner">
 						                <input type="text" class="inputForm" id="subject" name="subject" placeholder="제목을 작성해 주세요" th:value="${reSubject}">
 						                <span class="inputError">[[${subjectError}]]</span>
 						            </div>

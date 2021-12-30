@@ -13,7 +13,7 @@
 			
 			
 			$('#followRequestModal').modal(); //id가 "followModal"인 모달창을 열어준다. 
-			$('.modal-title-request').text("크루 팔로우 요청"); //modal 의 header 부분에 "크루 멤버"라는 값을 넣어준다. 
+			$('.modal-title').text("크루 팔로우 요청"); //modal 의 header 부분에 "크루 멤버"라는 값을 넣어준다. 
 			
 		})
 
@@ -33,7 +33,7 @@
                     "memberId": memberId
                 },
                 complete: function () {
-                	$(".modal-body").load(location.href + " .modal-body");
+                	$(".followModal").load(location.href + " .followModal");
                 	$("#memberCount").load(location.href + " #memberCount");
                 },
 			})
@@ -56,10 +56,10 @@
                     "crewId": crewId
                 },
                 complete: function () {
-                	$(".modal-body-request").load(location.href + " .modal-body-request");
+                	$(".followModal").load(location.href + " .followModal");
                 	$("#memberCount").load(location.href + " #memberCount");
-               		$(".modal-body").load(location.href + " .modal-body");
-               		$("#notification").load(location.href + " #notification-m");
+               		$(".followRequestModal").load(location.href + " .followRequestModal");
+               		$("#reqNum").load(location.href + " #reqNum");
                 },
 			})
 			
@@ -80,8 +80,8 @@
                     "crewId": crewId
                 },
                 complete: function () {
-                	$(".modal-body-request").load(location.href + " .modal-body-request");
-               		$("#notification").load(location.href + " #notification-m");
+               		$(".followRequestModal").load(location.href + " .followRequestModal");
+               		$("#reqNum").load(location.href + " #reqNum");
                 },
 			})
 			

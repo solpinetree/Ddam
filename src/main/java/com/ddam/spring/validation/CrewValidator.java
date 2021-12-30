@@ -1,11 +1,12 @@
 package com.ddam.spring.validation;
 
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.ddam.spring.domain.Crew;
 
+@Component
 public class CrewValidator implements Validator{
 
 	@Override
