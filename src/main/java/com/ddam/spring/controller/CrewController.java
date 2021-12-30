@@ -93,9 +93,24 @@ public class CrewController {
 	 * 크루 모집 페이지
 	 */
 	@GetMapping("/crews")
-	public String crews(Model model) {
+	public String crews(Model model, HttpServletRequest request) {
 		List<Crew> crewList = crewRepository.findAll();
+		long userCount = userRepository.count();
+		long meetupCount = meetupRepository.count();
+		model.addAttribute("userCount", userCount);
+		model.addAttribute("meetupCount", meetupCount);
 		model.addAttribute("crewList", crewList);
+		
+		
+    	HttpSession session = request.getSession();
+    	String username = (String)session.getAttribute("username");
+    	User user = userRepository.findByUsername(username);
+    	
+    	if(user!=null) {
+    		model.addAttribute("user",user);
+    	}
+		
+		
 		return "crew/crews";
 	}
 

@@ -1,16 +1,13 @@
 package com.ddam.spring.controller;
 
 
-import java.io.File;
 import java.util.List;
-import java.util.UUID;
-
-import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ddam.spring.domain.Crew;
 import com.ddam.spring.repository.CrewRepository;
@@ -44,7 +41,10 @@ public class IndexController {
 	
 
 	
-	
+	@RequestMapping("/testing")
+	public String testing() {
+		return "crew/testing";
+	}
 	
 	
 	
