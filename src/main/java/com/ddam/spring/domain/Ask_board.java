@@ -54,8 +54,8 @@ public class Ask_board {
 	private String answer;
 	
 	@ManyToOne
-	@JoinColumn(name = "u_id")
-	private User u_id;
+	@JoinColumn(name = "Id")
+	private User uid;
 	
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "board_id")

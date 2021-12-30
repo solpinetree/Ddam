@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -121,6 +122,14 @@ public class MemberController {
 			request.getSession().setAttribute("url_prior_login", referer);
 
 		session.setAttribute("sessionedUser", user.getUsername());
+		
+		// 현재 로그인한 user 정보 Authentication
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User loggedUser = (User)authentication.getPrincipal();
+		if(loggedUser != null) {			
+			System.out.println("현재로그인 username : "+ loggedUser.getUsername());
+		}
+		
 
 		System.out.println("POST: /login");
 		return "redirect:/";

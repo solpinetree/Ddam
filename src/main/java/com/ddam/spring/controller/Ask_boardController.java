@@ -3,6 +3,7 @@ package com.ddam.spring.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.ddam.spring.domain.Ask_board;
 import com.ddam.spring.domain.Ask_file;
+import com.ddam.spring.domain.User;
 import com.ddam.spring.service.Ask_boardService;
 import com.ddam.spring.service.Ask_fileService;
 import com.ddam.spring.util.Ask_Notice_UtilFile;
@@ -28,7 +30,7 @@ public class Ask_boardController {
 	
 	@Autowired
 	private Ask_fileService ask_fileService;
-	
+		
 	@Autowired
 	public void setAsk_boardService(Ask_boardService ask_boardService) {
 		this.ask_boardService = ask_boardService;
@@ -49,8 +51,15 @@ public class Ask_boardController {
 
 	@PostMapping("/ask/writeOk")
 	public void writeOk(Ask_board dto, Model model,
-			MultipartHttpServletRequest request, @RequestPart MultipartFile files) {
+			MultipartHttpServletRequest request, @RequestPart MultipartFile files
+				//, @SessionAttribute("User") Long Uid
+			) {
 		System.out.println("writeOk 진입");
+		
+//		HttpSession session = (HttpSession)request.getSession();
+//		dto.setUid(session.getAttribute("loginUid"));
+
+		
 		
 		//제목,내용
 		Long cnt = ask_boardService.saveAsk_board(dto);

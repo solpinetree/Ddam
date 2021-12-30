@@ -60,6 +60,7 @@ public class UserService implements UserDetailsService{
 //        UserContext userContext = new UserContext(user,roles);
 
         return User.builder()
+        		.id(user.getId()) // 이영진!!!!!!!! by 강사.
                 .username(user.getUsername())
                 .password(user.getPassword())
                 .name(user.getName())
