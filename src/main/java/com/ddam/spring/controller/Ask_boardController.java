@@ -17,9 +17,11 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.ddam.spring.domain.Ask_board;
 import com.ddam.spring.domain.Ask_file;
-import com.ddam.spring.domain.User;
+import com.ddam.spring.domain.Notice_board;
 import com.ddam.spring.service.Ask_boardService;
 import com.ddam.spring.service.Ask_fileService;
+import com.ddam.spring.service.Notice_boardService;
+import com.ddam.spring.service.Notice_fileService;
 import com.ddam.spring.util.Ask_Notice_UtilFile;
 
 @Controller
@@ -30,6 +32,22 @@ public class Ask_boardController {
 	
 	@Autowired
 	private Ask_fileService ask_fileService;
+	
+	@Autowired
+	private Notice_boardService notice_boardService;
+
+	@Autowired
+	private Notice_fileService notice_fileService;
+	
+	@Autowired
+	public void setNotice_boardService(Notice_boardService notice_boardService) {
+		this.notice_boardService = notice_boardService;
+	}
+
+	@Autowired
+	public void setNotice_fileService(Notice_fileService notice_fileService) {
+		this.notice_fileService = notice_fileService;
+	}
 		
 	@Autowired
 	public void setAsk_boardService(Ask_boardService ask_boardService) {
@@ -119,10 +137,9 @@ public class Ask_boardController {
 	public void list(Model model) {
 		System.out.println("list 진입");
 		List<Ask_board> ask_boardlist = ask_boardService.list();
-//		for(int i = 0; i < ask_boardlist.size(); i++) {
-//			System.out.println(ask_boardlist.get(i).toString());
-//		}
 		model.addAttribute("ask_boardlist", ask_boardService.list());
+		List<Notice_board> notice_boardlist = notice_boardService.list();
+		model.addAttribute("notice_boardlist", notice_boardService.list());
 	}
 	
 	@GetMapping("/ask/update")

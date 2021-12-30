@@ -7,6 +7,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.ddam.spring.domain.User;
 
@@ -16,10 +17,13 @@ class UserRepositoryTest {
 	@Autowired
 	private UserRepository userRepository;
 	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	User user1 = null,user2 = null;
 	List<Long> ids = null;
 	
-	@Test
+//	@Test
 	void crud() { // create - read - update - delete
 		System.out.println("=====#TEST#================================================");
 		
@@ -39,6 +43,33 @@ class UserRepositoryTest {
 		
 		System.out.println("=====================================================");
 		
+	}
+	
+	@Test
+	void addAdmin() {
+		User user = User.builder()
+				.username("admin")
+				.name("관리자")
+				.gender("F")
+				.email("admin@mail.com")
+				.phone("000-111-2222")
+				.password(passwordEncoder.encode("1234"))
+				.role("ROLE_ADMIN")
+				.build();
+		
+		userRepository.saveAndFlush(user);
+		
+		user = User.builder()
+				.username("user")
+				.name("유저")
+				.gender("F")
+				.email("admin@mail.com")
+				.phone("000-111-2222")
+				.password(passwordEncoder.encode("1111"))
+				.role("ROLE_USER")
+				.build();
+		
+		userRepository.saveAndFlush(user);
 	}
 
 }

@@ -1,11 +1,7 @@
 {
 	"folders": {},
 	"connections": {
-<<<<<<< Updated upstream
-		"mysql8-17dd42f1791-b158f6896798010": {
-=======
-		"mysql8-17ddb42a88e-5e45ec947563cdb1": {
->>>>>>> Stashed changes
+		"mysql8-17df50621b1-302a0ad30ddc6eae": {
 			"provider": "mysql",
 			"driver": "mysql8",
 			"name": "mydb811",
@@ -16,19 +12,8 @@
 				"port": "3306",
 				"database": "mydb811",
 				"url": "jdbc:mysql://localhost:3306/mydb811",
-<<<<<<< Updated upstream
-				"home": "C:\\Program Files\\MySQL\\MySQL Server 8.0",
+				"home": "/usr/local/Cellar/mysql/8.0.27",
 				"type": "dev",
-=======
-				"home": "C:\\Program Files\\MySQL\\MySQL Router 8.0",
-				"type": "dev",
-				"properties": {
-					"connectTimeout": "20000",
-					"rewriteBatchedStatements": "true",
-					"enabledTLSProtocols": "TLSv1,TLSv1.1,TLSv1.2",
-					"allowPublicKeyRetrieval": "TRUE"
-				},
->>>>>>> Stashed changes
 				"auth-model": "native",
 				"handlers": {}
 			}

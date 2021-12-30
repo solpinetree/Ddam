@@ -88,12 +88,29 @@ function chkDelete(nbid){
             <button type="button" class="btn btn-primary" th:onclick="'location.href=\'' + @{update(nbid=${dto.nbid})} + '\''">수정</button>
             <button type="button" class="btn btn-primary" onclick="location.href='list'">목록</button>
             </div>
-            <button type="button" class="btn btn-primary" th:onclick="'chkDelete(' + ${dto.nbid} + ')'">삭제</button>
             <button type="button" class="btn btn-primary" onclick="location.href='write'">작성</button>
+            <button type="button" class="btn btn-primary" th:onclick="'chkDelete(' + ${dto.nbid} + ')'">삭제</button>
 
         </section>        
 	</div>
-	
+	    		<!-- 본문 하단 -->
+		<section class="probootstrap-cta">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+					</div>
+				</div>
+			</div>
+		</section>
+		    		<!-- 본문 하단 -->
+		<section class="probootstrap-cta">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+					</div>
+				</div>
+			</div>
+		</section>
 	<!--  footer -->
 		<div th:replace="include/footer :: footer"></div>
 	

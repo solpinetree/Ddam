@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests() // HttpServletRequest 요청 URL에 따라 접근 권한을 설정
 					.antMatchers("/**").permitAll() // 누구나 접근 허용
 					.antMatchers("/manage").hasRole("MANAGE") // MANAGE만 접근 가능
-					.antMatchers("/admin").hasRole("ADMIN") // ADMIN만 접근 가능
+					.antMatchers("/admin/**").hasRole("ADMIN") // ADMIN만 접근 가능
 					.antMatchers("/h2-console/**").permitAll() 
 					.anyRequest().authenticated() // 나머지 요청들은 권한의 종류에 상관 없이 권한이 있어야 접근 가능
 					

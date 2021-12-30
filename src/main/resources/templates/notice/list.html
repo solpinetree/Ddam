@@ -2,7 +2,7 @@
 <head>
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>공지사항 게시판</title>
+    <title>고객센터</title>
 	<meta name="description"
 		content="Free Bootstrap Theme by ProBootstrap.com">
 	<meta name="keywords"
@@ -12,10 +12,99 @@
 	<link rel="stylesheet" th:href="@{/css/styles-merged.css}">
 	<link rel="stylesheet" th:href="@{/css/style.min.css}">
 	<link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700|Open+Sans" rel="stylesheet">
+
+ <style>
+
+        #section1{
+            margin: auto;
+            width: 1000px;
+            min-height: 650px;
+        }
+        .wrap_head{
+            height: 70px;
+            position: relative;
+        }
+        .header_board{
+            width: 100px; height: 40px;
+            position: absolute;
+            transform: translate(0,50%);
+            left: 10px; top: -20px;
+        }
+        .btn_ask{
+            padding: 0; margin: 0;
+            width: 100px; height: 40px;
+            position: absolute;
+            transform: translate(0,-50%);
+            right: 10px; top: 35px;
+            background-color: light-gray;
+            border: 0px solid;
+            color: black;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .wrap_button_box{
+            margin: 20px 0px 20px 0px;
+            height: 100px;
+            position: relative;
+        }
+
+        .ask_Button{
+            width: 450px;
+            height: 70px;
+            position: absolute;
+            top: 0; right:32.5px;
+            font-weight: bold;
+            font-size: 20px;
+            text-align: center;
+            line-height: 70px;
+            border: 3px solid #424242;
+            border-bottom: none;
+        }
+        .notice_Button{
+            width: 450px;
+            height: 70px;
+            position: absolute;
+            top: 0; left:32.5px;
+            font-weight: bold;
+            font-size: 20px;
+            text-align: center;
+            line-height: 70px;
+            border: 3px solid #424242;
+            border-bottom: none;
+        }
+
+        .on_click{
+            width: 456px; height: 73px;
+            background-color: gray;
+            color: #fffdfd;
+            border: none;
+        }
+        .content_Box{
+            width: 1000px;
+            height: 500px;
+            position: absolute;
+        }
+        .question{
+            width: 1000px;
+            height: 500px;
+            position: absolute;
+            top: 0; left: 0;
+            display: none;
+        }
+        .notice{
+            width: 1000px;
+            height: 500px;
+            position: absolute;
+            top: 0; left: 0;
+        }
+
+    </style>
+    
 </head>
 <body>
 <!--  header -->
-		<!-- 페이지 -->
+			<!-- 페이지 -->
 	<div class="probootstrap-page-wrapper">
 	
 		<!-- 헤더 -->
@@ -23,20 +112,30 @@
 		
 		<!-- 네비게이션 바 -->
 		<div th:replace="include/header::nav"></div>
-<!--  공지사항 게시판  -->
+	
+<!--  문의사항 게시판  -->
+
 		<section class="probootstrap-section probootstrap-section-colored">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12 text-left section-heading mb0">
-						<h1 class="mb0">공지사항 게시판</h1>
+						<h1 class="mb0">고객센터</h1>
 					</div>
 				</div>
 			</div>
 		</section>
-		<div class="container mt-3">
+		
+    <section id="section1">
         <hr>
-        <table class="table table-hover" style="margin-bottom:500px">
-            <thead class="table-success">
+            <div class="wrap_button_box">
+                <div class="notice_Button on_click">공지사항</div><div class="ask_Button">문의사항</div>
+            </div>
+            <div class="content_Box">
+                <div class="notice">
+        <div class="wrap_head">
+        </div>
+                    <table class="table table-hover" style="margin-bottom:500px">
+                    <thead class="table-success">
                 <tr>
                     <th>번호</th>
                     <th>제목</th>
@@ -46,7 +145,7 @@
             </thead>
             <tbody>
 
-			<tr th:each="notice_boardlist: ${notice_boardlist}">
+               <tr th:each="notice_boardlist: ${notice_boardlist}">
 				<td>[[${notice_boardlist.nbid }]]</td>
 				<td><a th:href="@{view(nbid=${notice_boardlist.nbid})}">[[${notice_boardlist.subject }]]</a></td>
 				<td>[[${#temporals.format(notice_boardlist.regdate, 'yyyy-MM-dd HH:mm:ss') }]]</td>
@@ -56,8 +155,63 @@
 		</tbody>
         </table>
     </div>
+    <div class="question">
+        <div class="wrap_head">
+        <button class="btn_ask" onclick="location.href = 'write'">문의하기</button>
+        </div>
+                    <table class="table table-hover" style="margin-bottom:500px">
+                    <thead class="table-success">
+                        <tr>
+                            <th>작성자</th>
+                            <th>제목</th>
+                            <th>작성일자</th>
+                            <th>조회수</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+			<tr th:each="ask_boardlist: ${ask_boardlist}">
+				<td>[[${#authentication.getPrincipal().getUsername() }]]</td>
+				<td><a th:href="@{../ask/view(abid=${ask_boardlist.abid})}">[[${ask_boardlist.subject }]]</a></td>
+				<td>[[${#temporals.format(ask_boardlist.regdate, 'yyyy-MM-dd HH:mm:ss') }]]</td>
+ 				<td>[[${ask_boardlist.view_cnt }]]</td>
+			</tr>
+			</tbody>
+                    </table>
+                </div>
+            </div>
+    </section>
+    <script th:src="@{/js/ask_notice_list.js}"></script>
+</body>
+<script>
+
+    $(".ask_Button").click(function (e) {
+        $(".question").show()
+        $(".notice").hide()
+        $(this).addClass('on_click')
+        $(this).siblings().removeClass('on_click')
+    })
+
+    $(".notice_Button").click(function (e) {
+        $(".question").hide()
+        $(".notice").show()
+        $(this).addClass('on_click')
+        $(this).siblings().removeClass('on_click')
+    })
+
+</script>
+    
+    		<!-- 본문 하단 -->
+		<section class="probootstrap-cta">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+					</div>
+				</div>
+			</div>
+		</section>
+		
 <!--  footer -->
-	 	<div th:replace="include/footer :: footer"></div>
+		<div th:replace="include/footer :: footer"></div>
 	
 	</div>
 	

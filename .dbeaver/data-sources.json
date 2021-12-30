@@ -14,6 +14,12 @@
 				"url": "jdbc:mysql://localhost:3306/mydb811",
 				"home": "/usr/local/Cellar/mysql/8.0.27",
 				"type": "dev",
+				"properties": {
+					"connectTimeout": "20000",
+					"rewriteBatchedStatements": "true",
+					"enabledTLSProtocols": "TLSv1,TLSv1.1,TLSv1.2",
+					"allowPublicKeyRetrieval": "TRUE"
+				},
 				"auth-model": "native",
 				"handlers": {}
 			}

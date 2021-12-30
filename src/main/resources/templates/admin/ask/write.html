@@ -1,4 +1,6 @@
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+>
+<!-- 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security" -->
 
 <th:block th:with="dto=${ask_boardlist[0]}" th:unless="${ask_boardlist == null} or ${#lists.size(ask_boardlist) <= 0 }">
 <head>
@@ -62,6 +64,7 @@
                     <img id = "uploadedImg" th:src="@{'/img/' + ${ask_filelist[0].filename}}" style="width:600;height:500;">
             </div>
             <div class="col-lg-9 col-md-9 col-sm-9 probootstrap-top-quick-contact-info">
+            <!-- sec:authorize="hasRole('ROLE_ADMIN')" -->
                 <label for="answer"><strong>답변</strong></label>
                 <input type="text" class="form-control" id="answer" style="text-align:left !important; height:70; margin-bottom:50px" name="answer">
             </div>
@@ -72,7 +75,15 @@
 		</div>
 		</form>
 	</div>
-	
+	    		<!-- 본문 하단 -->
+		<section class="probootstrap-cta">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+					</div>
+				</div>
+			</div>
+		</section>
 <!--  footer -->
 		<div th:replace="include/footer :: footer"></div>
 	
