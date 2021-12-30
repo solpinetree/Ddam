@@ -23,6 +23,8 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
   </head>
+  
+  
   <body>
 
     <div class="probootstrap-search" id="probootstrap-search">
@@ -72,7 +74,7 @@
         <div sec:authorize="isAnonymous()" class="probootstrap-tab-style-1">
             <ul class="nav nav-tabs probootstrap-center probootstrap-tabs no-border">
             <li class="active"><a data-toggle="tab" href="#crewListUp">크루 탐색</a></li>
-            <li><a href="#crewListUp"  onClick="alert('로그인 후에 이용해주세요!')">오픈 채팅</a></li>
+            <li><a href=""  onClick="alert('로그인 후에 이용해주세요!')">오픈 채팅</a></li>
           </ul>
         </div>
       </section>
@@ -189,12 +191,14 @@
       <!--  crewOpenChat 시작 -->
 					<div id="crewOpenChat"  class="tab-pane fade">
 								<div class="chat-page">
-									<div class="msg_view"></div> <!-- 여기에 msg view가 나타남 ajax로! -->
+									<div class="msg_view" id="msgDiv" style="overflow-y:scroll; width:80%; margin:auto; height:500px; padding:4px; border:1 solid #000000;"></div> <!-- 여기에 msg view가 나타남 ajax로! -->
 									<div id="msg_input" sec:authorize="isAuthenticated()">
 										<form id="chatinput">
 											<input type="hidden" name="writerId" th:value="${user.id}"> 
-											<input type="text"  name="message" class="textiiii" placeholder="메시지 보내기..." required>
+											<div style=" margin-left:60%;">
+											<input type="text"  name="message" class="textiiii" placeholder="메시지 보내기..."  style="text-align:center; width:70%;"  required>
 											<button type="button" id="chatbtn" class="btn btn-primary">보내기</button>
+											</div>
 										</form>
 											<script th:inline="javascript">
 																var id = '[[${user.id}]]';
@@ -237,24 +241,30 @@
 																		success : function(data) {
 																			var a = '';
 																			$.each(data, function(key, value){
-																				a += '<div class="hmhm">';
+																				
 																				if(value.writer.id == id) { // 보낸건 오른쪽에
-																					a += '<div class="sasa">';
-																					a += '<span>'+ value.content +'</span>';
+																					a += '<div class="sasa" align="right">';
+																					a += '<span><b>'+ value.writer.name +'</b></span><br>';
+																					a += '<span style="color:black;">'+ value.content +'</span>';
 																					a += '</div>';
 																				}
-																				else // 받은건 왼쪽
-																					a += '<span>' + value.content + '</span>';
+																				else{ // 받은건 왼쪽
+																					a += '<div class="hmhm" align:"left">';
+																					a += '<span><b>'+ value.writer.name +'</b></span><br>';
+																					a += '<span style="color:black;">' + value.content + '</span>';
 																				a += '<br /></div>';
+																				}
 																			});
 																			$('.msg_view').html(a);
+		 																	$('#msgDiv').scrollTop($('#msgDiv')[0].scrollHeight);
 																		}
 																	});
 																}
 																
 																
  																$(document).ready(function() {
-																	setInterval(chatlist, 3000); // 1초로 하면 렉이..
+ 																	$('#msgDiv').scrollTop($('#msgDiv')[0].scrollHeight);
+																	setInterval(chatlist, 3000); //렉이 걸리면 초를 늘리자..!
 																}); 
 												</script>
 									</div>
