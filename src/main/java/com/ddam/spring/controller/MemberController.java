@@ -130,6 +130,12 @@ public class MemberController {
 		System.out.println("POST: /login");
 		return "redirect:/";
 	}
+	
+	// view
+		@RequestMapping("/mypage")
+		public void mypage(Long username, User user) {
+		
+		}
 
 	@RequestMapping("/auth")
 	@ResponseBody

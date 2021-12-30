@@ -13,17 +13,21 @@
 			</div>
 			<div class="col-lg-3 col-md-3 col-sm-3 probootstrap-top-social">
 				<ul>
-				<li class="nav-item">
-                        <a sec:authorize="isAnonymous()" class="nav-link" href="/members/login">로그인</a>
-                    </li>
-                    <li>|</li>
-                    <li class="nav-item">
-                        <a sec:authorize="isAnonymous()" class="nav-link" href="/members/join">회원가입</a>
-                    </li>
-					<li class="nav-item">
-                        <a sec:authorize="isAuthenticated()" class="nav-link" href="/logout">로그아웃</a>
-                    </li>
 
+					<th:block sec:authorize="isAnonymous()">
+						<a sec:authorize="isAnonymous()" class="nav-link"
+							href="/members/login">로그인</a>
+
+						<li>|</li>
+
+						<a sec:authorize="isAnonymous()" class="nav-link"
+							href="/members/join">회원가입</a>
+					</th:block>
+					<th:block sec:authorize="isAuthenticated()">
+						<li class="nav-item"><a href="/members/mypage"><span sec:authentication="name"></span>님</a>  </li>
+						<li class="nav-item"><a sec:authorize="isAuthenticated()"
+							class="nav-link" href="/logout">로그아웃</a></li>
+					</th:block>
 				</ul>
 			</div>
 		</div>

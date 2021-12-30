@@ -1,16 +1,86 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5 ">
+      <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="description"
+	content="Free Bootstrap Theme by ProBootstrap.com">
+<meta name="keywords"
+	content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
+
+<link
+	href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700|Open+Sans"
+	rel="stylesheet">
+<link rel="stylesheet" th:href="@{/css/styles-merged.css}">
+<link rel="stylesheet" th:href="@{/css/style.min.css}">
+<link rel="stylesheet" th:href="@{/css/custom.css}">
+<link rel="stylesheet" th:href="@{/css/common.css}">
 <head>
     <title>마이페이지</title>
 </head>
+<!-- header -->
+<div th:replace="include/header::header"></div>
+<!--  nav bar -->
+<div th:replace="include/header::nav"></div>
 <body>
 ​
 <p>Click <a th:href="@{/user}">user</a> to see a greeting.</p>
 <p>Click <a th:href="@{/manager}">manager</a> to see a greeting.</p>
 <p>Click <a th:href="@{/admin}">admin</a> to see a greeting.</p>
+
+ <!-- container -->
+        <div id="container">
+            <div class="location_area member">
+                <div class="box_inner">
+                    <h2 class="tit_page">땀땀</h2>
+                    <p class="location">MEMBER <span class="path">/</span> 개인 정보 수정</p>
+                </div>
+            </div>
+            <!-- 본문 -->
+            <div class="bodytext_area box_inner">
+                <dl class="myinfo">
+                    <dt>내 정보</dt>
+                    <dd>
+                        <form action="#" class="regForm">
+                            <fieldset>
+                                <legend>내정보 입력 양식</legend>
+                                <ul class="reg_list">
+                                    <li class="clear">
+                                        <span class="tit_lbl">이름</span>
+                                        <div class="reg_content"><th:text=[["${user.name}"]]></div>
+                                    </li>
+                                    <li class="clear">
+                                        <span class="tit_lbl">닉네임</span>
+                                        <div class="reg_content"></div>
+                                    </li>
+                                    <li class="clear">
+                                        <span class="tit_lbl">성별</span>
+                                        <div class="reg_content">[[${session.name}]]</div>
+                                    </li>
+                                    <li class="clear">
+                                        <span class="tit_lbl">이메일</span>
+                                        <div class="reg_content">[[${session.name}]]</div>
+                                    </li>
+                                    <li class="clear">
+                                        <span class="tit_lbl">연락처</span>
+                                        <div class="reg_content">[[${session.name}]]</div>
+                                    </li>              
+                                </ul>
+                            </fieldset>
+                        </form>
+                    </dd>
+                </dl>
+            </div>
+            <!-- 본문 끝-->
+        </div>
+        <!-- container 끝 -->
+        <!-- footer -->
+<div th:replace="include/footer :: footer"></div>
 </body>
-</html> -->
+
+</html> 
