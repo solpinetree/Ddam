@@ -21,6 +21,7 @@
 	<link rel="stylesheet" th:href="@{/css/custom.css}">
 	<link rel="stylesheet" th:href="@{/font-awesome/css/font-awesome.min.css}">   <!-- font awesome 4 -->
 
+<script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
   </head>
   <body>
 
@@ -40,7 +41,7 @@
 		<div th:replace="include/header::nav"></div>
 
       
-      <section class="probootstrap-section probootstrap-section-colored">
+ <!--      <section class="probootstrap-section probootstrap-section-colored">
         <div class="container">
           <div class="row">
             <div class="col-md-12 text-left section-heading probootstrap-animate">
@@ -48,42 +49,224 @@
             </div>
           </div>
         </div>
+      </section> -->
+
+
+
+
+
+      <section class="probootstrap-section probootstrap-section-colored probootstrap-bg probootstrap-custom-heading probootstrap-tab-section" style="background-image: url(img/slider_2.jpg)">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 text-center section-heading probootstrap-animate">
+              <h2 class="mb0">크루 모집</h2>
+            </div>
+          </div>
+        </div>
+        <div sec:authorize="isAuthenticated()" class="probootstrap-tab-style-1">
+          <ul class="nav nav-tabs probootstrap-center probootstrap-tabs no-border">
+            <li class="active"><a data-toggle="tab" href="#crewListUp">크루 탐색</a></li>
+            <li><a data-toggle="tab" href="#crewOpenChat">오픈 채팅</a></li>
+          </ul>
+        </div>
+        <div sec:authorize="isAnonymous()" class="probootstrap-tab-style-1">
+            <ul class="nav nav-tabs probootstrap-center probootstrap-tabs no-border">
+            <li class="active"><a data-toggle="tab" href="#crewListUp">크루 탐색</a></li>
+            <li><a href="#crewListUp"  onClick="alert('로그인 후에 이용해주세요!')">오픈 채팅</a></li>
+          </ul>
+        </div>
       </section>
 
       
-      <!--  크루 리스트 보여주는 section -->
-      <section class="probootstrap-section">
+      <section class="probootstrap-section probootstrap-section">
         <div class="container">
           <div class="row">
-         	<div th:each="crew:${crewList}">
-	         	<!--  하나의 크루 -->
-	         	
-		         	<div style="cursor:pointer" th:onclick="'location.href=\'' + @{/crew/crew-detail/{id}(id=${crew.id})} +'\''">
-			            <div class="col-md-6">
-			              <div class="probootstrap-service-2 probootstrap-animate">
-			                <div class="image">
-								<div class="image-bg">
-									<!--  <span th:text="${crew.filePath}"></span>-->
-									<img th:src="@{${crew.filePath}}" alt="Free Bootstrap Template by ProBootstrap.com">
-								</div>
-							</div>
-			                <div class="text">
-			                  <h3 th:text="${crew.name}">크루 이름</h3>
-			                  <span class="probootstrap-meta" th:text="${crew.area}"></span><br>
-			                  <span class="probootstrap-meta" th:text="${crew.category}"></span><br>
-			                  <p><span class="enrolled-count" th:text="${crew.memberCount+'/'+crew.memberLimit}"></span></p>
-			                </div>
-			              </div>
+            <div class="col-md-12">
+              
+              <div class="tab-content">
+
+      <div id="crewListUp" class="tab-pane fade in active">
+      					<!-- data display section -->
+				       <section class="probootstrap-section" id="probootstrap-counter">
+				        <div class="container"  style="text-align:center;">
+				          
+				          <div class="row">
+				            <div class="col-md-3 col-sm-6 col-xs-6 col-xxs-12 probootstrap-animate">
+				              <div class="probootstrap-counter-wrap">
+				                <div class="probootstrap-icon">
+				                  <i class="icon-users2"></i>
+				                </div>
+				                <div class="probootstrap-text">
+				                  <span class="probootstrap-counter">
+				                    <span class="js-counter" data-from="0" th:attr="data-to=${#lists.size(crewList)}" data-speed="2500" data-refresh-interval="50">1</span>
+				                  </span>
+				                  <span class="probootstrap-counter-label">총 크루 수</span>
+				                </div>
+				              </div>
+				            </div>
+				            <div class="col-md-3 col-sm-6 col-xs-6 col-xxs-12 probootstrap-animate">
+				              <div class="probootstrap-counter-wrap">
+				                <div class="probootstrap-icon">
+				                  <i class="icon-user-tie"></i>
+				                </div>
+				                <div class="probootstrap-text">
+				                  <span class="probootstrap-counter">
+				                    <span class="js-counter" data-from="0" th:attr="data-to=${userCount}" data-speed="2500" data-refresh-interval="50">1</span>
+				                  </span>
+				                  <span class="probootstrap-counter-label">총 회원 수 </span>
+				                </div>
+				              </div>
+				            </div>
+				            <div class="clearfix visible-sm-block visible-xs-block"></div>
+				            <div class="col-md-3 col-sm-6 col-xs-6 col-xxs-12 probootstrap-animate">
+				              <div class="probootstrap-counter-wrap">
+				                <div class="probootstrap-icon">
+				                  <i class="icon-library"></i>
+				                </div>
+				                <div class="probootstrap-text">
+				                  <span class="probootstrap-counter">
+				                    <span class="js-counter" data-from="0" th:attr="data-to=${meetupCount}" data-speed="2500" data-refresh-interval="50">1</span>
+				                  </span>
+				                  <span class="probootstrap-counter-label">총 모임 횟수</span>
+				                </div>
+				              </div>
+				            </div>
+				            <div class="col-md-3 col-sm-6 col-xs-6 col-xxs-12 probootstrap-animate">
+				               
+				               <div class="probootstrap-counter-wrap">
+				                <div class="probootstrap-icon">
+				                  <i class="icon-smile2"></i>
+				                </div>
+				                <div class="probootstrap-text">
+				                  <span class="probootstrap-counter">
+				                    <span class="js-counter" data-from="0" data-to="100" data-speed="5000" data-refresh-interval="50">1</span>%
+				                  </span>
+				                  <span class="probootstrap-counter-label">모임 만족도</span>
+				                </div>
+				              </div>
+				            </div>
+				            
+				          </div>
+				        </div>
+				      </section>
+				     <!-- data display section 끝-->
+      
+			      <!--  크루 리스트 보여주는 section -->
+			      <section class="probootstrap-section">
+			        <div class="container">
+			          <div class="row">
+			         	<div th:each="crew:${crewList}">
+				         	<!--  하나의 크루 -->
+				         	
+					         	<div style="cursor:pointer" th:onclick="'location.href=\'' + @{/crew/crew-detail/{id}(id=${crew.id})} +'\''">
+						            <div class="col-md-6">
+						              <div class="probootstrap-service-2 probootstrap-animate">
+						                <div class="image">
+											<div class="image-bg">
+												<!--  <span th:text="${crew.filePath}"></span>-->
+												<img th:src="@{${crew.filePath}}" alt="Free Bootstrap Template by ProBootstrap.com">
+											</div>
+										</div>
+						                <div class="text">
+						                  <h3 th:text="${crew.name}">크루 이름</h3>
+						                  <span class="probootstrap-meta" th:text="${crew.area}"></span><br>
+						                  <span class="probootstrap-meta" th:text="${crew.category}"></span><br>
+						                  <p><span class="enrolled-count" th:text="${crew.memberCount+'/'+crew.memberLimit}"></span></p>
+						                </div>
+						              </div>
+						             </div>
+						         </div>
+						      
+				             <!-- 하나의 크루 끝 -->
 			             </div>
-			         </div>
-			      
-	             <!-- 하나의 크루 끝 -->
-             </div>
+			          </div>
+			        </div>
+			      </section>
+			      <!--  크루 리스트 보여주는 section 끝 -->
+      </div>
+      <!-- crewListUp div끝 -->
+      
+      <!--  crewOpenChat 시작 -->
+					<div id="crewOpenChat"  class="tab-pane fade">
+								<div class="chat-page">
+									<div class="msg_view"></div> <!-- 여기에 msg view가 나타남 ajax로! -->
+									<div id="msg_input" sec:authorize="isAuthenticated()">
+										<form id="chatinput">
+											<input type="hidden" name="writerId" th:value="${user.id}"> 
+											<input type="text"  name="message" class="textiiii" placeholder="메시지 보내기..." required>
+											<button type="button" id="chatbtn" class="btn btn-primary">보내기</button>
+										</form>
+											<script th:inline="javascript">
+																var id = '[[${user.id}]]';
+																
+																console.log([[${user.username}]]);
+																
+																
+																
+																$('#chatbtn').click(function(){
+																	var insertData = $('#chatinput').serialize();
+																	chatInsert(insertData);
+																});
+																
+																function chatInsert(insertData) {
+																	
+																	console.log('chatInsert');
+																	$.ajax({
+																		url: '/chat/insert',
+																		type: 'post',
+																		data: insertData,
+																		success : function(data){
+																			if(data == 1){
+																				chatlist();
+																				 // 메시지를 보내면 메시지 입력창은 초기화
+																				$('.textiiii').val('');
+																			}
+																		}
+																	});
+																}
+																
+																function chatlist() {
+																	
+																	console.log('chatlist');
+																	$.ajax({
+																		url: '/chat/list/' + id,
+																		type: 'post',
+																		async : true,
+																		data : {'id' : id},
+														/* 			 	dataType : "json",  */
+																		success : function(data) {
+																			var a = '';
+																			$.each(data, function(key, value){
+																				a += '<div class="hmhm">';
+																				if(value.writer.id == id) { // 보낸건 오른쪽에
+																					a += '<div class="sasa">';
+																					a += '<span>'+ value.content +'</span>';
+																					a += '</div>';
+																				}
+																				else // 받은건 왼쪽
+																					a += '<span>' + value.content + '</span>';
+																				a += '<br /></div>';
+																			});
+																			$('.msg_view').html(a);
+																		}
+																	});
+																}
+																
+																
+ 																$(document).ready(function() {
+																	setInterval(chatlist, 3000); // 1초로 하면 렉이..
+																}); 
+												</script>
+									</div>
+								</div>
+		     	 </div>
+		     	 <!--  crewOpenChat 끝 -->
+      
+      				</div>
+                  </div>
           </div>
         </div>
       </section>
-      
-      
       
       
 		<!--  크루 생성하기 버튼 -->
