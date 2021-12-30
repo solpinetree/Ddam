@@ -87,7 +87,7 @@ public class MemberController {
 			User user = User.createUser(userFormDto, bCryptPasswordEncoder);
 			redirectAttributes.addFlashAttribute("message", "회원가입 성공!");
 			userService.saveUser(user);
-			System.out.println(user+" insert 성공");
+			System.out.println(user + " insert 성공");
 		} catch (IllegalStateException e) {
 			model.addAttribute("errorMessage", e.getMessage());
 			return "members/join";
@@ -118,24 +118,29 @@ public class MemberController {
 			request.getSession().setAttribute("url_prior_login", referer);
 
 		session.setAttribute("sessionedUser", user.getUsername());
-		
+
 		// 현재 로그인한 user 정보 Authentication
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		User loggedUser = (User)authentication.getPrincipal();
-		if(loggedUser != null) {			
-			System.out.println("현재로그인 username : "+ loggedUser.getUsername());
+		User loggedUser = (User) authentication.getPrincipal();
+		if (loggedUser != null) {
+			System.out.println("현재로그인 username : " + loggedUser.getUsername());
 		}
-		
 
 		System.out.println("POST: /login");
 		return "redirect:/";
 	}
-	
-	// view
-		@RequestMapping("/mypage")
-		public void mypage(Long username, User user) {
-		
-		}
+
+	// 마이페이지
+	@RequestMapping("/mypage")
+	public void mypage(Long username, User user) {
+
+	}
+
+	// 크루장페이지
+	@RequestMapping("/manager")
+	public void manager(Long username, User user) {
+
+	}
 
 	@RequestMapping("/auth")
 	@ResponseBody

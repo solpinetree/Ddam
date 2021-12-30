@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5 ">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="description"
+	content="Free Bootstrap Theme by ProBootstrap.com">
+<meta name="keywords"
+	content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
+
+<link
+	href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700|Open+Sans"
+	rel="stylesheet">
+<link rel="stylesheet" th:href="@{/css/styles-merged.css}">
+<link rel="stylesheet" th:href="@{/css/style.min.css}">
+<link rel="stylesheet" th:href="@{/css/custom.css}">
+<link rel="stylesheet" th:href="@{/css/common.css}">
+<style>
+.answer {
+	display: none;
+}
+
+#faq-title {
+	font-size: 25px;
+}
+
+.faq-content {
+	border-bottom: 1px solid #e0e0e0;
+}
+
+.question {
+	font-size: 19px;
+	padding: 30px 0;
+	cursor: pointer;
+	border: none;
+	outline: none;
+	background: none;
+	width: 100%;
+	text-align: left;
+}
+
+.question:hover {
+	color: #2962ff;
+}
+
+[id$="-toggle"] {
+	margin-right: 15px;
+}
+</style>
+<head>
+<title>마이페이지</title>
+</head>
+<!-- header -->
+<div th:replace="include/header::header"></div>
+<!--  nav bar -->
+<div th:replace="include/header::nav"></div>
+<body>
+	<!-- 본문 상단 -->
+	<section class="probootstrap-section probootstrap-section-colored">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 text-left section-heading mb0">
+					<h1 class="mb0" style="font-size: 25px;">관리자페이지</h1>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- 본문 중단 -->
+	<section class="probootstrap-section probootstrap-bg-white">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="portfolio-feed three-cols">
+						<div class="faq-content">
+
+							<div class="communityBoard commnityList">
+
+								<button class="question" id="que-1">
+									<span id="que-1-toggle">+</span><span>모든게시물보기</span>
+								</button>
+								<div class="answer" id="ans-1">
+									<!-- 게시판 테이블 -->
+									<div id="communityTable">
+										<table class="table">
+											<tr>
+												<th class="tbcenter">번호</th>
+												<th class="tbcenter">제목</th>
+												<th class="tbcenter">작성자</th>
+												<th class="tbcenter">작성일</th>
+												<th class="tbcenter">조회 수</th>
+											</tr>
+											<tr th:each="pagingList: ${pagingList}">
+												<td class="tbcenter">[[${pagingList.id}]]</td>
+												<td><a th:href="@{view(id=${pagingList.id})}">[[${pagingList.subject}]]</a></td>
+												<td class="tbcenter">[[${pagingList.username}]]</td>
+												<td class="tbcenter">[[${#temporals.format(pagingList.createdAt,
+													'yyyy-MM-dd')}]]</td>
+												<td class="tbcenter">[[${pagingList.viewCnt}]]</td>
+											</tr>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</section>
+
+
+</body>
+<!-- footer -->
+<div th:replace="include/footer :: footer"></div>
+<script>
+  const items = document.querySelectorAll('.question');
+
+  function openCloseAnswer() {
+    const answerId = this.id.replace('que', 'ans');
+
+    if(document.getElementById(answerId).style.display === 'block') {
+      document.getElementById(answerId).style.display = 'none';
+      document.getElementById(this.id + '-toggle').textContent = '+';
+    } else {
+      document.getElementById(answerId).style.display = 'block';
+      document.getElementById(this.id + '-toggle').textContent = '-';
+    }
+  }
+
+  items.forEach(item => item.addEventListener('click', openCloseAnswer));
+</script>
+</html>

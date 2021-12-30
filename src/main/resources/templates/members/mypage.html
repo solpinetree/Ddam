@@ -28,10 +28,6 @@
 <!--  nav bar -->
 <div th:replace="include/header::nav"></div>
 <body>
-
-<p>Click <a th:href="@{/manager}">manager</a> to see a greeting.</p>
-<p>Click <a th:href="@{/admin}">admin</a> to see a greeting.</p>
-
  <!-- container -->
         <div id="container">
             <div class="location_area member">
@@ -69,10 +65,13 @@
                                         <span class="tit_lbl">연락처</span>
                                         <div class="reg_content"><span th:text="${#authentication.getPrincipal().getPhone()}" ></span></div>
                                     </li>    
-                                    <li class="clear" sec:authorize access="hasRole('manage')">
+                                     <sec:authorize access="hasRole('admin')">
+                                    <li class="clear">
+                                    
                                         <span class="tit_lbl">관리자</span>
-                                        <div class="reg_content"> <a th:href="@{/manager}">크루장권한</a></div>
-                                    </li>           
+                                        <div class="reg_content"> <a th:href="@{/adminpage}">관리자권한</a></div>
+                                    </li>  
+                                    
                                 </ul>
                             </fieldset>
                         </form>
