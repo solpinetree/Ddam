@@ -74,8 +74,8 @@
 						            
 									<!-- 첨부파일 -->
 									<div class="writeFormInner" id="addFiles">
-										<label th:if="${list.communityFiles.size()} == 0" for="multipartFile">첨부파일 : </label>
-										<div th:if="${list.communityFiles.size()} == 0" id="inputFile">
+										<label for="multipartFile">첨부파일 : </label>
+										<div id="inputFile">
 											<input name="multipartFile" id="multipartFile" type="file" multiple="multiple">
 										</div>
 									</div>
@@ -117,12 +117,19 @@
 	-->
 
 </body>
-<script>
+<script th:inline="javascript">
+$(document).ready(function() {
+	var fileCount = [[${list.communityFiles.size}]];
+	
+	if(fileCount > 0) {
+		document.getElementById("addFiles").style = "display: none;";
+	}
+});
+
 function removeFile(cfId) {
 	$("#removeFiles").append("<input type='hidden' name='removeFileId' value='" + cfId + "'>");
 	
-	$("#addFiles").append("<label for='multipartFile'>첨부파일 : </label>" +
-			"<div id='inputFile'>" + "<input name='multipartFile' id='multipartFile' type='file' multiple='multiple'>" + "</div>");
+	document.getElementById("addFiles").style = "";
 }
 </script>
 </th:block>

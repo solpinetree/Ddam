@@ -73,7 +73,7 @@
 								
 								<!-- 버튼 -->
 								<div class="cbBtn">
-									<button type="button" class="btn" onclick="location.href='write'">글 작성</button>
+									<button type="button" class="btn" onclick="chkWrite()">글 작성</button>
 								</div>
 								
 								<!-- 페이지 네비게이션 -->
@@ -135,6 +135,17 @@
 
 </body>
 <script th:inline="javascript">
+function chkWrite() {
+	var username = [[${session.username}]];
+	
+	if(username == "" || username == null) {
+		alert("로그인이 필요합니다");
+		location.href = '/members/login';
+	} else {
+		location.href = 'write';
+	}
+}
+
 $("#startPage").click(function() {
 	document.getElementById("pageNum").value = 0;
 	
