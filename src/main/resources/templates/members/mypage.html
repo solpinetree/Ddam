@@ -28,8 +28,7 @@
 <!--  nav bar -->
 <div th:replace="include/header::nav"></div>
 <body>
-​
-<p>Click <a th:href="@{/user}">user</a> to see a greeting.</p>
+
 <p>Click <a th:href="@{/manager}">manager</a> to see a greeting.</p>
 <p>Click <a th:href="@{/admin}">admin</a> to see a greeting.</p>
 
@@ -52,24 +51,28 @@
                                 <ul class="reg_list">
                                     <li class="clear">
                                         <span class="tit_lbl">이름</span>
-                                        <div class="reg_content"><th:text=[["${user.name}"]]></div>
+                                        <div class="reg_content"><span th:text="${#authentication.getPrincipal().getName()}" ></span></div>
                                     </li>
                                     <li class="clear">
                                         <span class="tit_lbl">닉네임</span>
-                                        <div class="reg_content"></div>
+                                        <div class="reg_content"><span th:text="${#authentication.getPrincipal().getUsername()}" ></span></div>
                                     </li>
                                     <li class="clear">
                                         <span class="tit_lbl">성별</span>
-                                        <div class="reg_content">[[${session.name}]]</div>
+                                        <div class="reg_content"><span th:text="${#authentication.getPrincipal().getGender()}" ></span></div>
                                     </li>
                                     <li class="clear">
                                         <span class="tit_lbl">이메일</span>
-                                        <div class="reg_content">[[${session.name}]]</div>
+                                        <div class="reg_content"><span th:text="${#authentication.getPrincipal().getEmail()}" ></span></div>
                                     </li>
                                     <li class="clear">
                                         <span class="tit_lbl">연락처</span>
-                                        <div class="reg_content">[[${session.name}]]</div>
-                                    </li>              
+                                        <div class="reg_content"><span th:text="${#authentication.getPrincipal().getPhone()}" ></span></div>
+                                    </li>    
+                                    <li class="clear" sec:authorize access="hasRole('manage')">
+                                        <span class="tit_lbl">관리자</span>
+                                        <div class="reg_content"> <a th:href="@{/manager}">크루장권한</a></div>
+                                    </li>           
                                 </ul>
                             </fieldset>
                         </form>
