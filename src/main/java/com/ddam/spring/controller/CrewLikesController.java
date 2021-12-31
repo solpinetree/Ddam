@@ -34,8 +34,6 @@ public class CrewLikesController {
 		long userId = Long.parseLong((String) paramMap.get("userId"));
 		long crewId = Long.parseLong((String) paramMap.get("crewId"));
 		
-		System.out.println("uid:" + userId);
-		System.out.println("cid:" + crewId);	
 		
 		// 동일 크루에 대한 이전 좋아요 여부 검색
 		int result = likesService.find(userId,crewId);

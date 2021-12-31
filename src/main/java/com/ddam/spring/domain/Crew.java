@@ -1,10 +1,9 @@
 package com.ddam.spring.domain;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,11 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AccessLevel;
 import lombok.Data;
@@ -40,6 +36,8 @@ public class Crew {
 
 	private String area; // 크루 활동 지역
 	
+//	@OneToMany(mappedBy="crew")
+//	private Set<Meetup> meetupLists = new HashSet<>();
 	
    // 크루 썸네일
 	private String fileOriginName; // 받아올 때 파일 이름

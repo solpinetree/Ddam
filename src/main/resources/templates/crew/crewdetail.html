@@ -62,7 +62,7 @@
 
 <body>
 	<!--  js에서 쓰기 위해 저장해놓음  -->
-	<div sec:authorize="isAuthenticated()">
+	<div th:if="${user!=null}">
 		<input type="hidden" id="userId" name="userId" th:value="${user.id}" /> 
 		<input type="hidden" id="crewId" name="crewId" th:value="${crew.id}" />
 	</div>
@@ -129,6 +129,10 @@
 									<span class="probootstrap-location" id="memberCount">
 										<i class="fa fa-users" aria-hidden="true"></i>멤버수 : [[${crew.memberCount}]]
 									</span>
+									<!-- 크루 멤버 수 -->
+									<span class="probootstrap-location" id="memberCount">
+										<i class="fa fa-meetup" aria-hidden="true"></i>누적 모임 횟수 : [[${#lists.size(allmeetupLists)}]]
+									</span>									
 								</p>
 								
 								<h2>크루를 소개하는 말</h2>

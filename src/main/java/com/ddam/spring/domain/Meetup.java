@@ -33,7 +33,7 @@ public class Meetup {
 	
 	@ManyToOne
 	@JoinColumn(name="crewId")
-	@JsonIgnoreProperties({"crewAdmin"})
+	@JsonIgnoreProperties({"crewAdmin, meetupLists"})
 	private Crew crew;
 	
 	private String location;

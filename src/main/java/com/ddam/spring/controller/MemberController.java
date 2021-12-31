@@ -93,7 +93,7 @@ public class MemberController {
 			return "members/join";
 		}
 
-		return "redirect:/";
+		return "redirect:/members/login";
 	}
 
 	// 로그인 페이지

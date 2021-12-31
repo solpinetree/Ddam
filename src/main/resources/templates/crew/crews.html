@@ -161,7 +161,7 @@
 				         	<!--  하나의 크루 -->
 				         	
 					         	<div style="cursor:pointer" th:onclick="'location.href=\'' + @{/crew/crew-detail/{id}(id=${crew.id})} +'\''">
-						            <div class="col-md-6">
+						    <!--         <div class="col-md-6"> -->
 						              <div class="probootstrap-service-2 probootstrap-animate">
 						                <div class="image">
 											<div class="image-bg">
@@ -173,10 +173,13 @@
 						                  <h3 th:text="${crew.name}">크루 이름</h3>
 						                  <span class="probootstrap-meta" th:text="${crew.area}"></span><br>
 						                  <span class="probootstrap-meta" th:text="${crew.category}"></span><br>
-						                  <p><span class="enrolled-count" th:text="${crew.memberCount+'/'+crew.memberLimit}"></span></p>
+						                  <span class="probootstrap-meta">크루장 : [[${crew.crewAdmin.username}]]</span><br>
+						             <!--   	 <span class="probootstrap-meta">누적 모임 횟수 : </span><br>  -->
+						                  <p><span class="enrolled-count">멤버 수 : [[${crew.memberCount}]]  /  [[${crew.memberLimit}]]</span></p>
+						                	<span class="probootstrap-meta"><i class="fa fa-heart" aria-hidden="true">&nbsp;[[${crew.likesCount}]]</i></span>
 						                </div>
 						              </div>
-						             </div>
+						          <!--    </div> -->
 						         </div>
 						      
 				             <!-- 하나의 크루 끝 -->
@@ -192,8 +195,8 @@
 					<div id="crewOpenChat"  class="tab-pane fade">
 								<div class="chat-page">
 									<div class="msg_view" id="msgDiv" style="overflow-y:scroll; width:80%; margin:auto; height:500px; padding:4px; border:1 solid #000000;"></div> <!-- 여기에 msg view가 나타남 ajax로! -->
-									<div id="msg_input" sec:authorize="isAuthenticated()">
-										<form id="chatinput">
+									<div id="msg_input" th:if="${user!=null}"><br><br>
+										<form id="chatinput" name="chatinput">
 											<input type="hidden" name="writerId" th:value="${user.id}"> 
 											<div style=" margin-left:60%;">
 											<input type="text"  name="message" class="textiiii" placeholder="메시지 보내기..."  style="text-align:center; width:70%;"  required>
@@ -205,7 +208,12 @@
 																
 																console.log([[${user.username}]]);
 																
-																
+																$("#chatinput").keypress(function(event){
+																	if(event.which==13){
+																		$('#chatbtn').click();
+																		return false;
+																	}
+																});
 																
 																$('#chatbtn').click(function(){
 																	var insertData = $('#chatinput').serialize();

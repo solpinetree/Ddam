@@ -16,4 +16,6 @@ public interface MeetupRepository extends JpaRepository<Meetup, Long>{
 	List<Meetup> findByDatetimeGreaterThanOrderByDatetimeAsc(LocalDateTime now);
 
 	Meetup findById(long id);
+
+	List<Meetup> findByCrewIdAndDatetimeGreaterThanOrderByDatetimeAsc(long cid, LocalDateTime minusDays);
 }

@@ -2,6 +2,7 @@ package com.ddam.spring.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -127,7 +128,6 @@ public class CrewController {
     	
     	model.addAttribute("user", user);
     	
-    	System.out.println("crew-detail: " +user);   	
     	if(user!=null) {
 		
 	    	// 지금 로그인한 유저와 크루와의 관계
@@ -147,8 +147,11 @@ public class CrewController {
     	List<User> members = followService.findMembers(cid);
     	model.addAttribute("members", members);
     	
-    	List<Meetup> meetupLists = meetupRepository.findByCrewId(cid);
+    	List<Meetup> meetupLists = meetupRepository.findByCrewIdAndDatetimeGreaterThanOrderByDatetimeAsc(cid, LocalDateTime.now().minusDays(1L));
     	model.addAttribute( "meetupLists", meetupLists);
+    	
+    	List<Meetup> allmeetupLists = meetupRepository.findByCrewId(cid);
+    	model.addAttribute("allmeetupLists", allmeetupLists);
     	
 		return "crew/crewdetail";
 	}
@@ -222,7 +225,7 @@ public class CrewController {
 			e.printStackTrace();
 		}
 		
-		return "redirect:/crew/crews";
+		return "redirect:/crew/crew-detail/"+crew.getId();
 	}
 	
 	/**

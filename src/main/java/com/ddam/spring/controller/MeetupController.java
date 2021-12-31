@@ -25,6 +25,7 @@ import com.ddam.spring.repository.CrewRepository;
 import com.ddam.spring.repository.FollowRepository;
 import com.ddam.spring.repository.MeetupRepository;
 import com.ddam.spring.repository.UserRepository;
+import com.ddam.spring.service.MeetupService;
 import com.ddam.spring.service.MeetupUserService;
 
 @Controller
@@ -33,6 +34,9 @@ public class MeetupController {
 
 	@Autowired
 	CrewRepository crewRepository;
+	
+	@Autowired
+	MeetupService meetupService;
 	
 	@Autowired
 	MeetupRepository meetupRepository;
@@ -75,8 +79,9 @@ public class MeetupController {
 			Meetup meetup) throws ParseException {
 		meetup.setCrew(crewRepository.findById(cid));
 		meetup.setDatetime(datetime2);
-		Meetup res = meetupRepository.save(meetup);
-		return "redirect:/crew/crew-detail/"+res.getCrew().getId();
+		Meetup res = meetupService.save(cid,meetup);
+		
+		return "redirect:/crew/crew-detail/"+cid;
 	}
 	
 	/**

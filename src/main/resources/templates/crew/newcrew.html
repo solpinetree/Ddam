@@ -104,7 +104,7 @@
                     <span style="font-size: 14px; color: red">[[${errMemberLimit}]]</span>
                       <select class="form-control" id="subject" name="memberLimit" style="text-align:left !important;">
                       		<option value="" th:selected="${crew.memberLimit==null}"></option>
-                      		<option th:each="num:${#numbers.sequence(10,25)}" th:value="${num}" th:selected="${crew.memberLimit==num}">[[${num}]]</option>
+                      		<option th:each="num:${#numbers.sequence(2,25)}" th:value="${num}" th:selected="${crew.memberLimit==num}">[[${num}]]</option>
                       </select>
                     </div>
                     

@@ -4,6 +4,9 @@ drop table if exists user;
 drop table if exists likes;
 drop table if exists follow_request;
 drop table if exists meetup;
+drop table if exists meetup_user;
+
+select * from meetup_user;
 
 drop table if exists crew_chat;
 
