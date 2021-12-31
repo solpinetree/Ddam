@@ -80,7 +80,12 @@ public class User implements UserDetails{
     private String role;
     
 	@OneToMany(mappedBy="user",fetch = FetchType.EAGER)
+	@ToString.Exclude
 	private Set<MeetupUser> participantList = new HashSet<>();
+	
+	@OneToMany(mappedBy="user")
+	@ToString.Exclude
+	private List<Notification> notifications = new ArrayList<>();
 
 	public static User createUser(UserFormDto userFormDto, PasswordEncoder passwordEncoder){
 		System.out.println(userFormDto);

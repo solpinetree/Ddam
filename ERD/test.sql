@@ -38,5 +38,7 @@ select * from ask_board;
 
 show tables;
 
+select * from notification;
+
 -- 1	admin@mail.com	F	관리자	$2a$10$brmUGn9NBEofvBAUiY7.cueF8FeKyQdbvDdcs7Af85NxMJmrYFr7a	000-111-2222	ROLE_ADMIN	admin
 -- 2	admin@mail.com	F	유저	$2a$10$8cFT1JYztyHYjazrmQC68untNjp9hBG0W/QNY7yRfPS0E.DgOJwp.	000-111-2222	ROLE_USER	user

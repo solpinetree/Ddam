@@ -130,7 +130,7 @@
 										<i class="fa fa-users" aria-hidden="true"></i>멤버수 : [[${crew.memberCount}]]
 									</span>
 									<!-- 크루 멤버 수 -->
-									<span class="probootstrap-location" id="memberCount">
+									<span class="probootstrap-location">
 										<i class="fa fa-meetup" aria-hidden="true"></i>누적 모임 횟수 : [[${#lists.size(allmeetupLists)}]]
 									</span>									
 								</p>
@@ -282,7 +282,7 @@
 							<td id="modal_userID">[[${request.fromUser.username}]]</td>
 							<td id="llll">[[${request.info}]]</td>
 							<td id="modal_userFollow">
-								<input type="hidden" id="requestId"  th:value="${request.id}"/>
+								<input type="hidden" id="requestId"  th:value="${request.fromUser.id}"/>
 								<button th:onclick="'acceptMember(\''+${request.fromUser.id} + '\')'" class="btn btn-outline-primary">승인하기</button>
 								<button th:onclick="'rejectMember(\''+${request.fromUser.id} + '\')'" class="btn btn-outline-primary">거절하기</button>
 							</td>

@@ -10,10 +10,12 @@ import org.springframework.stereotype.Service;
 
 import com.ddam.spring.domain.Crew;
 import com.ddam.spring.domain.Follow;
+import com.ddam.spring.domain.Notification;
 import com.ddam.spring.domain.User;
 import com.ddam.spring.repository.CrewRepository;
 import com.ddam.spring.repository.FollowRepository;
 import com.ddam.spring.repository.FollowRequestRepository;
+import com.ddam.spring.repository.NotificationRepository;
 import com.ddam.spring.repository.UserRepository;
 
 @Service
@@ -30,10 +32,14 @@ public class FollowService {
 	@Autowired
 	FollowRequestRepository followRequestRepository;
 	
+	@Autowired
+	NotificationService notificationService;
 	
 	@Transactional
 	public void save(long fromUserId, long toCrewId) { // 최종적으로 멤버가 됨
 		Follow f = new Follow();
+		
+		User user = userRepository.findById(fromUserId);
 		
 		f.setFromUser(userRepository.findById(fromUserId));
 		f.setToCrew(crewRepository.findById(toCrewId));
@@ -43,13 +49,25 @@ public class FollowService {
 		
 		followRepository.save(f);
 		followRequestRepository.deleteByFromUserIdAndToCrewId(fromUserId, toCrewId);
+		
+		Notification notification = new Notification();
+		notification.setUser(user);
+		notification.setNoti(crew.getName()+" 크루 멤버가 되었습니다.");
+		notificationService.save(user, notification);	
+		
 	}
 	
 	@Transactional
 	public void deleteByFromUserIdAndToCrewId(long fromUserId, long toCrewId) { // 크루 팔로우 거절당함
 		followRepository.deleteByFromUserIdAndToCrewId(fromUserId, toCrewId);
 		Crew crew = crewRepository.findById(toCrewId);
+		User user = userRepository.findById(fromUserId);
 		crew.setMemberCount(crew.getMemberCount()-1);
+		
+		Notification notification = new Notification();
+		notification.setUser(user);
+		notification.setNoti(crew.getName()+" 크루에서 내보내졌습니다.");
+		notificationService.save(user, notification);		
 	}
 
 	public String find(long fromUserId, long toCrewId) { // 팔로우가 되어있는지를 확인하기위해

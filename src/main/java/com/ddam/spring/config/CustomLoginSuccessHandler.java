@@ -23,6 +23,8 @@ import com.ddam.spring.repository.UserRepository;
 
 public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
+	@Autowired
+	UserRepository userRepository;
 	
 	public CustomLoginSuccessHandler(String defaultTargetUrl) {
 		// 로그인후 특별히 redirect 할 url 이 없는경우 기본적으로 rediret 할 url
@@ -53,9 +55,15 @@ public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSu
 		
 		request.getSession().setAttribute("username", userDetails.getUsername());
 		
-		// 로그인 직전 url 로 redirect 하기...
+		request.getSession().setAttribute("user", (User)userDetails);
+		
+		
 		HttpSession session = request.getSession();
-		if(session != null) {
+		System.out.println(session.getAttribute("user"));
+		
+		// 로그인 직전 url 로 redirect 하기...
+		HttpSession session1 = request.getSession();
+		if(session1 != null) {
 			String redirectUrl = (String)session.getAttribute("url_prior_login");
 			if(redirectUrl != null) {
 				session.removeAttribute("url_prior_login");

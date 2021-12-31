@@ -35,6 +35,7 @@ import com.ddam.spring.domain.Crew;
 import com.ddam.spring.domain.Follow;
 import com.ddam.spring.domain.FollowRequest;
 import com.ddam.spring.domain.Meetup;
+import com.ddam.spring.domain.Notification;
 import com.ddam.spring.domain.User;
 import com.ddam.spring.repository.CrewRepository;
 import com.ddam.spring.repository.FollowRepository;
@@ -43,6 +44,7 @@ import com.ddam.spring.repository.MeetupRepository;
 import com.ddam.spring.repository.UserRepository;
 import com.ddam.spring.service.FollowRequestService;
 import com.ddam.spring.service.FollowService;
+import com.ddam.spring.service.NotificationService;
 import com.ddam.spring.validation.CrewValidator;
 
 @Controller
@@ -63,6 +65,9 @@ public class CrewController {
 	
 	@Autowired
 	private FollowService followService;
+	
+	@Autowired
+	private NotificationService notificationService;
 
 	@Autowired
 	private UserRepository userRepository;
@@ -383,7 +388,6 @@ public class CrewController {
 //		crewRepository.findById(crewId).getMembers().remove(userRepository.findById(memberId));
 		
 		followService.deleteByFromUserIdAndToCrewId(memberId, crewId);
-		
 	}
 	
 	/**
@@ -391,7 +395,7 @@ public class CrewController {
 	 */
 	@RequestMapping("/follow")
 	@ResponseBody
-	public void follow(Model model, @RequestParam Map<String, Object> paramMap) {
+	public int follow(Model model, @RequestParam Map<String, Object> paramMap) {
 		
 		long requestId = Long.parseLong((String)paramMap.get("requestId"));
 		long crewId = Long.parseLong((String)paramMap.get("crewId"));
@@ -403,6 +407,8 @@ public class CrewController {
     	
     	List<User> members = followService.findMembers(crewId);
     	model.addAttribute("members", members);
+    	
+    	return requests.size();
 	}
 	
 	/**
@@ -414,6 +420,14 @@ public class CrewController {
 		
 		long requestId = Long.parseLong((String)paramMap.get("requestId"));
 		long crewId = Long.parseLong((String)paramMap.get("crewId"));
+		Notification notification = new Notification();
+		
+		User user = userRepository.findById(requestId);
+		Crew crew = crewRepository.findById(crewId);
+		
+		notification.setUser(user);
+		notification.setNoti(crew.getName()+" 크루 멤버 요청이 거절되었습니다.");
+		notificationService.save(user, notification);	
     	
 		followRequestRepository.deleteByFromUserIdAndToCrewId(requestId, crewId);
 	}

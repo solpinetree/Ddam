@@ -67,9 +67,4 @@ public class IndexController {
 
 	}
 
-	@RequestMapping("/testing")
-	public String testing() {
-		return "crew/testing";
-	}
-
 }
