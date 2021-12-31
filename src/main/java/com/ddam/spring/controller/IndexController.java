@@ -49,6 +49,7 @@ public class IndexController {
 	@GetMapping(value = {"/adminpage"})
 	public void adminpage(@RequestParam(defaultValue = "0") int pageNum, String sType, String sKeyword, Model model) {
 		Page<CommunityBoard> pagingList = communityBoardService.pagingList(pageNum, sType, sKeyword);
+		List<Crew> crews = crewRepository.findAll();
 
 		// 전체 페이지 수
 		int totalPage = pagingList.getTotalPages();
@@ -62,6 +63,7 @@ public class IndexController {
 		model.addAttribute("pageNum", pageNum);
 		model.addAttribute("sType", sType);
 		model.addAttribute("sKeyword", sKeyword);
+		model.addAttribute("crews",crews);
 
 	}
 

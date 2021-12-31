@@ -78,9 +78,7 @@
 				<div class="col-md-12">
 					<div class="portfolio-feed three-cols">
 						<div class="faq-content">
-
 							<div class="communityBoard commnityList">
-
 								<button class="question" id="que-1">
 									<span id="que-1-toggle">+</span><span>모든게시물보기</span>
 								</button>
@@ -113,6 +111,40 @@
 			</div>
 		</div>
 
+	</section>
+
+	<section
+		class="probootstrap-section probootstrap-bg-white probootstrap-border-top">
+		<div class="container">
+			<div class="faq-content">
+				<button class="question" id="que-2">
+					<span id="que-2-toggle">+</span><span>현재 활동 중인 크루</span>
+				</button>
+				<div class="answer" id="ans-2">
+					<div class="row">
+						<!-- 크루 항목 -->
+						<div th:each="crew:${crews}" class="col-md-6">
+							<div class="probootstrap-service-2 probootstrap-animate">
+								<div class="text">
+									<h3 th:text="${crew.name}">크루 이름</h3>
+									<span class="probootstrap-meta" th:text="${crew.area}"></span><br>
+									<span class="probootstrap-meta" th:text="${crew.category}"></span><br>
+									<p>
+										<span class="enrolled-count"
+											th:text="${crew.memberCount+'/'+crew.memberLimit}"></span>
+									</p>
+									<p>
+										<a
+											th:onclick="'location.href=\'' + @{/crew/crew-detail/{id}(id=${crew.id})} +'\''"
+											class="btn btn-primary">상세보기</a>
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</section>
 
 
