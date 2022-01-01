@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.ddam.spring.domain.Notification;
+import com.ddam.spring.domain.User;
 
 public interface NotificationRepository extends JpaRepository<Notification, Long> {
 
@@ -14,4 +15,7 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
 	
 	Notification save(Notification notification);
 
+	List<Notification> findByUser(User user);
+
+	int countByUserId(long userId);
 }

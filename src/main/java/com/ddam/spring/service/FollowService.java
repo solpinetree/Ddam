@@ -40,11 +40,11 @@ public class FollowService {
 		Follow f = new Follow();
 		
 		User user = userRepository.findById(fromUserId);
-		
-		f.setFromUser(userRepository.findById(fromUserId));
-		f.setToCrew(crewRepository.findById(toCrewId));
-		
 		Crew crew = crewRepository.findById(toCrewId);
+		
+		f.setFromUser(user);
+		f.setToCrew(crew);
+		
 		crew.setMemberCount(crew.getMemberCount()+1);
 		
 		followRepository.save(f);

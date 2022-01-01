@@ -52,12 +52,11 @@
                 	"requestId": requestId,
                     "crewId": crewId
                 },
-                complete: function (data) {
+                complete: function () {
                 	$(".followModal").load(location.href + " .followModal");
                 	$("#memberCount").load(location.href + " #memberCount");
                		$(".followRequestModal").load(location.href + " .followRequestModal");
           //     		$("#reqNum").load(location.href + " #reqNum");
-		//			$("#reqNum").html(data);
 					$("#forCrewAdmin").load(location.href + " #forCrewAdmin");
                 },
 			})

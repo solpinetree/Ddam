@@ -11,7 +11,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>땀땀 : 크루탐색</title>
+    <title>크루 탐색</title>
     <meta name="description" content="Free Bootstrap Theme by ProBootstrap.com">
     <meta name="keywords" content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
     
@@ -91,7 +91,7 @@
 				                  <span class="probootstrap-counter">
 				                    <span class="js-counter" data-from="0" th:attr="data-to=${#lists.size(crewList)}" data-speed="2500" data-refresh-interval="50">1</span>
 				                  </span>
-				                  <span class="probootstrap-counter-label">총 크루 수</span>
+				                  <span class="probootstrap-counter-label">누적 크루 수</span>
 				                </div>
 				              </div>
 				            </div>
@@ -104,7 +104,7 @@
 				                  <span class="probootstrap-counter">
 				                    <span class="js-counter" data-from="0" th:attr="data-to=${userCount}" data-speed="2500" data-refresh-interval="50">1</span>
 				                  </span>
-				                  <span class="probootstrap-counter-label">총 회원 수 </span>
+				                  <span class="probootstrap-counter-label">누적 회원 수 </span>
 				                </div>
 				              </div>
 				            </div>
@@ -118,7 +118,7 @@
 				                  <span class="probootstrap-counter">
 				                    <span class="js-counter" data-from="0" th:attr="data-to=${meetupCount}" data-speed="2500" data-refresh-interval="50">1</span>
 				                  </span>
-				                  <span class="probootstrap-counter-label">총 모임 횟수</span>
+				                  <span class="probootstrap-counter-label">누적 모임 횟수</span>
 				                </div>
 				              </div>
 				            </div>
@@ -209,7 +209,6 @@
 																
 																function chatInsert(insertData) {
 																	
-																	console.log('chatInsert');
 																	$.ajax({
 																		url: '/chat/insert',
 																		type: 'post',
@@ -226,7 +225,6 @@
 																
 																function chatlist() {
 																	
-																	console.log('chatlist');
 																	$.ajax({
 																		url: '/chat/list/' + id,
 																		type: 'post',

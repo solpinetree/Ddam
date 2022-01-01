@@ -14,7 +14,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Index;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -24,6 +23,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.ddam.spring.dto.UserFormDto;
+import com.ddam.spring.repository.NotificationRepository;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
@@ -81,11 +81,11 @@ public class User implements UserDetails{
 	@JsonIgnore
 	private Set<MeetupUser> participantList = new HashSet<>();
 	
-	@OneToMany( cascade = CascadeType.ALL)
-	@JoinColumn(name="userId")
+	@OneToMany(mappedBy= "user", cascade = CascadeType.PERSIST)
 	@ToString.Exclude
 	@JsonIgnore
-	private List<Notification> notifications = new ArrayList<>();
+	@Builder.Default
+	private List<Notification> notifications = new ArrayList<Notification>();
 
 	public static User createUser(UserFormDto userFormDto, PasswordEncoder passwordEncoder){
 		System.out.println(userFormDto);
@@ -98,7 +98,6 @@ public class User implements UserDetails{
         String password = passwordEncoder.encode(userFormDto.getPassword());
         user.setPassword(password);
         user.setParticipantList(null);
-        user.setNotifications(null);
 
         if(user.getUsername()=="admin") {
 			user.setRole("admin");
@@ -117,11 +116,9 @@ public class User implements UserDetails{
 		
 		notification.setUser(this);
 		notifications.add(notification);
-		
-		System.out.println(notifications);
-		System.out.println("1");
 	}
 
+	
 	@Override
 	public boolean isAccountNonExpired() {
 		// TODO Auto-generated method stub

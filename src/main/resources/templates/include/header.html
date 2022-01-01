@@ -5,94 +5,116 @@
 	xsi:schemaLocation="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5 ">
 
 
+
+
 <!-- 헤더 -->
 <div class="probootstrap-header-top" th:fragment="header">
 	<div class="container">
-		<div class="row">
-			<div
-				class="col-lg-9 col-md-9 col-sm-9 probootstrap-top-quick-contact-info">
-			</div>
-			<div class="col-lg-3 col-md-3 col-sm-3 probootstrap-top-social">
-				<ul>
+	 	<div class="row"> 
+		 	<div
+				class="col-lg-9 col-md-9 col-sm-9 probootstrap-top-quick-contact-info" >
+				
+			</div> 
+			<div class="col-lg-3 col-md-3 col-sm-3 probootstrap-top-social" align="right" style="width:100% !important;">
 
 					<th:block sec:authorize="isAnonymous()">
+						<ul>
+						<li>
 						<a sec:authorize="isAnonymous()" class="nav-link"
 							href="/members/login">로그인</a>
 
-						<li>|</li>
+						</li>|<li>
 
 						<a sec:authorize="isAnonymous()" class="nav-link"
-							href="/members/join">회원가입</a>
+							href="/members/join">회원가입</a></li>
+						</ul>
 					</th:block>
 					<th:block sec:authorize="isAuthenticated()">
-						<ul style="display:inline-block;">
-							<li class="nav-item" id="noti-bar"><a type="button" class="btn btn-primary" id="Notifications">
+						<ul>
+							<li class="nav-item" align="left"><a type="button" class="btn btn-primary" id="Notifications">
+								<input type="hidden" id="userId" th:value="${session.user.id}">
 								<span>Notifications   </span>
 								<span class="badge badge-sm badge-circle badge-danger border border-white border-2" id="notification-m">
-								<span id="notNum" th:if="${#lists.isEmpty(session.user.notifications)}">1</span>
-								<span id="notNum" th:if="${not #lists.isEmpty(session.user.notifications)}">[[${#lists.size(session.user.notifications)}]]</span>
+								<span id="notiNum"></span>
 								</span></a>
-										<script th:inline="javascript">
-							
-												/* Notifications 버튼 클릭*/
-												$('#Notifications').click(function() {
+															<script th:inline="javascript">
 													
-													$('#notificationModal').modal(); //id가 "notificationModal"인 모달창을 열어준다. 
-										 	 		$('.modal-title').text("알림"); //modal 의 header 부분에 "크루 멤버"라는 값을 넣어준다.   
-										 	 		console.log([[${session.user.name}]]);
-										 	 		console.log([[${#lists.isEmpty(session.user.getNotifications())}]]);
-										 	 		console.log([[${session.user.getNotifications()}]]);
-										 	 		console.log([[${session.user}]])
-												});
-												
-												/* 알림 삭제하는 ajax*/
-												function removeNoti(notiId){
+																var userId = $("#userId").val();
+																// 알림 수
+																function notiCount(){
+																	
+																	$.ajax({
+																		url: "/notification/count",
+														                type: "POST",
+														                data: {
+														                    "userId": userId
+														                },
+														                success: function (res) {
+														                	$("#notiNum").html(res.count);
+														                },
+																	});
+																}
+																
+																// 알림 삭제 버튼을 누르면 . . 
+																function removeNoti(notiId){
+																	
+																	console.log(notiId);
+																	
+																	$.ajax({
+																		url: "/deleteNoti",
+														                type: "POST",
+														                data: {
+														                	"notiId":notiId
+														                },
+														                success: function (res) {
+														                	notiCount();
+														                	notilist();
+														                },
+																	});
+																}
+																		
+										
+															/* Notifications 버튼 클릭*/
+															$('#Notifications').click(function() {
+																
+																$('#notificationModal').modal(); //id가 "notificationModal"인 모달창을 열어준다. 
+													 	 		$('.modal-title').text("알림"); //modal 의 header 부분에 "크루 멤버"라는 값을 넣어준다.   
+													 	 		notilist();
+															});
+															
+															 	
+															function notilist() {
+																
+																$.ajax({
+																	url: '/notification/list/' + userId,
+																	type: 'post',
+																	async : true,
+																	data : {'userId' : userId},
+																	success : function(data) {
+																		var a = '<table class="modal_table">';
+																		$.each(data, function(key, value){
+																				var date = moment(value.writetime).format('YYYY-MM-DD HH:mm');
+																				a+='<td id="modal_userID">'+ date +'</td>'; 
+																		 		a+='<td id="llll">'+value.noti+'</td>'; 
+																				a+='<td id="modal_userFollow">';
+																				a+='<button onclick="removeNoti('+value.id+')" class="btn btn-outline-primary">알림 삭제</button>';
+																				a+='</td><tr>';
+																		});
+																				a += '</table>';
+																		$('.notiModalBody').html(a);
+																	}
+																});
+															}
 													
-													var userId = [[${session.user.id}]];
-													
-													$.ajax({
-														url: "/deleteNoti",
-										                type: "POST",
-										                data: {
-										                	"notiId": notiId,
-										                	"userID": userId
-										                },
-										                complete: function () {
-										                	$(".notificationModal").load(location.href + " .notificationModal");
-										                	$(".nav-item").load(location.href + " .nav-item");
-										                }
-													});
-													
-												}
-		
-												/* notification refresh 하는 ajax*/
-												function getNoti(){
-														console.log("getnoti 진입");
-													
-									/* 				var userId = [[${session.user.id}]];
-													
-													$.ajax({
-														url: "/notification/"+userId,
-										                type: "POST",
-										                data: {
-										                	"userID": userId
-										                },
-										                complete: function () { */
-										                	$(".notificationModal").load(location.href + " .notificationModal");
-										                	$("#notNum").load(location.href + " #notNum");
-										         /*        }
-													}); */
-												}
-												
-											 	$(document).ready(function(){
-												 	/* setInterval(getNoti, 3000);  */
-												 	getNoti();
-												});  
-										</script>
+															
+														 	$(document).ready(function(){
+															 	setInterval(notiCount,1000);	// 처음 시작했을 때 실행되도록
+															 	setInterval(notiList, 4000);
+															});  
+													</script>
 							</li>
 							<li class="nav-item"><a href="/members/mypage"><span sec:authentication="name"></span>님</a>  </li>
-							<li class="nav-item"><a sec:authorize="isAuthenticated()"
-								class="nav-link" href="/logout">로그아웃</a></li>
+							<li class="nav-item"><a sec:authorize="isAuthenticated()" class="nav-link" href="/logout">로그아웃</a></li>
 						</ul>
 										
 												<!-----------Notifications 모달 시작------------->
@@ -110,14 +132,8 @@
 															</div>
 															<div class="notificationModal">
 												 				<div class="modal-body">
-	 																<table class="modal_table">
-																		<tr th:each="notification : ${session.user.notifications}">
-																			<td id="llll">[[${notification.noti}]]</td>
-																			<td id="modal_userFollow">
-																				<button th:onclick="'removeNoti(\''+${notification.id} + '\')'" class="btn btn-outline-primary">알림 삭제</button>
-																			</td>
-																		</tr>
-																	</table> 
+	 																<div class="notiModalBody">
+	 																</div>
 																</div>
 															</div>
 														</div>
@@ -126,20 +142,18 @@
 												<!-- -----------Notifications 모달 끝    ------------- -->
 					</th:block>
 					
-				</ul>
-				
 			</div>
 		</div>
 	</div>
-</div>
-
+ </div>
+ 
 
 
 <!-- 네비게이션 바 -->
 <nav class="navbar navbar-default probootstrap-navbar" th:fragment="nav">
 	<div class="container">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="/" title="땀땀!!" style="background: url('../img/logo.png')!important; background-repeat-x: no-repeat !important; background-repeat-y: no-repeat !important;">땀땀!!</a>
+			<a class="navbar-brand" href="/" title="땀땀!!" style="background: url('/img/logo.png')!important; background-repeat-x: no-repeat !important; background-repeat-y: no-repeat !important;">땀땀!!</a>
 		</div>
 		<div id="navbar-collapse" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right">

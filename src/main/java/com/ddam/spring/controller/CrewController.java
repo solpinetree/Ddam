@@ -395,7 +395,7 @@ public class CrewController {
 	 */
 	@RequestMapping("/follow")
 	@ResponseBody
-	public int follow(Model model, @RequestParam Map<String, Object> paramMap) {
+	public void follow(Model model, @RequestParam Map<String, Object> paramMap) {
 		
 		long requestId = Long.parseLong((String)paramMap.get("requestId"));
 		long crewId = Long.parseLong((String)paramMap.get("crewId"));
@@ -407,10 +407,7 @@ public class CrewController {
     	
     	List<User> members = followService.findMembers(crewId);
     	model.addAttribute("members", members);
-    	
-    	return requests.size();
-	}
-	
+	}	
 	/**
 	 *  팔로우 요청에 거절할 때(크루장이)
 	 */
