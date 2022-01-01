@@ -39,10 +39,7 @@
 			})
 			
 		}
-		
-		
-		
-		
+
 		/* 크루 팔로우 요청 모달에서 멤버 승인하기 버튼 클릭*/
 		function acceptMember(requestId){
 			

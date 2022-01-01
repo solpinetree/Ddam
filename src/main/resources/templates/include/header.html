@@ -29,7 +29,7 @@
 							<li class="nav-item" id="noti-bar"><a type="button" class="btn btn-primary" id="Notifications">
 								<span>Notifications   </span>
 								<span class="badge badge-sm badge-circle badge-danger border border-white border-2" id="notification-m">
-								<span id="notNum" th:if="${#lists.isEmpty(session.user.notifications)}">0</span>
+								<span id="notNum" th:if="${#lists.isEmpty(session.user.notifications)}">1</span>
 								<span id="notNum" th:if="${not #lists.isEmpty(session.user.notifications)}">[[${#lists.size(session.user.notifications)}]]</span>
 								</span></a>
 										<script th:inline="javascript">
@@ -40,8 +40,8 @@
 													$('#notificationModal').modal(); //id가 "notificationModal"인 모달창을 열어준다. 
 										 	 		$('.modal-title').text("알림"); //modal 의 header 부분에 "크루 멤버"라는 값을 넣어준다.   
 										 	 		console.log([[${session.user.name}]]);
-										 	 		console.log([[${#lists.isEmpty(session.user.notifications)}]]);
-										 	 		console.log([[${session.user.notifications}]]);
+										 	 		console.log([[${#lists.isEmpty(session.user.getNotifications())}]]);
+										 	 		console.log([[${session.user.getNotifications()}]]);
 										 	 		console.log([[${session.user}]])
 												});
 												
@@ -133,11 +133,13 @@
 	</div>
 </div>
 
+
+
 <!-- 네비게이션 바 -->
 <nav class="navbar navbar-default probootstrap-navbar" th:fragment="nav">
 	<div class="container">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="/" title="땀땀!!">땀땀!!</a>
+			<a class="navbar-brand" href="/" title="땀땀!!" style="background: url('../img/logo.png')!important; background-repeat-x: no-repeat !important; background-repeat-y: no-repeat !important;">땀땀!!</a>
 		</div>
 		<div id="navbar-collapse" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right">

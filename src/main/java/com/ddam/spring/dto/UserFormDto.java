@@ -1,6 +1,8 @@
 package com.ddam.spring.dto;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 import javax.validation.constraints.NotBlank;
 
@@ -9,6 +11,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.ddam.spring.constant.Role;
+import com.ddam.spring.domain.MeetupUser;
+import com.ddam.spring.domain.Notification;
 import com.ddam.spring.domain.User;
 
 import lombok.Builder;
@@ -39,6 +43,10 @@ public class UserFormDto{
 	
 	private String role;
 	
+	private Set<MeetupUser> participantList;
+	
+	private List<Notification> notifications;
+	
 	public User toEntity(){
         User build = User.builder()
                 .username(username)
@@ -48,7 +56,10 @@ public class UserFormDto{
                 .email(email)
                 .phone(phone)
                 .role(role)
+                .participantList(participantList)
+                .notifications(notifications)
                 .build();
+        		
         return build;
     }
 

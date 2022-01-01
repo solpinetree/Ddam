@@ -125,7 +125,7 @@
 									                  					</div>
 									                  					<div th:unless="${isMember.size() > 0}">
 									                  						<div th:if="${meetup.crew.crewAdmin.id==user.id}">
-									  	                						<button th:onclick="'updatePart(\''+${meetup.id} + '\')'" class="btn btn-primary">참가하기</button>&nbsp;&nbsp;&nbsp;[[${#lists.size(meetup.participantList)}]] 명 참가 예정   /    [[${meetup.memberLimit}]]
+									  	                						<button th:onclick="'updatePart(\''+${meetup.id} + '\')'" class="btn btn-primary">참가하기</button>&nbsp;&nbsp;&nbsp;[[${#lists.size(meetup.participantList)}]] 명 참가 예정   /    [[${meetup.memberLimit}]]<br>
 									                  						</div>
 									                  						<div th:unless="${meetup.crew.crewAdmin.id==user.id}">
 									                  							<a th:href="'#div'+${meetup.id}" onClick="alert('해당 크루 멤버만 참가할 수 있습니다! 크루원이 되어 보세요!')" id="rec_part" class="btn btn-primary">참가하기</a>&nbsp;&nbsp;&nbsp;[[${#lists.size(meetup.participantList)}]] 명 참가 예정   /    [[${meetup.memberLimit}]]
@@ -134,6 +134,9 @@
 								                  					</div>
 								                  				</div>
 								                  			</div> 
+								                  			<div th:if="${meetup.crew.crewAdmin.id==user.id}">
+								                  				<button th:onclick="'updatePart(\''+${meetup.id} + '\')'" class="btn btn-primary" style="margin-top:5px;">모임 삭제하기</button>
+								                  			</div>
 													</div>
 													
 																		<!--참가, 참가 취소 버튼 관리하는 AJAX -->

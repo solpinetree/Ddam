@@ -20,8 +20,10 @@ public class NotificationService {
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		notification.setWritetime(timestamp);
 		
-
-		user.getNotifications().add(notificationRepository.save(notification));
+		
+		user.addNotification(notification);
+		
+		notificationRepository.save(notification);
 	}
 	
 

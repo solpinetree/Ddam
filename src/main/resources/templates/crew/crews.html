@@ -15,15 +15,17 @@
     <meta name="description" content="Free Bootstrap Theme by ProBootstrap.com">
     <meta name="keywords" content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
     
+    
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700|Open+Sans" rel="stylesheet">
 	<link rel="stylesheet" th:href="@{/css/styles-merged.css}">
 	<link rel="stylesheet" th:href="@{/css/style.min.css}">
 	<link rel="stylesheet" th:href="@{/css/custom.css}">
 	<link rel="stylesheet" th:href="@{/font-awesome/css/font-awesome.min.css}">   <!-- font awesome 4 -->
 
-<script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+
   </head>
   
+  <head th:replace="include/common::iconstyle"></head>
   
   <body>
 
@@ -41,19 +43,6 @@
 		<div th:replace="include/header::header"></div>
 		<!--  nav bar -->
 		<div th:replace="include/header::nav"></div>
-
-      
- <!--      <section class="probootstrap-section probootstrap-section-colored">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12 text-left section-heading probootstrap-animate">
-              <h1>크루 탐색</h1>
-            </div>
-          </div>
-        </div>
-      </section> -->
-
-
 
 
 
@@ -206,8 +195,6 @@
 											<script th:inline="javascript">
 																var id = '[[${user.id}]]';
 																
-																console.log([[${user.username}]]);
-																
 																$("#chatinput").keypress(function(event){
 																	if(event.which==13){
 																		$('#chatbtn').click();
@@ -270,10 +257,10 @@
 																}
 																
 																
- 															/* 	$(document).ready(function() {
+ 															 	$(document).ready(function() {
  																	$('#msgDiv').scrollTop($('#msgDiv')[0].scrollHeight);
-																	//setInterval(chatlist, 3000); //렉이 걸리면 초를 늘리자..!
-																});  */
+																	setInterval(chatlist, 1000); //렉이 걸리면 초를 늘리자..!
+																});  
 												</script>
 									</div>
 								</div>

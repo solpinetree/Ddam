@@ -1,10 +1,8 @@
 package com.ddam.spring.domain;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.Comparator;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,9 +11,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 @Entity
+@ToString
 public class Notification implements Comparator<Notification>{
 
 	@Id
