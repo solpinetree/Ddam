@@ -1,5 +1,9 @@
 package com.ddam.spring.service;
 
+import java.util.List;
+
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +19,9 @@ public class MeetupService {
 	MeetupRepository meetupRepository;
 	
 	@Autowired
+	MeetupUserService meetupUserService;
+	
+	@Autowired
 	CrewRepository crewRepository;
 	
 	public Meetup save(long cid, Meetup meetup) {
@@ -23,5 +30,16 @@ public class MeetupService {
 		Meetup res = meetupRepository.save(meetup);
 //		crew.getMeetupLists().add(res);
 		return res;
+	}
+	
+	@Transactional
+	public void deleteByCrewId(long crewId) {
+		List<Meetup> meetups = meetupRepository.findAllByCrewId(crewId);
+		
+		for(Meetup m : meetups) {
+			meetupUserService.deleteByMeetup(m);
+		}
+		
+		meetupRepository.deleteByCrewId(crewId);
 	}
 }

@@ -20,6 +20,9 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700|Open+Sans" rel="stylesheet">
 
   </head>
+  
+    <head th:replace="include/common::iconstyle"></head>
+  
   <body>
     
     <div class="probootstrap-page-wrapper">
@@ -40,6 +43,13 @@
       </section>
 
       </div>
+      
+      <script th:inline="javascript">
+      		if([[${session.user}]]==null){
+      			alert("회원만 크루 개설이 가능합니다.");
+      			history.back();
+      		}
+      </script>
       
       
 	<!--  크루 개설 작성 폼 -->

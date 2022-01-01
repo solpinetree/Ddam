@@ -234,17 +234,20 @@
 																		success : function(data) {
 																			var a = '';
 																			$.each(data, function(key, value){
+																				var time = moment(value.writetime).format('MM/DD HH:mm')
 																				
 																				if(value.writer.id == id) { // 보낸건 오른쪽에
 																					a += '<div class="sasa" align="right">';
 																					a += '<span><b>'+ value.writer.name +'</b></span><br>';
-																					a += '<span style="color:black;">'+ value.content +'</span>';
+																					a += '<span style="color:black;">'+ value.content +'</span><br>';
+																					a += '<span style="font-size:3px;">'+ time +'</span>';
 																					a += '</div>';
 																				}
 																				else{ // 받은건 왼쪽
 																					a += '<div class="hmhm" align:"left">';
 																					a += '<span><b>'+ value.writer.name +'</b></span><br>';
-																					a += '<span style="color:black;">' + value.content + '</span>';
+																					a += '<span style="color:black;">' + value.content + '</span><br>';
+																					a += '<span style="font-size:3px;">'+ time +'</span>';
 																				a += '<br /></div>';
 																				}
 																			});

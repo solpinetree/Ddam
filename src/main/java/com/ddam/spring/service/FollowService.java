@@ -96,4 +96,8 @@ public class FollowService {
 		return members;
 	}
 	
+	public void deleteByToCrewId(long toCrewId) {
+		followRepository.deleteByToCrewId(toCrewId);
+	}
+	
 }

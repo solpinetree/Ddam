@@ -5,19 +5,26 @@ drop table if exists likes;
 drop table if exists follow_request;
 drop table if exists meetup;
 drop table if exists meetup_user;
+drop table if exists community_board;
+drop table if exists community_comment;
+drop table if exists community_file;
+drop table if exists community_like;
+drop table if exists ask_board;
+drop table if exists ask_file;
+drop table if exists notification;
+drop table if exists crew_chat;
+drop table if exists notice_board;
+drop table if exists notice_file;
 
 select * from meetup_user;
 
-drop table if exists crew_chat;
+
 
 SELECT * FROM crew;
 select * from user;
 desc user;
 insert into user (username, rold) values()
 
-
-
-delete from crew where id=3;
 
 show tables;
 
@@ -30,8 +37,7 @@ select * from follow_request;
 SET foreign_key_checks = 0;
 SET foreign_key_checks = 1;
 
-drop table if exists ask_board;
-drop table if exists ask_file;
+
 
 select * from ask_file;
 select * from ask_board;

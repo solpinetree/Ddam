@@ -20,6 +20,9 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700|Open+Sans" rel="stylesheet">
 
   </head>
+  
+    <head th:replace="include/common::iconstyle"></head>
+  
   <body>
     
     
@@ -54,6 +57,7 @@
                   <p>크루에 대한 정보를 수정해주세요!</p>
                   <form action="/crew/crew-updateOk" method="post" class="probootstrap-form" enctype="multipart/form-data" accept-charset="UTF-8">
              
+             		<input type="hidden" name="id" th:value="${crew.id}">
                   	<!-- 썸네일 -->
                   	<table class="table">
 						<tr>
@@ -104,19 +108,21 @@
                     <span style="font-size: 14px; color: red">[[${errMemberLimit}]]</span>
                       <select class="form-control" id="subject" name="memberLimit" style="text-align:left !important;">
                       		<option value="" th:selected="${crew.memberLimit==null}"></option>
-                      		<option th:each="num:${#numbers.sequence(10,25)}" th:value="${num}" th:selected="${crew.memberLimit==num}">[[${num}]]</option>
+                      		<option th:each="num:${#numbers.sequence(2,25)}" th:value="${num}" th:selected="${crew.memberLimit==num}">[[${num}]]</option>
                       </select>
                     </div>
                     
                     <div class="form-group">
                       <label for="desc">크루의 목표 및 소개</label>
                     <span style="font-size: 14px; color: red">[[${errDescription}]]</span>
-                      <textarea cols="30" rows="10" class="form-control" id="message" name="description" style="text-align:left !important;">[[${crew.description}]]</textarea>
+                      <textarea cols="30" rows="10" class="form-control" id="message" name="description" style="text-align:left !important;" th:value="${crew.description}">[[${crew.description}]]</textarea>
                     </div>
                     
                     <div class="form-group">
                       <input type="submit" class="btn btn-primary btn-lg" id="submit" name="submit" value="크루 등록하기">
                     </div>
+                    
+                    
                     
                     
                   </form>

@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -44,7 +45,7 @@ public class Meetup {
 //	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private LocalDateTime datetime;
 	
-	@OneToMany(mappedBy = "meetup")
+	@OneToMany(mappedBy = "meetup", cascade = CascadeType.ALL)
 	private Set<MeetupUser> participantList = new HashSet<>();
 	
 	private Long memberLimit;

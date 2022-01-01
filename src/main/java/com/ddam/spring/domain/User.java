@@ -76,12 +76,12 @@ public class User implements UserDetails{
 //    private Role auth;
     private String role;
     
-	@OneToMany(mappedBy="user",fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="user",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@ToString.Exclude
 	@JsonIgnore
 	private Set<MeetupUser> participantList = new HashSet<>();
 	
-	@OneToMany(mappedBy= "user", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy= "user", cascade = CascadeType.ALL)
 	@ToString.Exclude
 	@JsonIgnore
 	@Builder.Default

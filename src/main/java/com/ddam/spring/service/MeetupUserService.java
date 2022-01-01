@@ -48,4 +48,8 @@ public class MeetupUserService {
 		meetup.getParticipantList().remove(meetupUserRepository.findByUserIdAndMeetupId(uid, mid));
 		meetupUserRepository.deleteByUserIdAndMeetupId(uid, mid);
 	}
+
+	public void deleteByMeetup(Meetup m) {
+		meetupUserRepository.deleteByMeetup(m);
+	}
 }

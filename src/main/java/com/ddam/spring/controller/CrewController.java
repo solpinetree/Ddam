@@ -42,6 +42,7 @@ import com.ddam.spring.repository.FollowRepository;
 import com.ddam.spring.repository.FollowRequestRepository;
 import com.ddam.spring.repository.MeetupRepository;
 import com.ddam.spring.repository.UserRepository;
+import com.ddam.spring.service.CrewService;
 import com.ddam.spring.service.FollowRequestService;
 import com.ddam.spring.service.FollowService;
 import com.ddam.spring.service.NotificationService;
@@ -56,6 +57,9 @@ public class CrewController {
 
 	@Autowired
 	private CrewRepository crewRepository;
+	
+	@Autowired
+	private CrewService crewService;
 	
 	@Autowired
 	private FollowRequestService followRequestService;
@@ -251,11 +255,12 @@ public class CrewController {
 			BindingResult result, Model model,
 			RedirectAttributes redirectAttributes, HttpServletRequest request) throws IllegalStateException, IOException{
 	
+		Crew precrew = crewService.findById(crew.getId());
+		
 		
 		// 크루 썸네일을 수정한 경우
 		if(!file.isEmpty()){
 			
-			System.out.println("파일 입력 됨");
 			// 기존 파일 삭제
 			File prefile = new File(System.getProperty("user.dir") +"/src/main/resources/static/crewphoto/" + crew.getFilePath());
 			prefile.delete();
@@ -268,22 +273,17 @@ public class CrewController {
 			System.out.println("파일 저장 경로: "+saveFile);
 	        file.transferTo(saveFile);
 			
-			crew.setFileOriginName(file.getOriginalFilename());
-			crew.setFileName(fileName);
-			crew.setFilePath("/crewphoto/" + fileName);
+			precrew.setFileOriginName(file.getOriginalFilename());
+			precrew.setFileName(fileName);
+			precrew.setFilePath("/crewphoto/" + fileName);
 		}
-
-		// 크루 입력 내용 유효성 검사
-		if(result.hasErrors() || crew.getFileName()==null) {
-			redirectAttributes.addFlashAttribute("crew", crew);
-			showErrors(result, redirectAttributes);
-			return "redirect:/crew/update/" + crew.getId();			
-		}
+				
+		precrew.setArea(crew.getArea());
+		precrew.setCategory(crew.getCategory());
+		precrew.setDescription(crew.getDescription());
+		precrew.setName(crew.getName());
 		
-
-		System.out.println(crew);
-		
-		crewRepository.save(crew);
+		crewService.save(precrew);
 
 		// 파일 업로드할 때 딜레이가 있어서....
 		try {
@@ -292,13 +292,13 @@ public class CrewController {
 			e.printStackTrace();
 		}
 		
-		return "crew/crew-detail/"+crew.getId();
+		return "redirect:/crew/crew-detail/"+crew.getId();
 	}
 	
 	
 	@PostMapping("/delete/{id}")
 	public String delete(@PathVariable("id") int id) {
-		crewRepository.deleteById((long) id);
+		crewService.deleteById((long) id);
 		return "redirect:/crew/crews";
 	}
 	

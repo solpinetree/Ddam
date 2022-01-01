@@ -50,4 +50,8 @@ public class LikesService {
 			return 0;
 		}
 	}
+	
+	public void deleteByToCrewId(long toCrewId) {
+		likesRepository.deleteByToCrewId(toCrewId);
+	}
 }

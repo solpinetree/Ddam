@@ -149,7 +149,7 @@
 									<!--  크루 멤버 -->
 									<div th:if="${crewRole.toString().equals('member')}">
 										<button
-											th:onclick="'location.href=\'' + @{/crew/unfollow/{id}(id=${crew.id})} +'\''"
+											th:onclick="deleteConfirm()"
 											class="btn btn-primary" id="unfollow">크루 탈퇴하기</button>
 										<button class="btn btn-primary" id="rec_update">
 											<i class="fa fa-heart" style="font-size: 16px; color: red" aria-hidden="true"></i>
@@ -162,7 +162,7 @@
 									<div id="forCrewAdmin" th:if="${crewRole.toString().equals('admin')}" style="width:100%; margin:auto;">
 										<button
 											th:onclick="'location.href=\'' + @{/crew/manage/{id}(id=${crew.id})} +'\''"
-											class="btn btn-primary">크루 관리페이지</button>
+											class="btn btn-primary">크루 삭제하기</button>
 										<button
 											th:onclick="'location.href=\'' + @{/crew/update/{id}(id=${crew.id})} +'\''"
 											class="btn btn-primary">크루 정보 수정하기</button>
@@ -265,6 +265,16 @@
 	
 	<!-- -----------크루장용 팔로우 요청 관리 모달 끝    ------------- -->
 	
+	
+	<script th:inline=javascript>
+		function deleteConfirm(){
+			if(!confirm("크루를 삭제하시겠습니까?")){	// 삭제 취소시
+				location.href="/crew/crew-detail/"+[[${crew.id}]];
+			}else{
+				location.href="/crew/delete/"+[[${crew.id}]];
+			}
+		}
+	</script>
 	
 	<!-- js include -->
 	<script th:src="@{/js/scripts.min.js}"></script>

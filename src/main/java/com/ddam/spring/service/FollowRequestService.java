@@ -49,4 +49,8 @@ public class FollowRequestService {
 		
 		return res;
 	}
+	
+	public void deleteByToCrewId(long toCrewId) {
+		followRequestRepository.deleteByToCrewId(toCrewId);
+	}
 }

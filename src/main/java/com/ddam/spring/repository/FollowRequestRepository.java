@@ -17,5 +17,7 @@ public interface FollowRequestRepository extends JpaRepository<FollowRequest, Lo
 	
 	@Transactional
 	void deleteByFromUserIdAndToCrewId(long fromUserId, long toCrewId);
+
+	void deleteByToCrewId(long toCrewId);
 	
 }

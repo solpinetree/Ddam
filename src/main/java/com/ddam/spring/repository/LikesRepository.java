@@ -17,4 +17,6 @@ public interface LikesRepository extends JpaRepository<Likes, Long>{
 
 	int countByFromUserIdAndToCrewId(long fromUserId, long toCrewId);	 // 좋아요 되어있는지 count 하는 메서드
 
+	void deleteByToCrewId(long toCrewId);
+
 }
