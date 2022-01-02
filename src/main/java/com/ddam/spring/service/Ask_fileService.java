@@ -1,6 +1,5 @@
 package com.ddam.spring.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +35,6 @@ public class Ask_fileService {
 	//문의사항 작성페이지(파일첨부)
 	@Transactional
 	public Ask_file saveAsk_file(Ask_file dto) {
-//		Ask_file f = new Ask_file();
-//		f.setFilename(files.getFilename());
-//		f.setOriginalname(files.getOriginalname());
 		repository.save(dto);
 		return dto;
 	}
@@ -59,8 +55,6 @@ public class Ask_fileService {
 		
 		Ask_board board = boardrepository.findById(abid).orElse(null);
 		List<Ask_file> files = repository.findByBoard(board);
-//		files = repository.findByBoard(board);
-//		Ask_file file = files.get(0);
 		return files;
 	}
 	
@@ -72,7 +66,6 @@ public class Ask_fileService {
 			data.setFilename(file.getFilename());
 			data.setOriginalname(file.getOriginalname());
 			repository.saveAndFlush(data);  // UPDATE
-//			repository.save(file);
 			cnt = 1;
 		}
 		return cnt;
