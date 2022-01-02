@@ -70,14 +70,7 @@ public class Ask_boardController {
 	@PostMapping("/ask/writeOk")
 	public void writeOk(Ask_board dto, Model model,
 			MultipartHttpServletRequest request, @RequestPart MultipartFile files
-				//, @SessionAttribute("User") Long Uid
 			) {
-		System.out.println("writeOk 진입");
-		
-//		HttpSession session = (HttpSession)request.getSession();
-//		dto.setUid(session.getAttribute("loginUid"));
-
-		
 		
 		//제목,내용
 		Long cnt = ask_boardService.saveAsk_board(dto);
@@ -107,8 +100,6 @@ public class Ask_boardController {
 		
 		System.out.println(dto.getAskFiles().get(0).getFilename());
 		
-
-		
 		model.addAttribute("file", file);
 	}
 	
@@ -121,9 +112,6 @@ public class Ask_boardController {
 	
 	@PostMapping("/admin/ask/writeOk")
 	public void writeOk(@ModelAttribute("dto") Ask_board ask_board, Model model) {
-//		Long cnt = ask_boardService.saveAsk_board_admin(dto);
-//		model.addAttribute("result", cnt);
-//		model.addAttribute("dto", dto);
 		model.addAttribute("ask_boardresult", ask_boardService.update_admin(ask_board));
 	}
 	

@@ -36,12 +36,6 @@ public class Ask_boardService {
 	
 	// 문의사항 게시판 목록페이지
 	public List<Ask_board> list() {
-		// return repository.findBySubjectAndRegDate("subject", "regdate");
-		System.out.println("Ask_board list 메서드 진입");
-//		List<Ask_board> temp = repository.findAll(Sort.by(Direction.ASC, "abid"));
-//		for(int i = 0; i < temp.size(); i++) {
-//			System.out.println(temp.get(i).toString());
-//		}
 		return repository.findAll(Sort.by(Direction.ASC, "abid"));
 	}
 
@@ -129,8 +123,6 @@ public class Ask_boardService {
 	// 문의사항 답변페이지(답변작성)
 	@Transactional
 	public int update_admin(Ask_board dto) {
-//		repository.save(dto);
-//		return (long) 1;
 		int cnt = 0;
 		Ask_board data = repository.findById(dto.getAbid()).orElse(null);
 		
