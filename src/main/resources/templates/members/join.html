@@ -22,6 +22,7 @@
 
 </head>
 
+		<head th:replace="include/common::iconstyle"></head>
 <body>
 	<ul class="skipnavi">
 		<li><a href="#container">본문내용</a></li>
@@ -30,7 +31,7 @@
 	<div id="wrap">
 
 		<!-- header -->
-		<head th:replace="include/common::iconstyle"></head>
+		<div th:replace="include/header::header"></div>
 		<!--  nav bar -->
 		<div th:replace="include/header::nav"></div>
 

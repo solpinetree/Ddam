@@ -15,13 +15,14 @@
 <link rel="stylesheet" th:href="@{/font-awesome/css/font-awesome.min.css}">
 <script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
 </head>
+		<head th:replace="include/common::iconstyle"></head>
 <body>
 
 	<!-- 페이지 -->
 	<div class="probootstrap-page-wrapper">
 	
 		<!-- 헤더 -->
-		<head th:replace="include/common::iconstyle"></head>
+		<div th:replace="include/header::header"></div>
 		
 		<!-- 네비게이션 바 -->
 		<div th:replace="include/header::nav"></div>
