@@ -29,13 +29,6 @@
   
   <body>
 
-    <div class="probootstrap-search" id="probootstrap-search">
-      <a href="#" class="probootstrap-close js-probootstrap-close"><i class="icon-cross"></i></a>
-      <form action="#">
-        <input type="search" name="s" id="search" placeholder="Search a keyword and hit enter...">
-      </form>
-    </div>
-    
     <div class="probootstrap-page-wrapper">
       
       
@@ -46,7 +39,8 @@
 
 
 
-      <section class="probootstrap-section probootstrap-section-colored probootstrap-bg probootstrap-custom-heading probootstrap-tab-section" style="background-image: url(img/slider_2.jpg)">
+      <section class="probootstrap-section probootstrap-section-colored probootstrap-bg probootstrap-custom-heading probootstrap-tab-section" 
+      		style="background-image: url(/img/meetup2.png); width:1200px !important; height:350px !important;">
         <div class="container">
           <div class="row">
             <div class="col-md-12 text-center section-heading probootstrap-animate">
@@ -159,7 +153,7 @@
 											</div>
 										</div>
 						                <div class="text">
-						                  <h3 th:text="${crew.name}">크루 이름</h3>
+						                  <h3 th:text="${crew.name}" style="font-weight:bold;">크루 이름</h3>
 						                  <span class="probootstrap-meta" th:text="${crew.area}"></span><br>
 						                  <span class="probootstrap-meta" th:text="${crew.category}"></span><br>
 						                  <span class="probootstrap-meta">크루장 : [[${crew.crewAdmin.username}]]</span><br>
@@ -180,7 +174,7 @@
       </div>
       <!-- crewListUp div끝 -->
       
-      <!--  crewOpenChat 시작 -->
+      				<!--  crewOpenChat 시작 -->
 					<div id="crewOpenChat"  class="tab-pane fade">
 								<div class="chat-page">
 									<div class="msg_view" id="msgDiv" style="overflow-y:scroll; width:80%; margin:auto; height:500px; padding:4px; border:1 solid #000000;"></div> <!-- 여기에 msg view가 나타남 ajax로! -->

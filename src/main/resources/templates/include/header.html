@@ -33,7 +33,7 @@
 						<ul>
 							<li class="nav-item" align="left"><a type="button" class="btn btn-primary" id="Notifications">
 								<input type="hidden" id="userId" th:value="${session.user.id}">
-								<span>Notifications   </span>
+								<span><i class="fa fa-bell" aria-hidden="true"></i> </span>
 								<span class="badge badge-sm badge-circle badge-danger border border-white border-2" id="notification-m">
 								<span id="notiNum"></span>
 								</span></a>
@@ -94,11 +94,11 @@
 																		var a = '<table class="modal_table">';
 																		$.each(data, function(key, value){
 																				var date = moment(value.writetime).format('YYYY-MM-DD HH:mm');
-																				a+='<td id="modal_userID">'+ date +'</td>'; 
+																				a+='<tr><td id="modal_userID">'+ date +'</td>'; 
 																		 		a+='<td id="llll">'+value.noti+'</td>'; 
 																				a+='<td id="modal_userFollow">';
 																				a+='<button onclick="removeNoti('+value.id+')" class="btn btn-outline-primary">알림 삭제</button>';
-																				a+='</td><tr>';
+																				a+='</td></tr>';
 																		});
 																				a += '</table>';
 																		$('.notiModalBody').html(a);
@@ -109,8 +109,8 @@
 															
 														 	$(document).ready(function(){
 														 		notiCount();
-															 	setInterval(notiCount,1000);	// 처음 시작했을 때 실행되도록
-															 	setInterval(notiList, 4000);
+															 	setInterval(notiCount,4000);	// 처음 시작했을 때 실행되도록
+															 	setInterval(notilist, 4000);
 															});  
 													</script>
 							</li>

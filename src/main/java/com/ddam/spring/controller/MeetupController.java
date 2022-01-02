@@ -65,6 +65,30 @@ public class MeetupController {
 		return "crew/meetupCreate";
 	}
 	
+	
+	/**
+	 *	/crew/meetup/list 에서 크루장이 미팅 삭제하기 버튼을 누른 경우
+	 * @param mid   - 삭제할 meetup id
+	 * @return	- 삭제 후 사용자가 가게될 페이지 - 모임참가 페이지
+	 */
+	@RequestMapping("/delete/{mid}")
+	public String delete(@PathVariable long mid) {
+		meetupService.deleteById(mid);
+		return "redirect:/crew/meetup/list";
+	}
+	
+	/**
+	 *	/crew/crew-detail/{cid} 에서 크루장이 미팅 삭제하기 버튼을 누른 경우
+	 * @param mid   - 삭제할 meetup id
+	 * @return	- 삭제 후 사용자가 가게될 페이지	- 크루의 상세 페이지
+	 */
+	@RequestMapping("/detaildelete/{mid}/{cid}")
+	public String detaildelete(@PathVariable long mid, @PathVariable long cid) {
+		meetupService.deleteById(mid);
+		return "redirect:/crew/crew-detail/"+cid;
+	}
+	
+	
 	/**
 	 *  크루 모임 추가 완료 처리하는 핸들러
 	 * @param cid

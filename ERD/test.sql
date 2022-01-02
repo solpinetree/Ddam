@@ -17,9 +17,7 @@ drop table if exists notice_board;
 drop table if exists notice_file;
 
 select * from meetup_user;
-
-
-
+select * from meetup;
 SELECT * FROM crew;
 select * from user;
 desc user;

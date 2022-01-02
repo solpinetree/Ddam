@@ -39,6 +39,24 @@
 			})
 			
 		}
+		
+		/* 크루 팔로우 요청 수 count */
+		function countRequest(){
+			var crewId = $("#crewId").val();
+			
+			$.ajax({
+				url: "/crew/countrequest",
+                type: "POST",
+                data: {
+                    "crewId": crewId
+                },
+               	success: function(res) {
+               		$("#reqNum").html(res.count);
+                },
+			});
+		}
+
+
 
 		/* 크루 팔로우 요청 모달에서 멤버 승인하기 버튼 클릭*/
 		function acceptMember(requestId){
@@ -56,8 +74,8 @@
                 	$(".followModal").load(location.href + " .followModal");
                 	$("#memberCount").load(location.href + " #memberCount");
                		$(".followRequestModal").load(location.href + " .followRequestModal");
-          //     		$("#reqNum").load(location.href + " #reqNum");
-					$("#forCrewAdmin").load(location.href + " #forCrewAdmin");
+					requestList();
+					countRequest();
                 },
 			})
 			
@@ -79,7 +97,7 @@
                 },
                 complete: function () {
                		$(".followRequestModal").load(location.href + " .followRequestModal");
-               		$("#reqNum").load(location.href + " #reqNum");
+              // 		$("#reqNum").load(location.href + " #reqNum");
                 },
 			})
 			

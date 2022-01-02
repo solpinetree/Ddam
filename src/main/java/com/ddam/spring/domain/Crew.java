@@ -1,7 +1,6 @@
 package com.ddam.spring.domain;
 
 import java.sql.Timestamp;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -14,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AccessLevel;
 import lombok.Data;
@@ -57,7 +58,7 @@ public class Crew {
 //	@OneToMany
 //	@JoinColumn(name ="crewId")
 //	@JsonIgnoreProperties({"crews"})
-//	private List<User> members;
+//	private Set<User> members;
 
 //	@OneToMany
 //	@JoinColumn(name ="followReqeustId")

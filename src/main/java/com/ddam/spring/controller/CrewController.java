@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -104,7 +105,7 @@ public class CrewController {
 	 */
 	@GetMapping("/crews")
 	public String crews(Model model, HttpServletRequest request) {
-		List<Crew> crewList = crewRepository.findAll();
+		List<Crew> crewList = crewRepository.findAll(Sort.by(Sort.Direction.DESC, "likesCount"));
 		long userCount = userRepository.count();
 		long meetupCount = meetupRepository.count();
 		model.addAttribute("userCount", userCount);
@@ -296,7 +297,7 @@ public class CrewController {
 	}
 	
 	
-	@PostMapping("/delete/{id}")
+	@RequestMapping("/delete/{id}")
 	public String delete(@PathVariable("id") int id) {
 		crewService.deleteById((long) id);
 		return "redirect:/crew/crews";
@@ -313,8 +314,39 @@ public class CrewController {
 		model.addAttribute("crewMembers", crewMembers );
 		return "crew/manage";
 	}
+	
+	/**
+	 * 해당 크루의 request 수를 셈
+	 * @param paramMap - crewId가 담긴 Map
+	 * @return	- 해당 크루의 request 수를 리턴
+	 */
+	@PostMapping("/countrequest")
+	public @ResponseBody Map<String, Integer> countRequest(@RequestParam Map<String, Object> paramMap) {
+		
+		long crewId = Long.parseLong((String)paramMap.get("crewId"));
+		
+		Map<String, Integer> res = new HashMap<>();
+		
+		// 해당 크루의 알림 수를 구함
+		int count = followRequestRepository.countByToCrewId(crewId);
+		
+		res.put("count", count);
+		
+		return res;
+	}
 
-
+	/**
+	 * 해당 크루에게 온 팔로우 요청들을 구함
+	 * @param cid 크루 id
+	 * @return 해당 크루의 FollowRequest 리스트를 리턴
+	 */
+	@PostMapping("/requestlist/{cid}")
+	public @ResponseBody List<FollowRequest> requestList(@PathVariable long cid) {
+		
+		List<FollowRequest> res = followRequestRepository.findAllByToCrewId(cid);
+		return res;
+		
+	}
 	
 	/**
 	 *  팔로우 요청이 왔을 때

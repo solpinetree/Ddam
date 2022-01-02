@@ -34,12 +34,10 @@ public class MeetupService {
 	
 	@Transactional
 	public void deleteByCrewId(long crewId) {
-		List<Meetup> meetups = meetupRepository.findAllByCrewId(crewId);
-		
-		for(Meetup m : meetups) {
-			meetupUserService.deleteByMeetup(m);
-		}
-		
 		meetupRepository.deleteByCrewId(crewId);
+	}
+	
+	public void deleteById(long meetupId) {
+		meetupRepository.deleteById(meetupId);
 	}
 }

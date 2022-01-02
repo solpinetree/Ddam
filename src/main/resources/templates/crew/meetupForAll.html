@@ -104,6 +104,7 @@
 				                  <span class="probootstrap-location"><i class="fa fa-money" aria-hidden="true"></i>[[${meetup.fee}]]</span><br>
 				                  
 									<a th:href="'/crew/crew-detail/'+${meetup.crew.id}" id="rec_part" class="btn btn-primary" style="margin-bottom:5px;">[[${meetup.crew.name}]] 크루 구경가기</a><br>
+									
 				                  	<!-- 인원마감이 아닐 때 -->
 				                  	<div th:if=${#lists.size(meetup.participantList)!=meetup.memberLimit}>
 								                  	<!-- user 상태에 따라 다른 버튼 -->
@@ -134,12 +135,17 @@
 								                  					</div>
 								                  				</div>
 								                  			</div> 
-								                  			<div th:if="${meetup.crew.crewAdmin.id==user.id}">
-								                  				<button th:onclick="'updatePart(\''+${meetup.id} + '\')'" class="btn btn-primary" style="margin-top:5px;">모임 삭제하기</button>
-								                  			</div>
 													</div>
-													
-																		<!--참가, 참가 취소 버튼 관리하는 AJAX -->
+													<!--  로그인한 유저 부분 끝 -->
+									</div>
+									<!--  인원 마감이 아닐 때 끝 -->
+				                  	<div th:if=${#lists.size(meetup.participantList)==meetup.memberLimit}>
+				                  		<a href="'#div'+${meetup.id}" onClick="alert('인원이 꽉 찼습니다.')" id="rec_part" class="btn btn-primary">모집 인원 마감</a>&nbsp;&nbsp;&nbsp;[[${#lists.size(meetup.participantList)}]]명 참가 예정   /    [[${meetup.memberLimit}]]
+				                  	</div>
+				                  	<div th:if="${meetup.crew.crewAdmin.id==user.id}">
+								         <button onclick="deleteMeetingConfirm()" class="btn btn-primary" style="margin-top:5px;">모임 삭제하기</button>
+								    </div>
+				                  							<!--참가, 참가 취소 버튼 관리하는 AJAX -->
 																		<script th:inline="javascript">
 																		
 																			function updatePart(meetupId){
@@ -157,16 +163,16 @@
 																	                },
 																				})
 																			}
+																			
+																			function deleteMeetingConfirm(){
+																				if(!confirm("모임을 삭제하시겠습니까?")){	// 취소 버튼 눌렀을 때
+																					location.href='#div'+[[${meetup.id}]];
+																				}else{
+																					location.href='/crew/meetup/delete/'+[[${meetup.id}]];
+																				}
+																			}
 																		</script>
 																		<!--  AJAX 끝 -->
-								                  	</div>
-								                  	<!--  로그인한 유저 부분 끝 -->
-				                  	</div>
-				                  	<!--  인원 마감이 아닐 때 끝 -->
-				                  	
-				                  	<div th:if=${#lists.size(meetup.participantList)==meetup.memberLimit}>
-				                  		<a href="#" onClick="alert('인원이 꽉 찼습니다.')" id="rec_part" class="btn btn-primary">모집 인원 마감</a>&nbsp;&nbsp;&nbsp;[[${#lists.size(meetup.participantList)}]]명 참가 예정   /    [[${meetup.memberLimit}]]
-				                  	</div>
 				                </div>
 				               	<!-- user 상태에 따라 다른 버튼 -->
 	                  </div>
@@ -174,7 +180,7 @@
 	                  
 	                  
 	             </div> 
-			</div>
+	 		</div> 
       </section>
       
 

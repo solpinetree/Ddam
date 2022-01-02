@@ -45,7 +45,7 @@ public class Meetup {
 //	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private LocalDateTime datetime;
 	
-	@OneToMany(mappedBy = "meetup", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "meetup", cascade = CascadeType.REMOVE)
 	private Set<MeetupUser> participantList = new HashSet<>();
 	
 	private Long memberLimit;
