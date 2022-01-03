@@ -16,12 +16,9 @@ public class NotificationService {
 	@Autowired
 	NotificationRepository notificationRepository;
 
-	public void save(User user, Notification notification) {
+	public void save(Notification notification) {
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		notification.setWritetime(timestamp);
-		
-		
-		user.addNotification(notification);
 		
 		notificationRepository.save(notification);
 	}

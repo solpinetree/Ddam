@@ -141,8 +141,10 @@
 				                  	<div th:if=${#lists.size(meetup.participantList)==meetup.memberLimit}>
 				                  		<a th:href="'#div'+${meetup.id}" onClick="alert('인원이 꽉 찼습니다.')" id="rec_part" class="btn btn-primary">모집 인원 마감</a>&nbsp;&nbsp;&nbsp;[[${#lists.size(meetup.participantList)}]]명 참가 예정   /    [[${meetup.memberLimit}]]
 				                  	</div>
+				                  	<div sec:authorize="isAuthenticated()">
 				                  	<div th:if="${meetup.crew.crewAdmin.id==user.id}">
 								           <button th:onclick="deleteMeetingConfirm()" class="btn btn-primary" style="margin-top:5px;">모임 삭제하기</button>
+								           <button th:onclick="#" class="btn btn-primary" style="margin-left:5px;">모임 참가멤버</button>
 								    </div>
 								    
 								    					<!--참가, 참가 취소 버튼 관리하는 AJAX -->
@@ -172,7 +174,9 @@
 																				}
 																			}
 																		</script>
-																		<!--  AJAX 끝 -->
+										
+										
+										</div>								<!--  AJAX 끝 -->
 				                </div>
 				               	<!-- user 상태에 따라 다른 버튼 -->
 	                  </div>

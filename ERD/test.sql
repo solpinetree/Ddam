@@ -16,6 +16,8 @@ drop table if exists crew_chat;
 drop table if exists notice_board;
 drop table if exists notice_file;
 
+alert 
+
 select * from meetup_user;
 select * from meetup;
 SELECT * FROM crew;

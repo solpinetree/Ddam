@@ -127,7 +127,7 @@ public class MeetupController {
     	}
 
 		model.addAttribute("user", user);
-		model.addAttribute("meetupLists", meetupRepository.findByDatetimeGreaterThanOrderByDatetimeAsc(LocalDateTime.now().minusDays(1L)));
+		model.addAttribute("meetupLists", meetupRepository.findByDatetimeGreaterThanOrderByDatetimeAsc(LocalDateTime.now()));
 		
 		return "crew/allmeetup";
 	}

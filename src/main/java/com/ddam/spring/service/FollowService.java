@@ -53,7 +53,7 @@ public class FollowService {
 		Notification notification = new Notification();
 		notification.setUser(user);
 		notification.setNoti(crew.getName()+" 크루 멤버가 되었습니다.");
-		notificationService.save(user, notification);	
+		notificationService.save(notification);	
 		
 	}
 	
@@ -63,11 +63,6 @@ public class FollowService {
 		Crew crew = crewRepository.findById(toCrewId);
 		User user = userRepository.findById(fromUserId);
 		crew.setMemberCount(crew.getMemberCount()-1);
-		
-		Notification notification = new Notification();
-		notification.setUser(user);
-		notification.setNoti(crew.getName()+" 크루에서 내보내졌습니다.");
-		notificationService.save(user, notification);		
 	}
 
 	public String find(long fromUserId, long toCrewId) { // 팔로우가 되어있는지를 확인하기위해

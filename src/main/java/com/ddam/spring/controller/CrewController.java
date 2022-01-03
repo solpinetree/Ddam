@@ -401,6 +401,11 @@ public class CrewController {
 //    	crewRepository.findById(cid).getMembers().remove(user);
     	
 		followService.deleteByFromUserIdAndToCrewId(user.getId(), cid);
+		
+		Notification notification = new Notification();
+		notification.setUser(user);
+		notification.setNoti(crewRepository.findById(cid).getName()+" 크루를 탈퇴했습니다.");
+		notificationService.save(notification);	
 
 		return "redirect:/crew/crew-detail/" + cid;
 	}
@@ -415,6 +420,11 @@ public class CrewController {
 		long memberId = Long.parseLong((String)paramMap.get("memberId"));
 		long crewId = Long.parseLong((String)paramMap.get("crewId"));
 		
+		
+		Notification notification = new Notification();
+		notification.setUser(userRepository.findById(memberId));
+		notification.setNoti(crewRepository.findById(crewId).getName()+" 크루에서 내보내졌습니다.");
+		notificationService.save(notification);	
 		
 		// Crew의 List<User> members에서 삭제
 //		crewRepository.findById(crewId).getMembers().remove(userRepository.findById(memberId));
@@ -456,7 +466,7 @@ public class CrewController {
 		
 		notification.setUser(user);
 		notification.setNoti(crew.getName()+" 크루 멤버 요청이 거절되었습니다.");
-		notificationService.save(user, notification);	
+		notificationService.save(notification);	
     	
 		followRequestRepository.deleteByFromUserIdAndToCrewId(requestId, crewId);
 	}

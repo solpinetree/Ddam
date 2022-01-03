@@ -98,6 +98,8 @@
                 complete: function () {
                		$(".followRequestModal").load(location.href + " .followRequestModal");
               // 		$("#reqNum").load(location.href + " #reqNum");
+					requestList();
+					countRequest();
                 },
 			})
 			

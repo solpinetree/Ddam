@@ -42,17 +42,15 @@
 	              				<div th:id="'div'+${meetup.id}" style="width:100%;height:350px;"></div>
 								<script th:inline="javascript" type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=65c9f79c00dce40eedc3bd3082999eae&libraries=services"></script>
 								<script th:inline="javascript">
-										 /*<![CDATA[*/ 
-											var divId = 'div'+/*[[ ${meetup.id} ]]*/;
-											var divLoc = 	 /*[[ ${meetup.location} ]]*/;
+											var divId = 'div'+[[ ${meetup.id} ]];
+											var divAddr = 	 [[ ${meetup.location} ]];
 											
-	 										var mapContainer = document.getElementById('div'+/*[[ ${meetup.id} ]]*/), // 지도를 표시할 div 
+	 										var mapContainer = document.getElementById('div'+[[ ${meetup.id} ]]), // 지도를 표시할 div 
 											    mapOption = {
 											        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
 											        level: 2 // 지도의 확대 레벨
 											    };  
 											
-									//	 	eval("var div"+/*[[ ${meetup.id} ]]*/+"="+/*[[ ${meetup.location} ]]*/);
 										 
 											// 지도를 생성합니다    
 											var map = new kakao.maps.Map(mapContainer, mapOption); 
@@ -62,16 +60,16 @@
 											// 주소-좌표 변환 객체를 생성합니다
 											var geocoder = new kakao.maps.services.Geocoder();
 											
-											se(/*[[ ${meetup.location} ]]*/, map);
+											se(divAddr,map);
 											
-											console.log('se 시작' + /*[[ ${meetup.id} ]]*/);
+											console.log('se 시작' + [[ ${meetup.id} ]]);
 											
-											function se(kk, map){
+											function se(addr,map){
 											// 주소로 좌표를 검색합니다
-											geocoder.addressSearch(kk, function(result, status) {
+											geocoder.addressSearch(addr, function(result, status) {
 											
-												console.log('div 시작'+/*[[ ${meetup.id} ]]*/);
-												console.log(kk);
+												console.log('div 시작'+[[ ${meetup.id} ]]);
+												console.log(addr);
 											    // 정상적으로 검색이 완료됐으면 
 											     if (status === kakao.maps.services.Status.OK) {
 											    	 
@@ -88,11 +86,10 @@
 											        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 											        map.setCenter(coords);
 											        
-													console.log('div 끝'+/*[[ ${meetup.id} ]]*/);
+													console.log('div 끝'+[[ ${meetup.id} ]]);
 											    } 
 											});    
 											}
-										/*]]*/
 								</script> 
  	             				<!--  지도 부분  끝-->	
  	             	
@@ -142,8 +139,10 @@
 				                  	<div th:if=${#lists.size(meetup.participantList)==meetup.memberLimit}>
 				                  		<a href="'#div'+${meetup.id}" onClick="alert('인원이 꽉 찼습니다.')" id="rec_part" class="btn btn-primary">모집 인원 마감</a>&nbsp;&nbsp;&nbsp;[[${#lists.size(meetup.participantList)}]]명 참가 예정   /    [[${meetup.memberLimit}]]
 				                  	</div>
+									<div sec:authorize="isAuthenticated()">
 				                  	<div th:if="${meetup.crew.crewAdmin.id==user.id}">
 								         <button onclick="deleteMeetingConfirm()" class="btn btn-primary" style="margin-top:5px;">모임 삭제하기</button>
+								         <button th:onclick="#" class="btn btn-primary" style="margin-left:5px;">모임 참가멤버</button>
 								    </div>
 				                  							<!--참가, 참가 취소 버튼 관리하는 AJAX -->
 																		<script th:inline="javascript">
@@ -173,6 +172,7 @@
 																			}
 																		</script>
 																		<!--  AJAX 끝 -->
+																		</div>
 				                </div>
 				               	<!-- user 상태에 따라 다른 버튼 -->
 	                  </div>
