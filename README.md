@@ -24,6 +24,11 @@
 HTML5, CSS3, JavaScript, jQuery, JSON, Ajax, BootStrap4.0, Java, Spring4, Spring Tool Suite(STS4), Spring Security, JSTL, EL, JPA, Apache Tomcat9.0, lombok
 ```
 
+### 템플릿
+뷰단은 부트스트랩의 템플릿을 기반으로 개발했습니다. 
+
+https://themewagon.com/themes/free-education-website-template-enlight/
+
 ### 기능 구현 목표
     1. 회원가입/로그인(Spring Security)
     2. 관리자 페이지(게시물 수, 회원 수, 회원 탈퇴)
