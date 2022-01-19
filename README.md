@@ -36,7 +36,8 @@ HTML5, CSS3, JavaScript, jQuery, JSON, Ajax, BootStrap4.0, Java, Spring4, Spring
     
 ### DB 설계
 * ERD
-    <img src="/git/db.png" width="700" height="370">>
+
+    <img src="src/main/resources/static/git/db.png" width="700" height="370">
     
 ## 개발 결과
 
@@ -47,6 +48,7 @@ HTML5, CSS3, JavaScript, jQuery, JSON, Ajax, BootStrap4.0, Java, Spring4, Spring
     4. 다가오는 미팅 페이지(CURD, 참여/불참)
     5. 공지사항/문의페이지
     6. 홈페이지 로고 및 디자인, 홈페이지 아이콘 제작
+    
 ### 실제 서비스 모습
 
 실제 서비스 사진
@@ -54,13 +56,9 @@ HTML5, CSS3, JavaScript, jQuery, JSON, Ajax, BootStrap4.0, Java, Spring4, Spring
 ## Built With
 
    * anddudwls(팀장) : 전제적인 프로젝트 일정관리, 로그인, 로그아웃 페이지 구현  
-    
    * unknown941 : 커뮤니티 게시판 CRUD 구현, 좋아요 및 댓글 기능 
-    
    * solpinetree : 프로젝트 및 Github 세팅 및 관리, 크루 등록 구현, 모임 등록 구현, 크루 팔로우 요청  승인, 거절과 멤버의 크루 탈퇴에 대한 실시간 알림 구현, 오픈 채팅 구현, 크루장의 멤버 관리 모달과 팔로우 요청 관리 모달 구현 
-    
    * lje1343 : 문의사항(CRUD, 파일업로드, 관리자답변) 공지사항(CRUD, 파일업로드) 
-    
    * Eden0318 : 메인 페이지 및 크루 모집 페이지 구현 
 
  
