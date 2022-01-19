@@ -37,7 +37,7 @@ HTML5, CSS3, JavaScript, jQuery, JSON, Ajax, BootStrap4.0, Java, Spring4, Spring
 ### DB 설계
 * ERD
 
-    <img src="src/main/resources/static/git/db.png" width="700" height="370">
+    <img src="src/main/resources/static/git/db.png">
     
 ## 개발 결과
 
