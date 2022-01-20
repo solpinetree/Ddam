@@ -9,7 +9,7 @@
 
 ### 개발 배경
 
-공부 중인 Spring Framework를 이용해 운동을 중심으로 한 모임과 미팅 관리가 유용한 커뮤니티를 만들고자 했습니다.
+공부 중인 Spring Framework를 이용해 운동을 중심으로 한 모임과 미팅의 관리가 유용한 커뮤니티를 만들고자 했습니다.
 
 ### 개발 기간
 
@@ -24,6 +24,11 @@
 HTML5, CSS3, JavaScript, jQuery, JSON, Ajax, BootStrap4.0, Java, Spring4, Spring Tool Suite(STS4), Spring Security, JSTL, EL, JPA, Apache Tomcat9.0, lombok
 ```
 
+### 템플릿
+뷰단은 themewagon이 제공하는 Enlight 템플릿을 기반으로 개발했습니다. 
+
+https://themewagon.com/themes/free-education-website-template-enlight/
+
 ### 기능 구현 목표
     1. 회원가입/로그인(Spring Security)
     2. 관리자 페이지(게시물 수, 회원 수, 회원 탈퇴)
@@ -37,7 +42,7 @@ HTML5, CSS3, JavaScript, jQuery, JSON, Ajax, BootStrap4.0, Java, Spring4, Spring
 ### DB 설계
 * ERD
 
-    <img src="src/main/resources/static/git/db.png" width="700" height="370">
+    <img src="src/main/resources/static/git/db.png">
     
 ## 개발 결과
 
