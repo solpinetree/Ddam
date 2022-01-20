@@ -25,7 +25,7 @@ HTML5, CSS3, JavaScript, jQuery, JSON, Ajax, BootStrap4.0, Java, Spring4, Spring
 ```
 
 ### 템플릿
-뷰단은 부트스트랩의 템플릿을 기반으로 개발했습니다. 
+뷰단은 themewagon이 제공하는 Enlight 템플릿을 기반으로 개발했습니다. 
 
 https://themewagon.com/themes/free-education-website-template-enlight/
 
