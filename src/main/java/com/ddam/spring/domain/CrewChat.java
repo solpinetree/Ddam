@@ -30,9 +30,6 @@ public class CrewChat implements Comparator<CrewChat> {
 	@JsonIgnoreProperties({"participantList"})
 	User writer;
 	
-//	@ManyToOne
-//	@JoinColumn(name = "toUserId")
-//	User toUser;
 	
 	Timestamp writetime;
 	String content;
